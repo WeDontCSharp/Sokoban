@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import gfx.Screen;
 
-public abstract class Field {
+public abstract class Field implements IVisitable {
 	private Optional<Entity> entityHere;
 	private boolean locked;
 	private int x;
@@ -51,5 +51,15 @@ public abstract class Field {
 	
 	public int getY() {
 		return y;
+	}
+	
+	public boolean visitBy(Worker w, List<Entity> ents) {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	public boolean visitBy(Crate c, List<Entity> ents) {
+		// TODO Auto-generated method stub
+		return true;
 	}
 }

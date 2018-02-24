@@ -11,6 +11,7 @@ public class Worker extends Entity {
 
 	private Direction direction;
 	private boolean dummy;
+	private int points;
 	
 	public Worker(Grid g, Field f, Direction dir, boolean dummy) {
 		super(g, f);
@@ -88,10 +89,6 @@ public class Worker extends Entity {
 		screen.drawSprite(getX() + 8,  getY(), xt + 1, yt, SpriteSheet.SHEET);
 		screen.drawSprite(getX(),  getY() + 8, xt, yt + 1, SpriteSheet.SHEET);
 		screen.drawSprite(getX() + 8,  getY() + 8, xt + 1, yt + 1, SpriteSheet.SHEET);
-	}
-
-	public void push(List<Entity> ents, Direction dir) {
-		ents.get(ents.size() - 1).pushBy(this, ents, dir);
 	}
 
 	@Override
@@ -175,8 +172,29 @@ public class Worker extends Entity {
 		
 	}
 	
-	public boolean hitWall(Wall w, List<Entity> ents) {
+	/*public boolean hitWall(Wall w, List<Entity> ents) {
 		return w.hitBy(this, ents);
-		
+	}*/
+	
+	/*public boolean reachTarget(Target t, List<Entity> ents) {
+		return t.reachBy(this, ents);
+	}*/
+	
+	public void gainPoint() {
+		points++;
 	}
+	
+	public void losePoint() {
+		points--;
+	}
+	
+	public int getPoints() {
+		return points;
+	}
+
+	public boolean visit(Field f, List<Entity> ents) {
+		// TODO Auto-generated method stub
+		return f.visitBy(this, ents);
+	}
+	
 }

@@ -6,7 +6,7 @@ import java.util.Optional;
 import gfx.Screen;
 import gfx.SpriteSheet;
 
-public class Wall extends Field {
+public class Wall extends Field  {
 
 	public Wall(int x, int y) {
 		super(x, y);
@@ -27,15 +27,21 @@ public class Wall extends Field {
 		if (entities.size() == 1) {
 			return false;
 		}else {
-			return entities.get(entities.size() - 1).hitWall(this, entities);
+			//return entities.get(entities.size() - 1).hitWall(this, entities);
+			return entities.get(entities.size() - 1).visit(this, entities);
 		}
 	}
 
-	public boolean hitBy(Worker worker, List<Entity> ents) {
+	/*public boolean hitBy(Worker worker, List<Entity> ents) {
 		return true;
 	}
 
 	public boolean hitBy(Crate crate, List<Entity> ents) {
+		return false;
+	}*/
+
+	public boolean visitBy(Crate c, List<Entity> ents) {
+		// TODO Auto-generated method stub
 		return false;
 	}
 

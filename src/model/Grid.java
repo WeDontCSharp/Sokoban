@@ -24,7 +24,11 @@ public class Grid {
 					fields.add(new Wall(i * 16, j * 16));
 				}
 				else {
-					fields.add(new Floor(i * 16, j * 16));
+					if (j == 5 && i == 5) {
+						fields.add(new Target(i * 16, j * 16));
+					}else {
+						fields.add(new Floor(i * 16, j * 16));
+					}
 				}
 			}
 		}

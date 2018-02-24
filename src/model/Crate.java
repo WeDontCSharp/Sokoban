@@ -101,9 +101,16 @@ public class Crate extends Entity {
 		return false;
 	}
 	
-	public boolean hitWall(Wall w, List<Entity> ents) {
+	/*public boolean hitWall(Wall w, List<Entity> ents) {
 		return w.hitBy(this, ents);
-		
+	}*/
+	
+	/*public boolean reachTarget(Target t, List<Entity> ents) {
+		return t.reachBy(this, ents);
+	}*/
+
+	public boolean visit(Field f, List<Entity> ents) {
+		return f.visitBy(this, ents);
 	}
 
 }
