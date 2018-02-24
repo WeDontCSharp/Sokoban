@@ -56,6 +56,7 @@ public class Target extends Floor {
 	public boolean visitBy(Crate crate, List<Entity> ents) {
 		((Worker)ents.get(0)).gainPoint();
 		whoPushed = ((Worker)ents.get(0));
+		System.err.println("Crate on target.");
 		return true;
 	}
 	
@@ -64,6 +65,7 @@ public class Target extends Floor {
 		if (whoPushed != null) {
 			whoPushed.losePoint();
 			whoPushed = null;
+			System.err.println("Crate removed from target.");
 		}
 		
 	}
