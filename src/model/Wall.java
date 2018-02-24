@@ -1,6 +1,7 @@
 package model;
 
 import java.util.List;
+import java.util.Optional;
 
 import gfx.Screen;
 import gfx.SpriteSheet;
@@ -23,6 +24,18 @@ public class Wall extends Field {
 	}
 
 	public boolean accept(List<Entity> entities, Direction dir) {
+		if (entities.size() == 1) {
+			return false;
+		}else {
+			return entities.get(entities.size() - 1).hitWall(this, entities);
+		}
+	}
+
+	public boolean hitBy(Worker worker, List<Entity> ents) {
+		return true;
+	}
+
+	public boolean hitBy(Crate crate, List<Entity> ents) {
 		return false;
 	}
 

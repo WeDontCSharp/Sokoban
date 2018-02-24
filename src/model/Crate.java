@@ -100,5 +100,10 @@ public class Crate extends Entity {
 		}
 		return false;
 	}
+	
+	public boolean hitWall(Wall w, List<Entity> ents) {
+		return w.hitBy(this, ents);
+		
+	}
 
 }

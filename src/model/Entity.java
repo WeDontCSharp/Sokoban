@@ -63,6 +63,8 @@ public abstract class Entity {
 	public abstract boolean pushBy(Worker w, List<Entity> ents, Direction dir);
 	public abstract boolean pushBy(Crate c, List<Entity> ents, Direction dir);
 	
+	public abstract boolean hitWall(Wall w, List<Entity> ents);
+	
 	public int getX() {
 		return x;
 	}

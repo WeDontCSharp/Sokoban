@@ -94,14 +94,6 @@ public class Worker extends Entity {
 		ents.get(ents.size() - 1).pushBy(this, ents, dir);
 	}
 
-	public void pushByWorker(List<Entity> ents, Direction dir) {
-		
-	}
-
-	public void pushByCrate(List<Entity> ents, Direction dir) {
-		
-	}
-
 	@Override
 	public boolean push(Entity e, List<Entity> ents, Direction dir) {
 		return e.pushBy(this, ents, dir);
@@ -180,6 +172,11 @@ public class Worker extends Entity {
 			return true;
 		}
 		return false;
+		
+	}
+	
+	public boolean hitWall(Wall w, List<Entity> ents) {
+		return w.hitBy(this, ents);
 		
 	}
 }
