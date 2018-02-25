@@ -25,27 +25,21 @@ public class Worker extends Entity {
 		}
 		int dx = 0;
 		int dy = 0;
-		int sx = 0;
-		int sy = 0;
 		Direction dir = this.direction;
 		if (Keyboard.RIGHT.isDown()) {
 			dx = 16;
-			sx = 2;
 			dir = Direction.Right;
 		}
 		else if (Keyboard.LEFT.isDown()) {
 			dx = -16;
-			sx = -2;
 			dir = Direction.Left;
 		}
 		else if (Keyboard.UP.isDown()) {
 			dy = -16;
-			sy = -2;
 			dir = Direction.Up;
 		}
 		else if (Keyboard.DOWN.isDown()) {
 			dy = 16;
-			sy = 2;
 			dir = Direction.Down;
 		}
 		if (dx != 0 || dy != 0) {
@@ -53,12 +47,8 @@ public class Worker extends Entity {
 			entlist.add(this);
 			Field target = level.getFieldPix(getX() + dx, getY() + dy);
 			if (target.accept(entlist, dir)) {
-				// XXX: Process should set references!
-				enqueueProcess(new MoveProcess(this, getX() + dx, getY() + dy, sx, sy));
-				super.getField().unsetEntity();
+				enqueueProcess(new MoveProcess(this, target));
 				this.direction = dir;
-				super.setField(target);
-				target.setEntityHere(this);
 			}
 		}
 	}
@@ -125,11 +115,7 @@ public class Worker extends Entity {
 		}
 		Field target = level.getFieldPix(getX() + dx, getY() + dy);
 		if (target.accept(ents, dir)) {
-			// XXX: Process should set references!
-			enqueueProcess(new MoveProcess(this, getX() + dx, getY() + dy, sx, sy));
-			super.getField().unsetEntity();
-			super.setField(target);
-			target.setEntityHere(this);
+			enqueueProcess(new MoveProcess(this, target));
 			return true;
 		}
 		return false;
@@ -141,31 +127,21 @@ public class Worker extends Entity {
 		ents.add(this);
 		int dx = 0;
 		int dy = 0;
-		int sx = 0;
-		int sy = 0;
 		if (dir == Direction.Right) {
 			dx = 16;
-			sx = 2;
 		}
 		else if (dir == Direction.Left) {
 			dx = -16;
-			sx = -2;
 		}
 		else if (dir == Direction.Up) {
 			dy = -16;
-			sy = -2;
 		}
 		else if (dir == Direction.Down) {
 			dy = 16;
-			sy = 2;
 		}
 		Field target = level.getFieldPix(getX() + dx, getY() + dy);
 		if (target.accept(ents, dir)) {
-			// XXX: Process should set references!
-			enqueueProcess(new MoveProcess(this, getX() + dx, getY() + dy, sx, sy));
-			super.getField().unsetEntity();
-			super.setField(target);
-			target.setEntityHere(this);
+			enqueueProcess(new MoveProcess(this, target));
 			return true;
 		}
 		return false;

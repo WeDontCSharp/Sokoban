@@ -34,31 +34,21 @@ public class Crate extends Entity {
 		ents.add(this);
 		int dx = 0;
 		int dy = 0;
-		int sx = 0;
-		int sy = 0;
 		if (dir == Direction.Right) {
 			dx = 16;
-			sx = 2;
 		}
 		else if (dir == Direction.Left) {
 			dx = -16;
-			sx = -2;
 		}
 		else if (dir == Direction.Up) {
 			dy = -16;
-			sy = -2;
 		}
 		else if (dir == Direction.Down) {
 			dy = 16;
-			sy = 2;
 		}
 		Field target = level.getFieldPix(getX() + dx, getY() + dy);
 		if (target.accept(ents, dir)) {
-			// XXX: Process should set references!
-			enqueueProcess(new MoveProcess(this, getX() + dx, getY() + dy, sx, sy));
-			super.getField().unsetEntity();
-			super.setField(target);
-			target.setEntityHere(this);
+			enqueueProcess(new MoveProcess(this, target));
 			return true;
 		}
 		return false;
@@ -71,31 +61,21 @@ public class Crate extends Entity {
 		ents.add(this);
 		int dx = 0;
 		int dy = 0;
-		int sx = 0;
-		int sy = 0;
 		if (dir == Direction.Right) {
 			dx = 16;
-			sx = 2;
 		}
 		else if (dir == Direction.Left) {
 			dx = -16;
-			sx = -2;
 		}
 		else if (dir == Direction.Up) {
 			dy = -16;
-			sy = -2;
 		}
 		else if (dir == Direction.Down) {
 			dy = 16;
-			sy = 2;
 		}
 		Field target = level.getFieldPix(getX() + dx, getY() + dy);
 		if (target.accept(ents, dir)) {
-			// XXX: Process should set references!
-			enqueueProcess(new MoveProcess(this, getX() + dx, getY() + dy, sx, sy));
-			super.getField().unsetEntity();
-			super.setField(target);
-			target.setEntityHere(this);
+			enqueueProcess(new MoveProcess(this, target));
 			return true;
 		}
 		return false;
