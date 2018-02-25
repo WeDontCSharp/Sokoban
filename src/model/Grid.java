@@ -47,10 +47,10 @@ public class Grid {
 		}
 		
 		entities.add(new Worker(this, fields.get(70), Direction.Right, false));
-		entities.add(new Worker(this, fields.get(49), Direction.Right, true));
-		entities.add(new Worker(this, fields.get(50), Direction.Right, true));
-		entities.add(new Crate(this, fields.get(47)));
-		entities.add(new Crate(this, fields.get(48)));
+		entities.add(new Worker(this, fields.get(69), Direction.Right, true));
+		entities.add(new Worker(this, fields.get(68), Direction.Right, true));
+		entities.add(new Crate(this, fields.get(67)));
+		entities.add(new Crate(this, fields.get(66)));
 		
 	}
 	

@@ -59,7 +59,7 @@ public class Switch extends Floor {
 		/*((Worker)ents.get(0)).gainPoint();
 		whoPushed = ((Worker)ents.get(0));
 		System.err.println("Crate on target.");*/
-		for (Hole h: holes) {
+		for (Hole h : holes) {
 			h.setOpen(true);
 		}
 		return true;
@@ -67,7 +67,7 @@ public class Switch extends Floor {
 	
 	public void unsetEntity() {
 		super.unsetEntity();
-		for (Hole h: holes) {
+		for (Hole h : holes) {
 			h.setOpen(false);
 		}
 		/*if (whoPushed != null) {
