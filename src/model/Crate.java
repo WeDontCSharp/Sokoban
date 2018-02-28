@@ -97,4 +97,10 @@ public class Crate extends Entity {
 		System.err.println("Crate reached target.");
 	}
 
+	@Override
+	public void hitSpawn() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

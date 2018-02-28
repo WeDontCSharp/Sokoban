@@ -179,5 +179,11 @@ public class Worker extends Entity {
 
 	@Override
 	public void reachTarget(Worker firstPusher) {}
+
+	@Override
+	public void hitSpawn() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

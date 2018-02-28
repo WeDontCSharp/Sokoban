@@ -64,6 +64,7 @@ public abstract class Entity {
 	
 	public abstract void fallDown(Worker firstPusher);
 	public abstract void hitWall();
+	public abstract void hitSpawn();
 	public abstract void useSwitch();
 	public abstract void reachTarget(Worker firstPusher);
 	
