@@ -7,6 +7,7 @@ import java.util.Optional;
 import gfx.Screen;
 import gfx.SpriteSheet;
 import io.Keyboard;
+import main.Game;
 
 public class Worker extends Entity {
 
@@ -29,19 +30,19 @@ public class Worker extends Entity {
 		int dy = 0;
 		Direction dir = this.direction;
 		if (Keyboard.RIGHT.isDown()) {
-			dx = 16;
+			dx = Game.TILE_WIDTH;
 			dir = Direction.Right;
 		}
 		else if (Keyboard.LEFT.isDown()) {
-			dx = -16;
+			dx = -Game.TILE_WIDTH;
 			dir = Direction.Left;
 		}
 		else if (Keyboard.UP.isDown()) {
-			dy = -16;
+			dy = -Game.TILE_HEIGHT;
 			dir = Direction.Up;
 		}
 		else if (Keyboard.DOWN.isDown()) {
-			dy = 16;
+			dy = Game.TILE_HEIGHT;
 			dir = Direction.Down;
 		}
 		this.direction = dir;
@@ -52,15 +53,14 @@ public class Worker extends Entity {
 
 	public void renderImage(Screen screen) {
 		int xt = 0;
-		int yt = 0;
 		
 		switch (direction) {
 		case Left: {
-			xt = 6;
+			xt = 2;
 		} break;
 		
 		case Right: {
-			xt = 2;
+			xt = 3;
 		} break;
 		
 		case Up: {
@@ -68,30 +68,28 @@ public class Worker extends Entity {
 		} break;
 		
 		case Down: {
-			xt = 4;
+			xt = 1;
 		} break;
 		}
 		
-		screen.drawSprite(getX(),  getY(), xt, yt, SpriteSheet.SHEET);
-		screen.drawSprite(getX() + 8,  getY(), xt + 1, yt, SpriteSheet.SHEET);
-		screen.drawSprite(getX(),  getY() + 8, xt, yt + 1, SpriteSheet.SHEET);
-		screen.drawSprite(getX() + 8,  getY() + 8, xt + 1, yt + 1, SpriteSheet.SHEET);
+		screen.drawSprite(getX(), getY(), xt, 1, SpriteSheet.SHEET);
+		screen.drawSprite(getX(), getY() - 16, xt, 0, SpriteSheet.SHEET);
 	}
 	
 	public boolean step(Worker firstPusher, Direction dir) {
 		int dx = 0;
 		int dy = 0;
 		if (dir == Direction.Right) {
-			dx = 16;
+			dx = Game.TILE_WIDTH;
 		}
 		else if (dir == Direction.Left) {
-			dx = -16;
+			dx = -Game.TILE_WIDTH;
 		}
 		else if (dir == Direction.Up) {
-			dy = -16;
+			dy = -Game.TILE_HEIGHT;
 		}
 		else if (dir == Direction.Down) {
-			dy = 16;
+			dy = Game.TILE_HEIGHT;
 		}
 		Field nextField = level.getFieldPix(getX() + dx, getY() + dy);
 		if (nextField.canStepHere(firstPusher, this)){

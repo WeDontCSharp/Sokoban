@@ -22,9 +22,6 @@ public class Switch extends Floor {
 
 	public void render(Screen screen) {
 		screen.drawSprite(getX(), getY(), 2, 4, SpriteSheet.SHEET);
-		screen.drawSprite(getX() + 8, getY(), 3, 4, SpriteSheet.SHEET);
-		screen.drawSprite(getX(), getY() + 8, 2, 5, SpriteSheet.SHEET);
-		screen.drawSprite(getX() + 8, getY() + 8, 3, 5, SpriteSheet.SHEET);
 	}
 
 	@Override

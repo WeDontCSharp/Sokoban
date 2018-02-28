@@ -13,10 +13,17 @@ public class Screen {
 
 	public void drawSprite(int x, int y, int xt, int yt, SpriteSheet sheet) {
 		for (int j = 0; j < sheet.tileSize; j++) {
-			int yp = (y + j) * width;
+			int yyy = y + j;
+			if (yyy < 0 || yyy >= height) {
+				continue;
+			}
+			int yp = (yyy) * width;
 			int typ = (yt * sheet.tileSize + j) * sheet.width;
 			for (int i = 0; i < sheet.tileSize; i++) {
 				int xp = x + i;
+				if (xp < 0 || xp >= width) {
+					continue;
+				}
 				int col = sheet.pixels[typ + xt * sheet.tileSize + i];
 				if (col == 0xffff00ff || col == 0xff800080) {
 					continue;

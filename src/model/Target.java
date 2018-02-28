@@ -19,10 +19,7 @@ public class Target extends Floor {
 	}
 
 	public void render(Screen screen) {
-		screen.drawSprite(getX(), getY(), 0, 6, SpriteSheet.SHEET);
-		screen.drawSprite(getX() + 8, getY(), 1, 6, SpriteSheet.SHEET);
-		screen.drawSprite(getX(), getY() + 8, 0, 7, SpriteSheet.SHEET);
-		screen.drawSprite(getX() + 8, getY() + 8, 1, 7, SpriteSheet.SHEET);
+		screen.drawSprite(getX(), getY(), 1, 4, SpriteSheet.SHEET);
 	}
 	
 	public void unsetEntity() {

@@ -20,16 +20,11 @@ public class Hole extends Floor {
 	}
 
 	public void render(Screen screen) {
+		// XXX
 		if (isOpen()) {
-			screen.drawSprite(getX(), getY(), 2, 6, SpriteSheet.SHEET);
-			screen.drawSprite(getX() + 8, getY(), 3, 6, SpriteSheet.SHEET);
-			screen.drawSprite(getX(), getY() + 8, 2, 7, SpriteSheet.SHEET);
-			screen.drawSprite(getX() + 8, getY() + 8, 3, 7, SpriteSheet.SHEET);
+			screen.drawSprite(getX(), getY(), 4, 4, SpriteSheet.SHEET);
 		}else {
-			screen.drawSprite(getX(), getY(), 0, 2, SpriteSheet.SHEET);
-			screen.drawSprite(getX() + 8, getY(), 1, 2, SpriteSheet.SHEET);
-			screen.drawSprite(getX(), getY() + 8, 0, 3, SpriteSheet.SHEET);
-			screen.drawSprite(getX() + 8, getY() + 8, 1, 3, SpriteSheet.SHEET);
+			screen.drawSprite(getX(), getY(), 3, 4, SpriteSheet.SHEET);
 		}
 	}
 	

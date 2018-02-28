@@ -11,7 +11,7 @@ public class SpriteSheet {
 	
 	static {
 		 try {
-			SHEET = new SpriteSheet("src/tileset.png", 8);
+			SHEET = new SpriteSheet("src/tileset2.png", 16);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -18,10 +18,8 @@ public class LifeCrate extends Crate {
 	}
 
 	public void renderImage(Screen screen) {
-		screen.drawSprite(getX(), getY(), 4, 2, SpriteSheet.SHEET);
-		screen.drawSprite(getX() + 8, getY(), 5, 2, SpriteSheet.SHEET);
-		screen.drawSprite(getX(), getY() + 8, 4, 3, SpriteSheet.SHEET);
-		screen.drawSprite(getX() + 8, getY() + 8, 5, 3, SpriteSheet.SHEET);
+		screen.drawSprite(getX(), getY(), 2, 3, SpriteSheet.SHEET);
+		screen.drawSprite(getX(), getY() - 16, 2, 2, SpriteSheet.SHEET);
 	}
 	
 	@Override

@@ -17,10 +17,7 @@ public class Floor extends Field {
 	}
 
 	public void render(Screen screen) {
-		screen.drawSprite(getX(), getY(), 0, 2, SpriteSheet.SHEET);
-		screen.drawSprite(getX() + 8, getY(), 1, 2, SpriteSheet.SHEET);
-		screen.drawSprite(getX(), getY() + 8, 0, 3, SpriteSheet.SHEET);
-		screen.drawSprite(getX() + 8, getY() + 8, 1, 3, SpriteSheet.SHEET);
+		screen.drawSprite(getX(), getY(), 0, 4, SpriteSheet.SHEET);
 	}
 
 	@Override

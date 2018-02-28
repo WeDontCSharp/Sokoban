@@ -17,10 +17,8 @@ public class Wall extends Field  {
 	}
 
 	public void render(Screen screen) {
-		screen.drawSprite(getX(), getY(), 0, 4, SpriteSheet.SHEET);
-		screen.drawSprite(getX() + 8, getY(), 0, 5, SpriteSheet.SHEET);
-		screen.drawSprite(getX(), getY() + 8, 1, 4, SpriteSheet.SHEET);
-		screen.drawSprite(getX() + 8, getY() + 8, 1, 5, SpriteSheet.SHEET);
+		screen.drawSprite(getX(), getY(), 0, 3, SpriteSheet.SHEET);
+		screen.drawSprite(getX(), getY() - 16, 0, 2, SpriteSheet.SHEET);
 	}
 
 	@Override

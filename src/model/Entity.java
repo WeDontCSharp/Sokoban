@@ -38,11 +38,11 @@ public abstract class Entity {
 	
 	public void render(Screen screen) {
 		// DEBUG //////////
-		screen.drawLine(x + 8, y + 8, field.getX() + 8, field.getY() + 8, 0xffff0000);
+		screen.drawLine(x + 8, y + 4, field.getX() + 8, field.getY() + 4, 0xffff0000);
 		Optional<Entity> etof = field.getEntityHere();
 		if (etof.isPresent()) {
 			Entity ee = etof.get();
-			screen.drawLine(field.getX() + 9, field.getY() + 9, ee.getX() + 9, ee.getY() + 9, 0xff00ff00);
+			screen.drawLine(field.getX() + 9, field.getY() + 5, ee.getX() + 5, ee.getY() + 5, 0xff00ff00);
 		}
 		else {
 			screen.drawRect(field.getX() + 4, field.getY() + 4, 8, 8, 0xff00ff00);

@@ -6,6 +6,7 @@ import java.util.Optional;
 import gfx.Screen;
 import gfx.SpriteSheet;
 import io.Keyboard;
+import main.Game;
 
 public class Crate extends Entity {
 
@@ -18,26 +19,24 @@ public class Crate extends Entity {
 	}
 
 	public void renderImage(Screen screen) {
-		screen.drawSprite(getX(), getY(), 2, 2, SpriteSheet.SHEET);
-		screen.drawSprite(getX() + 8, getY(), 3, 2, SpriteSheet.SHEET);
-		screen.drawSprite(getX(), getY() + 8, 2, 3, SpriteSheet.SHEET);
-		screen.drawSprite(getX() + 8, getY() + 8, 3, 3, SpriteSheet.SHEET);
+		screen.drawSprite(getX(), getY(), 1, 3, SpriteSheet.SHEET);
+		screen.drawSprite(getX(), getY() - 16, 1, 2, SpriteSheet.SHEET);
 	}
 
 	public boolean step(Worker firstPusher, Direction dir) {
 		int dx = 0;
 		int dy = 0;
 		if (dir == Direction.Right) {
-			dx = 16;
+			dx = Game.TILE_WIDTH;
 		}
 		else if (dir == Direction.Left) {
-			dx = -16;
+			dx = -Game.TILE_WIDTH;
 		}
 		else if (dir == Direction.Up) {
-			dy = -16;
+			dy = -Game.TILE_HEIGHT;
 		}
 		else if (dir == Direction.Down) {
-			dy = 16;
+			dy = Game.TILE_HEIGHT;
 		}
 		Field nextField = level.getFieldPix(getX() + dx, getY() + dy);
 		if (nextField.canStepHere(firstPusher, this)){
