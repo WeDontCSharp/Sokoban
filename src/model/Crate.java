@@ -27,29 +27,23 @@ public class Crate extends Entity {
 	public boolean step(Worker firstPusher, Direction dir) {
 		int dx = 0;
 		int dy = 0;
-		int sx = 0;
-		int sy = 0;
 		if (dir == Direction.Right) {
 			dx = 16;
-			sx = 2;
 		}
 		else if (dir == Direction.Left) {
 			dx = -16;
-			sx = -2;
 		}
 		else if (dir == Direction.Up) {
 			dy = -16;
-			sy = -2;
 		}
 		else if (dir == Direction.Down) {
 			dy = 16;
-			sy = 2;
 		}
 		Field nextField = level.getFieldPix(getX() + dx, getY() + dy);
 		if (nextField.canStepHere(firstPusher, this)){
 			Optional<Entity> here = nextField.getEntityHere();
 			if (!here.isPresent()) {
-				enqueueProcess(new MoveProcess(this, getX() + dx, getY() + dy, sx, sy));
+				enqueueProcess(new MoveProcess(this, nextField));
 				super.getField().unsetEntity();
 				super.setField(nextField);
 				nextField.setEntityHere(firstPusher, this);
@@ -58,7 +52,7 @@ public class Crate extends Entity {
 			else {
 				Entity nextEntity = nextField.getEntityHere().get();
 				if (push(firstPusher, nextEntity, dir)) {
-					enqueueProcess(new MoveProcess(this, getX() + dx, getY() + dy, sx, sy));
+					enqueueProcess(new MoveProcess(this, nextField));
 					super.getField().unsetEntity();
 					super.setField(nextField);
 					nextField.setEntityHere(firstPusher, this);
