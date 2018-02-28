@@ -23,15 +23,14 @@ public class Floor extends Field {
 		screen.drawSprite(getX() + 8, getY() + 8, 1, 3, SpriteSheet.SHEET);
 	}
 
-	public boolean accept(List<Entity> entities, Direction dir) {
-		Optional<Entity> here = getEntityHere();
-		if (!here.isPresent()) {
-			return true;
-		}
-		else {
-			Entity e = here.get();
-			return entities.get(entities.size() - 1).push(here.get(), entities, dir);
-		}
+	@Override
+	public boolean canStepHere(Worker firstPusher, Worker w) {
+		return true;
+	}
+
+	@Override
+	public boolean canStepHere(Worker firstPusher, Crate c) {
+		return true;
 	}
 
 }

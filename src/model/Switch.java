@@ -27,42 +27,22 @@ public class Switch extends Floor {
 		screen.drawSprite(getX() + 8, getY() + 8, 3, 5, SpriteSheet.SHEET);
 	}
 
-	public boolean accept(List<Entity> entities, Direction dir) {
-		Entity e = entities.get(entities.size() - 1);
-		Optional<Entity> here = getEntityHere();
-		if (!here.isPresent()) {
-			//e.reachTarget(this, entities);
-			e.visit(this, entities);
-			return true;
-		}
-		else {
-			if (entities.get(entities.size() - 1).push(here.get(), entities, dir)) {
-				//e.reachTarget(this, entities);
-				e.visit(this, entities);
-				return true;
-			}
-			return false;
-		}
+	@Override
+	public void setEntityHere(Worker firstPusher, Worker w) {
+		super.setEntityHere(w);
 	}
 	
-	/*public boolean reachBy(Worker worker, List<Entity> ents) {
-		return true;
-	}*/
-
-	/*public boolean reachBy(Crate crate, List<Entity> ents) {
-		((Worker)ents.get(0)).gainPoint();
-		whoPushed = ((Worker)ents.get(0));
-		return true;
-	}*/
-	
-	public boolean visitBy(Crate crate, List<Entity> ents) {
-		/*((Worker)ents.get(0)).gainPoint();
-		whoPushed = ((Worker)ents.get(0));
-		System.err.println("Crate on target.");*/
+	@Override
+	public void setEntityHere(Worker firstPusher, Crate c) {
+		super.setEntityHere(c);
 		for (Hole h : holes) {
 			h.setOpen(true);
+			Optional<Entity> here = h.getEntityHere();
+			if (here.isPresent()) {
+				Entity e = here.get();
+				e.fallDown(h.getWhoPushed());
+			}
 		}
-		return true;
 	}
 	
 	public void unsetEntity() {
@@ -70,12 +50,6 @@ public class Switch extends Floor {
 		for (Hole h : holes) {
 			h.setOpen(false);
 		}
-		/*if (whoPushed != null) {
-			whoPushed.losePoint();
-			whoPushed = null;
-			System.err.println("Crate removed from target.");
-		}*/
-		
 	}
 
 }

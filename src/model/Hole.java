@@ -9,6 +9,7 @@ import gfx.SpriteSheet;
 public class Hole extends Floor {
 	
 	private boolean open = false;
+	private Worker whoPushed;
 	
 	public Hole(int x, int y) {
 		super(x, y);
@@ -31,50 +32,22 @@ public class Hole extends Floor {
 			screen.drawSprite(getX() + 8, getY() + 8, 1, 3, SpriteSheet.SHEET);
 		}
 	}
-
-	public boolean accept(List<Entity> entities, Direction dir) {
-		Entity e = entities.get(entities.size() - 1);
-		Optional<Entity> here = getEntityHere();
-		if (!here.isPresent()) {
-			//e.reachTarget(this, entities);
-			e.visit(this, entities);
-			return true;
-		}
-		else {
-			if (entities.get(entities.size() - 1).push(here.get(), entities, dir)) {
-				//e.reachTarget(this, entities);
-				e.visit(this, entities);
-				return true;
-			}
-			return false;
+	
+	@Override
+	public void setEntityHere(Worker firstPusher, Worker w) {
+		super.setEntityHere(w);
+		if (open) {
+			w.fallDown(firstPusher);
 		}
 	}
 	
-	/*public boolean reachBy(Worker worker, List<Entity> ents) {
-		return true;
-	}*/
-
-	/*public boolean reachBy(Crate crate, List<Entity> ents) {
-		((Worker)ents.get(0)).gainPoint();
-		whoPushed = ((Worker)ents.get(0));
-		return true;
-	}*/
-	
-	public boolean visitBy(Worker w, List<Entity> ents) {
-		/*((Worker)ents.get(0)).gainPoint();
-		whoPushed = ((Worker)ents.get(0));
-		System.err.println("Crate on target.");*/
-		if (isOpen()) {
-			System.err.println("Worker fell.");
+	@Override
+	public void setEntityHere(Worker firstPusher, Crate c) {
+		super.setEntityHere(c);
+		whoPushed = firstPusher;
+		if (open) {
+			c.fallDown(firstPusher);
 		}
-		return true;
-	}
-	
-	public boolean visitBy(Crate c, List<Entity> ents) {
-		if (isOpen()) {
-			System.err.println("Crate fell.");
-		}
-		return true;
 	}
 
 	public boolean isOpen() {
@@ -83,6 +56,10 @@ public class Hole extends Floor {
 
 	public void setOpen(boolean open) {
 		this.open = open;
+	}
+	
+	public Worker getWhoPushed() {
+		return whoPushed;
 	}
 
 }

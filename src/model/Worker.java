@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import gfx.Screen;
 import gfx.SpriteSheet;
@@ -12,6 +13,7 @@ public class Worker extends Entity {
 	private Direction direction;
 	private boolean dummy;
 	private int points;
+	private int health;
 	
 	public Worker(Grid g, Field f, Direction dir, boolean dummy) {
 		super(g, f);
@@ -48,18 +50,9 @@ public class Worker extends Entity {
 			sy = 2;
 			dir = Direction.Down;
 		}
+		this.direction = dir;
 		if (dx != 0 || dy != 0) {
-			List<Entity> entlist = new ArrayList<Entity>();
-			entlist.add(this);
-			Field target = level.getFieldPix(getX() + dx, getY() + dy);
-			if (target.accept(entlist, dir)) {
-				// XXX: Process should set references!
-				enqueueProcess(new MoveProcess(this, getX() + dx, getY() + dy, sx, sy));
-				super.getField().unsetEntity();
-				this.direction = dir;
-				super.setField(target);
-				target.setEntityHere(this);
-			}
+			step(this, dir);
 		}
 	}
 
@@ -90,111 +83,113 @@ public class Worker extends Entity {
 		screen.drawSprite(getX(),  getY() + 8, xt, yt + 1, SpriteSheet.SHEET);
 		screen.drawSprite(getX() + 8,  getY() + 8, xt + 1, yt + 1, SpriteSheet.SHEET);
 	}
-
-	@Override
-	public boolean push(Entity e, List<Entity> ents, Direction dir) {
-		return e.pushBy(this, ents, dir);
-		
+	
+	public boolean step(Worker firstPusher, Direction dir) {
+		int dx = 0;
+		int dy = 0;
+		int sx = 0;
+		int sy = 0;
+		if (dir == Direction.Right) {
+			dx = 16;
+			sx = 2;
+		}
+		else if (dir == Direction.Left) {
+			dx = -16;
+			sx = -2;
+		}
+		else if (dir == Direction.Up) {
+			dy = -16;
+			sy = -2;
+		}
+		else if (dir == Direction.Down) {
+			dy = 16;
+			sy = 2;
+		}
+		Field nextField = level.getFieldPix(getX() + dx, getY() + dy);
+		if (nextField.canStepHere(firstPusher, this)){
+			Optional<Entity> here = nextField.getEntityHere();
+			if (!here.isPresent()) {
+				enqueueProcess(new MoveProcess(this, getX() + dx, getY() + dy, sx, sy));
+				super.getField().unsetEntity();
+				super.setField(nextField);
+				nextField.setEntityHere(firstPusher, this);
+				return true;
+			}
+			else {
+				Entity nextEntity = nextField.getEntityHere().get();
+				if (push(firstPusher, nextEntity, dir)) {
+					enqueueProcess(new MoveProcess(this, getX() + dx, getY() + dy, sx, sy));
+					super.getField().unsetEntity();
+					super.setField(nextField);
+					nextField.setEntityHere(firstPusher, this);
+					return true;
+				}
+				return false;
+			}
+		}
+		return false;
 	}
 
 	@Override
-	public boolean pushBy(Worker w, List<Entity> ents, Direction dir) {
-		if (ents.size() == 1) {
+	public boolean push(Worker firstPusher, Entity pushed, Direction dir) {
+		return pushed.pushBy(firstPusher, this, dir);
+	}
+
+	@Override
+	public boolean pushBy(Worker firstPusher, Worker pushed, Direction dir) {
+		if (firstPusher == pushed) {
 			return false;
 		}
-		ents.add(this);
-		int dx = 0;
-		int dy = 0;
-		int sx = 0;
-		int sy = 0;
-		if (dir == Direction.Right) {
-			dx = 16;
-			sx = 2;
-		}
-		else if (dir == Direction.Left) {
-			dx = -16;
-			sx = -2;
-		}
-		else if (dir == Direction.Up) {
-			dy = -16;
-			sy = -2;
-		}
-		else if (dir == Direction.Down) {
-			dy = 16;
-			sy = 2;
-		}
-		Field target = level.getFieldPix(getX() + dx, getY() + dy);
-		if (target.accept(ents, dir)) {
-			// XXX: Process should set references!
-			enqueueProcess(new MoveProcess(this, getX() + dx, getY() + dy, sx, sy));
-			super.getField().unsetEntity();
-			super.setField(target);
-			target.setEntityHere(this);
-			return true;
-		}
-		return false;
-		
+		return step(firstPusher, dir);	
 	}
 
 	@Override
-	public boolean pushBy(Crate c, List<Entity> ents, Direction dir) {
-		ents.add(this);
-		int dx = 0;
-		int dy = 0;
-		int sx = 0;
-		int sy = 0;
-		if (dir == Direction.Right) {
-			dx = 16;
-			sx = 2;
-		}
-		else if (dir == Direction.Left) {
-			dx = -16;
-			sx = -2;
-		}
-		else if (dir == Direction.Up) {
-			dy = -16;
-			sy = -2;
-		}
-		else if (dir == Direction.Down) {
-			dy = 16;
-			sy = 2;
-		}
-		Field target = level.getFieldPix(getX() + dx, getY() + dy);
-		if (target.accept(ents, dir)) {
-			// XXX: Process should set references!
-			enqueueProcess(new MoveProcess(this, getX() + dx, getY() + dy, sx, sy));
-			super.getField().unsetEntity();
-			super.setField(target);
-			target.setEntityHere(this);
-			return true;
-		}
-		return false;
-		
+	public boolean pushBy(Worker firstPusher, Crate pusher, Direction dir) {
+		return step(firstPusher, dir);
 	}
-	
-	/*public boolean hitWall(Wall w, List<Entity> ents) {
-		return w.hitBy(this, ents);
-	}*/
-	
-	/*public boolean reachTarget(Target t, List<Entity> ents) {
-		return t.reachBy(this, ents);
-	}*/
 	
 	public void gainPoint() {
 		points++;
+		System.err.println("Worker gained point.");
 	}
 	
 	public void losePoint() {
 		points--;
+		System.err.println("Worker lost point.");
 	}
 	
 	public int getPoints() {
 		return points;
 	}
-
-	public boolean visit(Field f, List<Entity> ents) {
-		// TODO Auto-generated method stub
-		return f.visitBy(this, ents);
+	
+	public void gainHealth() {
+		health++;
+		System.err.println("Worker gained health.");
 	}
+	
+	public void loseHealth() {
+		health--;
+		System.err.println("Worker lost health.");
+	}
+	
+	public int getHealth() {
+		return health;
+	}
+
+	@Override
+	public void fallDown(Worker firstPusher) {
+		System.err.println("Worker fell.");
+	}
+
+	@Override
+	public void hitWall() {
+		System.err.println("Worker hit wall.");
+	}
+
+	@Override
+	public void useSwitch() {}
+
+	@Override
+	public void reachTarget(Worker firstPusher) {}
 	
 }

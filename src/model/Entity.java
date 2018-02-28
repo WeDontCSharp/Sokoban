@@ -6,7 +6,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import gfx.Screen;
 
-public abstract class Entity implements IVisitor {
+public abstract class Entity {
 	protected Grid level;
 	private Queue<Process> processes;
 	private int x;
@@ -58,13 +58,14 @@ public abstract class Entity implements IVisitor {
 	public abstract void updateLogic();
 	public abstract void renderImage(Screen screen);
 	
-	public abstract boolean push(Entity here, List<Entity> ents, Direction dir);
+	public abstract boolean push(Worker firstPusher, Entity pushed, Direction dir);
+	public abstract boolean pushBy(Worker firstPusher, Worker pusher, Direction dir);
+	public abstract boolean pushBy(Worker firstPusher, Crate pusher, Direction dir);
 	
-	public abstract boolean pushBy(Worker w, List<Entity> ents, Direction dir);
-	public abstract boolean pushBy(Crate c, List<Entity> ents, Direction dir);
-	
-	//public abstract boolean hitWall(Wall w, List<Entity> ents);
-	//public abstract boolean reachTarget(Target t, List<Entity> ents);
+	public abstract void fallDown(Worker firstPusher);
+	public abstract void hitWall();
+	public abstract void useSwitch();
+	public abstract void reachTarget(Worker firstPusher);
 	
 	public int getX() {
 		return x;

@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import gfx.Screen;
 
-public abstract class Field implements IVisitable {
+public abstract class Field {
 	private Optional<Entity> entityHere;
 	private boolean locked;
 	private int x;
@@ -19,7 +19,16 @@ public abstract class Field implements IVisitable {
 	
 	public abstract void update();
 	public abstract void render(Screen screen);
-	public abstract boolean accept(List<Entity> entities, Direction dir);
+	public abstract boolean canStepHere(Worker firstPusher, Worker w);
+	public abstract boolean canStepHere(Worker firstPusher, Crate c);
+	
+	public void setEntityHere(Worker firstPusher, Worker w) {
+		setEntityHere(w);
+	}
+
+	public void setEntityHere(Worker firstPusher, Crate c) {
+		setEntityHere(c);
+	}
 	
 	public Optional<Entity> getEntityHere() {
 		return entityHere;
@@ -51,15 +60,5 @@ public abstract class Field implements IVisitable {
 	
 	public int getY() {
 		return y;
-	}
-	
-	public boolean visitBy(Worker w, List<Entity> ents) {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	public boolean visitBy(Crate c, List<Entity> ents) {
-		// TODO Auto-generated method stub
-		return true;
 	}
 }

@@ -51,6 +51,7 @@ public class Grid {
 		entities.add(new Worker(this, fields.get(68), Direction.Right, true));
 		entities.add(new Crate(this, fields.get(67)));
 		entities.add(new Crate(this, fields.get(66)));
+		entities.add(new LifeCrate(this, fields.get(62)));
 		
 	}
 	
