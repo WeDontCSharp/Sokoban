@@ -9,10 +9,13 @@ import java.awt.image.DataBufferInt;
 
 import javax.swing.JFrame;
 
-import gfx.Screen;
+import gfx.Bitmap;
+import gfx.Brush;
+import gfx.SpriteSheet;
 import io.Keyboard;
 import model.Grid;
 
+@SuppressWarnings("serial")
 public class Game extends Canvas implements Runnable {
 
 	public static final String TITLE = "Sokoban!";
@@ -29,8 +32,8 @@ public class Game extends Canvas implements Runnable {
 	
 	private boolean running;
 	
-	private Screen screen;
-	private Grid grid;
+	private Bitmap screen;
+	private Grid level;
 	
 	public Game() {
 		frame = new JFrame(TITLE);
@@ -53,9 +56,10 @@ public class Game extends Canvas implements Runnable {
 		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 		pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
 		running = true;
-		screen = new Screen(WIDTH, HEIGHT);
+		screen = new Bitmap(WIDTH, HEIGHT, Brush.IGNORE_BRUSH);
 		Keyboard.init(frame);
-		grid = new Grid(WIDTH / 16, HEIGHT / 16);
+		
+		level = new Grid(14, 14, 48, 48);
 	}
 	
 	public synchronized void start() {
@@ -98,7 +102,7 @@ public class Game extends Canvas implements Runnable {
 	}
 	
 	private void tick() {
-		grid.update();
+		level.update();
 	}
 	
 	private void render() {
@@ -110,7 +114,7 @@ public class Game extends Canvas implements Runnable {
 		Graphics g = bs.getDrawGraphics();
 		/////////////////////////////////
 		
-		grid.render(screen);
+		level.render(screen);
 		
 		/////////////////////////////////
 		for (int i = 0; i < pixels.length; i++) {

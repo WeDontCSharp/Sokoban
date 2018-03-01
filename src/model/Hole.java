@@ -1,9 +1,6 @@
 package model;
 
-import java.util.List;
-import java.util.Optional;
-
-import gfx.Screen;
+import gfx.Bitmap;
 import gfx.SpriteSheet;
 
 public class Hole extends Floor {
@@ -11,20 +8,20 @@ public class Hole extends Floor {
 	private boolean open = false;
 	private Worker whoPushed;
 	
-	public Hole(int x, int y) {
-		super(x, y);
+	public Hole(Grid level, int x, int y) {
+		super(level, x, y);
 	}
 
 	public void update() {
 		
 	}
 
-	public void render(Screen screen) {
-		// XXX
+	@Override
+	public void render(Bitmap bmp, int xoff, int yoff) {
 		if (isOpen()) {
-			screen.drawSprite(getX(), getY(), 4, 4, SpriteSheet.SHEET);
+			SpriteSheet.SHEET.blitSpriteTo(bmp, getX() + xoff, getY() + yoff, 4, 4);
 		}else {
-			screen.drawSprite(getX(), getY(), 3, 4, SpriteSheet.SHEET);
+			SpriteSheet.SHEET.blitSpriteTo(bmp, getX() + xoff, getY() + yoff, 3, 4);
 		}
 	}
 	

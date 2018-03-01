@@ -1,11 +1,7 @@
 package model;
 
-import java.util.List;
-import java.util.Optional;
-
-import gfx.Screen;
+import gfx.Bitmap;
 import gfx.SpriteSheet;
-import io.Keyboard;
 
 public class LifeCrate extends Crate {
 
@@ -17,9 +13,10 @@ public class LifeCrate extends Crate {
 		
 	}
 
-	public void renderImage(Screen screen) {
-		screen.drawSprite(getX(), getY(), 2, 3, SpriteSheet.SHEET);
-		screen.drawSprite(getX(), getY() - 16, 2, 2, SpriteSheet.SHEET);
+	@Override
+	public void renderImage(Bitmap bmp, int xoff, int yoff) {
+		SpriteSheet.SHEET.blitSpriteTo(bmp, getX() + xoff, getY() + yoff, 2, 3);
+		SpriteSheet.SHEET.blitSpriteTo(bmp, getX() + xoff, getY() - 16 + yoff, 2, 2);
 	}
 	
 	@Override

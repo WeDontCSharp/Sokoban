@@ -1,25 +1,23 @@
 package model;
 
-import java.util.List;
-import java.util.Optional;
-
-import gfx.Screen;
+import gfx.Bitmap;
 import gfx.SpriteSheet;
 
 public class Target extends Floor {
 	
 	private Worker whoPushed;
 
-	public Target(int x, int y) {
-		super(x, y);
+	public Target(Grid level, int x, int y) {
+		super(level, x, y);
 	}
 
 	public void update() {
 		
 	}
 
-	public void render(Screen screen) {
-		screen.drawSprite(getX(), getY(), 1, 4, SpriteSheet.SHEET);
+	@Override
+	public void render(Bitmap bmp, int xoff, int yoff) {
+		SpriteSheet.SHEET.blitSpriteTo(bmp, getX() + xoff, getY() + yoff, 1, 4);
 	}
 	
 	public void unsetEntity() {

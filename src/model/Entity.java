@@ -1,12 +1,10 @@
 package model;
-import java.util.List;
-import java.util.Optional;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import gfx.Screen;
+import gfx.Bitmap;
 
-public abstract class Entity {
+public abstract class Entity implements IRenderable {
 	protected Grid level;
 	private Queue<Process> processes;
 	private int x;
@@ -27,6 +25,7 @@ public abstract class Entity {
 			Process proc = processes.element();
 			if (proc.isDone()) {
 				processes.remove();
+				proc.terminate();
 			}
 			else {
 				proc.update();
@@ -36,34 +35,40 @@ public abstract class Entity {
 		updateLogic();
 	}
 	
-	public void render(Screen screen) {
-		// DEBUG //////////
-		screen.drawLine(x + 8, y + 4, field.getX() + 8, field.getY() + 4, 0xffff0000);
+	private void debugDrawFieldRelation(Bitmap bmp, int xoff, int yoff) {
+		// XXX
+		/*
+		bmp.drawLine(x + 8 + xoff, y + 4 + yoff, field.getX() + 8 + xoff, field.getY() + 4 + yoff, 0xffff0000);
 		Optional<Entity> etof = field.getEntityHere();
 		if (etof.isPresent()) {
 			Entity ee = etof.get();
-			screen.drawLine(field.getX() + 9, field.getY() + 5, ee.getX() + 5, ee.getY() + 5, 0xff00ff00);
+			bmp.drawLine(field.getX() + 9 + xoff, field.getY() + 5 + yoff, ee.getX() + 5 + xoff, ee.getY() + 5 + yoff, 0xff00ff00);
 		}
 		else {
-			screen.drawRect(field.getX() + 4, field.getY() + 4, 8, 8, 0xff00ff00);
+			bmp.drawRect(field.getX() + 4 + xoff, field.getY() + 4 + yoff, 8, 8, 0xff00ff00);
 		}
-		//////////////////
+		*/
+	}
+	
+	public void render(Bitmap bmp, int xoff, int yoff) {
+		debugDrawFieldRelation(bmp, xoff, yoff);
+		
 		if (!processes.isEmpty()) {
-			processes.element().render(screen);
+			processes.element().render(bmp, xoff, yoff);
 			return;
 		}
-		renderImage(screen);	
+		renderImage(bmp, xoff, yoff);
 	}
 	
 	public abstract void updateLogic();
-	public abstract void renderImage(Screen screen);
+	public abstract void renderImage(Bitmap bmp, int xoff, int yoff);
 	
 	public abstract boolean push(Worker firstPusher, Entity pushed, Direction dir);
 	public abstract boolean pushBy(Worker firstPusher, Worker pusher, Direction dir);
 	public abstract boolean pushBy(Worker firstPusher, Crate pusher, Direction dir);
 	
 	public abstract void fallDown(Worker firstPusher);
-	public abstract void hitWall();
+	public abstract void hitWall(Direction dir);
 	public abstract void useSwitch();
 	public abstract void reachTarget(Worker firstPusher);
 	
@@ -98,5 +103,17 @@ public abstract class Entity {
 	
 	public void enqueueProcess(Process proc) {
 		this.processes.add(proc);
+	}
+	
+	public int getDepth() {
+		return -y;
+	}
+	
+	public Grid getLevel() {
+		return level;
+	}
+	
+	public void abortAllProcesses() {
+		processes.clear();
 	}
 }

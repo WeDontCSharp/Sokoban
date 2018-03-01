@@ -1,16 +1,21 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
-import gfx.Screen;
-import gfx.SpriteSheet;
+import gfx.Animation;
+import gfx.Bitmap;
+import gfx.Sprite;
 import io.Keyboard;
-import main.Game;
 
 public class Worker extends Entity {
 
+	private Animation playerLeft;
+	private Animation playerRight;
+	private Animation playerUp;
+	private Animation playerDown;
+	
+	private Animation currentAnim;
+	
 	private Direction direction;
 	private boolean dummy;
 	private int points;
@@ -18,6 +23,14 @@ public class Worker extends Entity {
 	
 	public Worker(Grid g, Field f, Direction dir, boolean dummy) {
 		super(g, f);
+		
+		this.playerLeft = new Animation(new Sprite[] { Sprite.PLAYER_LEFT0, Sprite.PLAYER_LEFT1, Sprite.PLAYER_LEFT0, Sprite.PLAYER_LEFT2 }, 5);
+		this.playerRight = new Animation(new Sprite[] { Sprite.PLAYER_RIGHT0, Sprite.PLAYER_RIGHT1, Sprite.PLAYER_RIGHT0, Sprite.PLAYER_RIGHT2 }, 5);
+		this.playerUp = new Animation(new Sprite[] { Sprite.PLAYER_UP0, Sprite.PLAYER_UP1, Sprite.PLAYER_UP0, Sprite.PLAYER_UP2 }, 5);
+		this.playerDown = new Animation(new Sprite[] { Sprite.PLAYER_DOWN0, Sprite.PLAYER_DOWN1, Sprite.PLAYER_DOWN0, Sprite.PLAYER_DOWN2 }, 5);
+		
+		this.currentAnim = this.playerRight;
+		
 		this.direction = dir;
 		this.dummy = dummy;
 	}
@@ -26,76 +39,72 @@ public class Worker extends Entity {
 		if (dummy) {
 			return;
 		}
-		int dx = 0;
-		int dy = 0;
+		boolean moved = false;
 		Direction dir = this.direction;
 		if (Keyboard.RIGHT.isDown()) {
-			dx = Game.TILE_WIDTH;
+			moved = true;
 			dir = Direction.Right;
 		}
 		else if (Keyboard.LEFT.isDown()) {
-			dx = -Game.TILE_WIDTH;
+			moved = true;
 			dir = Direction.Left;
 		}
 		else if (Keyboard.UP.isDown()) {
-			dy = -Game.TILE_HEIGHT;
+			moved = true;
 			dir = Direction.Up;
 		}
 		else if (Keyboard.DOWN.isDown()) {
-			dy = Game.TILE_HEIGHT;
+			moved = true;
 			dir = Direction.Down;
 		}
-		this.direction = dir;
-		if (dx != 0 || dy != 0) {
+		if (moved) {
+			this.direction = dir;
 			step(this, dir);
+		}
+		else {
+			this.currentAnim.reset();
 		}
 	}
 
-	public void renderImage(Screen screen) {
-		int xt = 0;
-		
+	public void renderShadow(Bitmap bmp) {
+		Sprite.PLAYER_SHADOW.render(getLevel().getShadowScreen(), getX(), getY());
+	}
+	
+	@Override
+	public void renderImage(Bitmap bmp, int xoff, int yoff) {
 		switch (direction) {
 		case Left: {
-			xt = 2;
+			this.currentAnim = this.playerLeft;
 		} break;
 		
 		case Right: {
-			xt = 3;
+			this.currentAnim = this.playerRight;
 		} break;
 		
 		case Up: {
-			xt = 0;
+			this.currentAnim = this.playerUp;
 		} break;
 		
 		case Down: {
-			xt = 1;
+			this.currentAnim = this.playerDown;
 		} break;
 		}
 		
-		screen.drawSprite(getX(), getY(), xt, 1, SpriteSheet.SHEET);
-		screen.drawSprite(getX(), getY() - 16, xt, 0, SpriteSheet.SHEET);
+		currentAnim.render(bmp, getX() + xoff, getY() + yoff);
 	}
 	
 	public boolean step(Worker firstPusher, Direction dir) {
-		int dx = 0;
-		int dy = 0;
-		if (dir == Direction.Right) {
-			dx = Game.TILE_WIDTH;
-		}
-		else if (dir == Direction.Left) {
-			dx = -Game.TILE_WIDTH;
-		}
-		else if (dir == Direction.Up) {
-			dy = -Game.TILE_HEIGHT;
-		}
-		else if (dir == Direction.Down) {
-			dy = Game.TILE_HEIGHT;
-		}
-		Field nextField = level.getFieldPix(getX() + dx, getY() + dy);
+		Field nextField = super.getField().getNeighbor(dir);
 		if (nextField.canStepHere(firstPusher, this)){
 			Optional<Entity> here = nextField.getEntityHere();
 			if (!here.isPresent()) {
-				enqueueProcess(new MoveProcess(this, nextField));
+				if (this == firstPusher) {
+					// XXX: Pushing animations
+					enqueueProcess(new MoveProcess(this, nextField, Optional.of(currentAnim)));
+				}
+				else {
+					enqueueProcess(new MoveProcess(this, nextField, Optional.empty()));
+				}
 				super.getField().unsetEntity();
 				super.setField(nextField);
 				nextField.setEntityHere(firstPusher, this);
@@ -104,7 +113,13 @@ public class Worker extends Entity {
 			else {
 				Entity nextEntity = nextField.getEntityHere().get();
 				if (push(firstPusher, nextEntity, dir)) {
-					enqueueProcess(new MoveProcess(this, nextField));
+					if (this == firstPusher) {
+						// XXX: Pushing animations
+						enqueueProcess(new MoveProcess(this, nextField, Optional.of(currentAnim)));
+					}
+					else {
+						enqueueProcess(new MoveProcess(this, nextField, Optional.empty()));
+					}
 					super.getField().unsetEntity();
 					super.setField(nextField);
 					nextField.setEntityHere(firstPusher, this);
@@ -168,7 +183,8 @@ public class Worker extends Entity {
 	}
 
 	@Override
-	public void hitWall() {
+	public void hitWall(Direction dir) {
+		enqueueProcess(new DieProcess(this, dir));
 		System.err.println("Worker hit wall.");
 	}
 
@@ -177,5 +193,16 @@ public class Worker extends Entity {
 
 	@Override
 	public void reachTarget(Worker firstPusher) {}
+	
+	public void resetPosition() {
+		Field f = getLevel().getField(1, 1);
+		this.setPos(f.getX(), f.getY());
+		this.setField(f);
+		f.setEntityHere(this);
+	}
+	
+	public Direction getDirection() {
+		return this.direction;
+	}
 	
 }

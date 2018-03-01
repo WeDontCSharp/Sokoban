@@ -4,15 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import gfx.Screen;
+import gfx.Bitmap;
 import gfx.SpriteSheet;
 
 public class Switch extends Floor {
 	
 	List<Hole> holes;
 
-	public Switch(int x, int y) {
-		super(x, y);
+	public Switch(Grid level, int x, int y) {
+		super(level, x, y);
 		holes = new ArrayList<Hole>();
 	}
 
@@ -20,8 +20,9 @@ public class Switch extends Floor {
 		
 	}
 
-	public void render(Screen screen) {
-		screen.drawSprite(getX(), getY(), 2, 4, SpriteSheet.SHEET);
+	@Override
+	public void render(Bitmap bmp, int xoff, int yoff) {
+		SpriteSheet.SHEET.blitSpriteTo(bmp, getX() + xoff, getY() + yoff, 2, 4);
 	}
 
 	@Override

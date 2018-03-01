@@ -1,30 +1,32 @@
 package model;
 
-import java.util.List;
-import java.util.Optional;
-
-import gfx.Screen;
+import gfx.Bitmap;
+import gfx.Sprite;
 import gfx.SpriteSheet;
 
 public class Wall extends Field  {
 
-	public Wall(int x, int y) {
-		super(x, y);
+	public Wall(Grid level, int x, int y) {
+		super(level, x, y);
 	}
 
 	public void update() {
 		
 	}
 
-	public void render(Screen screen) {
-		screen.drawSprite(getX(), getY(), 0, 3, SpriteSheet.SHEET);
-		screen.drawSprite(getX(), getY() - 16, 0, 2, SpriteSheet.SHEET);
+	public void renderShadow(Bitmap bmp) {
+		Sprite.BOX_SHADOW.render(getLevel().getShadowScreen(), getX(), getY());
+	}
+	
+	public void render(Bitmap bmp, int xoff, int yoff) {
+		SpriteSheet.SHEET.blitSpriteTo(bmp, getX() + xoff, getY() + yoff, 0, 3);
+		SpriteSheet.SHEET.blitSpriteTo(bmp, getX() + xoff, getY() - 16 + yoff, 0, 2);
 	}
 
 	@Override
 	public boolean canStepHere(Worker firstPusher, Worker w) {
 		if (w != firstPusher) {
-			w.hitWall();
+			w.hitWall(firstPusher.getDirection());
 			return true;
 		}
 		return false;
@@ -33,6 +35,11 @@ public class Wall extends Field  {
 	@Override
 	public boolean canStepHere(Worker firstPusher, Crate c) {
 		return false;
+	}
+
+	@Override
+	public int getDepth() {
+		return -getY();
 	}
 
 }

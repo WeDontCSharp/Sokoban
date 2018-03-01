@@ -1,12 +1,10 @@
 package model;
 
-import java.util.List;
 import java.util.Optional;
 
-import gfx.Screen;
+import gfx.Bitmap;
+import gfx.Sprite;
 import gfx.SpriteSheet;
-import io.Keyboard;
-import main.Game;
 
 public class Crate extends Entity {
 
@@ -18,31 +16,24 @@ public class Crate extends Entity {
 		
 	}
 
-	public void renderImage(Screen screen) {
-		screen.drawSprite(getX(), getY(), 1, 3, SpriteSheet.SHEET);
-		screen.drawSprite(getX(), getY() - 16, 1, 2, SpriteSheet.SHEET);
+	public void renderShadow(Bitmap bmp) {
+		Sprite.BOX_SHADOW.render(getLevel().getShadowScreen(), getX(), getY());
+	}
+	
+	@Override
+	public void renderImage(Bitmap bmp, int xoff, int yoff) {
+		//Sprite.BOX_SHADOW.render(getLevel().getShadowScreen(), getX() + xoff, getY() + yoff);
+		
+		SpriteSheet.SHEET.blitSpriteTo(bmp, getX() + xoff, getY() + yoff, 1, 3);
+		SpriteSheet.SHEET.blitSpriteTo(bmp, getX() + xoff, getY() - 16 + yoff, 1, 2);
 	}
 
 	public boolean step(Worker firstPusher, Direction dir) {
-		int dx = 0;
-		int dy = 0;
-		if (dir == Direction.Right) {
-			dx = Game.TILE_WIDTH;
-		}
-		else if (dir == Direction.Left) {
-			dx = -Game.TILE_WIDTH;
-		}
-		else if (dir == Direction.Up) {
-			dy = -Game.TILE_HEIGHT;
-		}
-		else if (dir == Direction.Down) {
-			dy = Game.TILE_HEIGHT;
-		}
-		Field nextField = level.getFieldPix(getX() + dx, getY() + dy);
+		Field nextField = super.getField().getNeighbor(dir);
 		if (nextField.canStepHere(firstPusher, this)){
 			Optional<Entity> here = nextField.getEntityHere();
 			if (!here.isPresent()) {
-				enqueueProcess(new MoveProcess(this, nextField));
+				enqueueProcess(new MoveProcess(this, nextField, Optional.empty()));
 				super.getField().unsetEntity();
 				super.setField(nextField);
 				nextField.setEntityHere(firstPusher, this);
@@ -51,7 +42,7 @@ public class Crate extends Entity {
 			else {
 				Entity nextEntity = nextField.getEntityHere().get();
 				if (push(firstPusher, nextEntity, dir)) {
-					enqueueProcess(new MoveProcess(this, nextField));
+					enqueueProcess(new MoveProcess(this, nextField, Optional.empty()));
 					super.getField().unsetEntity();
 					super.setField(nextField);
 					nextField.setEntityHere(firstPusher, this);
@@ -84,7 +75,7 @@ public class Crate extends Entity {
 	}
 
 	@Override
-	public void hitWall() {}
+	public void hitWall(Direction dir) {}
 
 	@Override
 	public void useSwitch() {
