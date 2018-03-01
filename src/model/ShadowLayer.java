@@ -16,7 +16,7 @@ public class ShadowLayer implements IRenderable {
 	@Override
 	public void render(Bitmap bmp, int xoff, int yoff) {
 		Brush b = bmp.getBrush();
-		bmp.setBrush(Brush.ALPHA_BRUSH);
+		bmp.setBrush(Brush.SUBTRACT_BRUSH);
 		bmp.blit(xoff, yoff, 0, 0, bitmap.getWidth(), bitmap.getHeight(), bitmap);
 		bmp.setBrush(b);
 	}
