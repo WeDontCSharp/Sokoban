@@ -55,9 +55,6 @@ public class MoveProcess implements Process {
 	}
 	
 	public void terminate() {
-		if (this.animation.isPresent()) {
-			//this.animation.get().reset();
-		} 
 	}
 	
 }

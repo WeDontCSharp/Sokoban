@@ -5,7 +5,6 @@ import java.util.Optional;
 import gfx.Animation;
 import gfx.Bitmap;
 import gfx.Sprite;
-import io.Keyboard;
 
 public class Worker extends Entity {
 
@@ -13,6 +12,11 @@ public class Worker extends Entity {
 	private Animation playerRight;
 	private Animation playerUp;
 	private Animation playerDown;
+	
+	private Animation playerPushLeft;
+	private Animation playerPushRight;
+	private Animation playerPushUp;
+	private Animation playerPushDown;
 	
 	private Animation currentAnim;
 	
@@ -31,6 +35,11 @@ public class Worker extends Entity {
 		this.playerUp = new Animation(new Sprite[] { Sprite.PLAYER_UP0, Sprite.PLAYER_UP1, Sprite.PLAYER_UP0, Sprite.PLAYER_UP2 }, 5);
 		this.playerDown = new Animation(new Sprite[] { Sprite.PLAYER_DOWN0, Sprite.PLAYER_DOWN1, Sprite.PLAYER_DOWN0, Sprite.PLAYER_DOWN2 }, 5);
 		
+		this.playerPushLeft = new Animation(new Sprite[] { Sprite.PLAYER_PLEFT0, Sprite.PLAYER_PLEFT1, Sprite.PLAYER_PLEFT0, Sprite.PLAYER_PLEFT2 }, 5);
+		this.playerPushRight = new Animation(new Sprite[] { Sprite.PLAYER_PRIGHT0, Sprite.PLAYER_PRIGHT1, Sprite.PLAYER_PRIGHT0, Sprite.PLAYER_PRIGHT2 }, 5);
+		this.playerPushUp = new Animation(new Sprite[] { Sprite.PLAYER_PUP0, Sprite.PLAYER_PUP1, Sprite.PLAYER_PUP0, Sprite.PLAYER_PUP2 }, 5);
+		this.playerPushDown = new Animation(new Sprite[] { Sprite.PLAYER_PDOWN0, Sprite.PLAYER_PDOWN1, Sprite.PLAYER_PDOWN0, Sprite.PLAYER_PDOWN2 }, 5);
+		
 		this.currentAnim = this.playerRight;
 		
 		this.direction = dir;
@@ -42,9 +51,43 @@ public class Worker extends Entity {
 		Optional<Direction> moveDir = controls.getControl();
 		if (moveDir.isPresent()) {
 			this.direction = moveDir.get();
+			switch (this.direction) {
+			case Left: {
+				this.currentAnim = this.playerLeft;
+			} break;
+			
+			case Right: {
+				this.currentAnim = this.playerRight;
+			} break;
+			
+			case Up: {
+				this.currentAnim = this.playerUp;
+			} break;
+			
+			case Down: {
+				this.currentAnim = this.playerDown;
+			} break;
+			}
 			step(this, this.direction);
 		}
 		else {
+			switch (this.direction) {
+			case Left: {
+				this.currentAnim = this.playerLeft;
+			} break;
+			
+			case Right: {
+				this.currentAnim = this.playerRight;
+			} break;
+			
+			case Up: {
+				this.currentAnim = this.playerUp;
+			} break;
+			
+			case Down: {
+				this.currentAnim = this.playerDown;
+			} break;
+			}
 			this.currentAnim.reset();
 		}
 	}
@@ -55,24 +98,6 @@ public class Worker extends Entity {
 	
 	@Override
 	public void renderImage(Bitmap bmp, int xoff, int yoff) {
-		switch (direction) {
-		case Left: {
-			this.currentAnim = this.playerLeft;
-		} break;
-		
-		case Right: {
-			this.currentAnim = this.playerRight;
-		} break;
-		
-		case Up: {
-			this.currentAnim = this.playerUp;
-		} break;
-		
-		case Down: {
-			this.currentAnim = this.playerDown;
-		} break;
-		}
-		
 		currentAnim.render(bmp, getX() + xoff, getY() + yoff);
 	}
 	
@@ -82,7 +107,6 @@ public class Worker extends Entity {
 			Optional<Entity> here = nextField.getEntityHere();
 			if (!here.isPresent()) {
 				if (this == firstPusher) {
-					// XXX: Pushing animations
 					enqueueProcess(new MoveProcess(this, nextField, Optional.of(currentAnim)));
 				}
 				else {
@@ -97,8 +121,23 @@ public class Worker extends Entity {
 				Entity nextEntity = nextField.getEntityHere().get();
 				if (push(firstPusher, nextEntity, dir)) {
 					if (this == firstPusher) {
-						// XXX: Pushing animations
-						enqueueProcess(new MoveProcess(this, nextField, Optional.of(currentAnim)));
+						Animation anim = null;
+						switch (this.direction) {
+						case Up:
+							anim = playerPushUp;
+							break;
+						case Down:
+							anim = playerPushDown;
+							break;
+						case Left:
+							anim = playerPushLeft;
+							break;
+						case Right:
+							anim = playerPushRight;
+							break;
+						}
+						currentAnim = anim;
+						enqueueProcess(new MoveProcess(this, nextField, Optional.of(anim)));
 					}
 					else {
 						enqueueProcess(new MoveProcess(this, nextField, Optional.empty()));
