@@ -9,13 +9,15 @@ public class DieProcess implements Process {
 	public static final float SPEED = 0.1f;
 	
 	private Worker worker;
-	private Direction direction;
+	private Direction pushDirection;
+	private Direction faceDirection;
 	private float percent;
 	private float speed;
 	
-	public DieProcess(Worker w, Direction dir) {
+	public DieProcess(Worker w, Direction pdir, Direction fdir) {
 		this.worker = w;
-		this.direction = dir;
+		this.pushDirection = pdir;
+		this.faceDirection = fdir;
 		this.percent = 1.0f;
 		this.speed = SPEED;
 	}
@@ -38,27 +40,41 @@ public class DieProcess implements Process {
 		float sx = 1.0f;
 		float sy = 1.0f;
 		
-		switch (direction) {
+		switch (pushDirection) {
 		case Left: {
-			spr = Sprite.PLAYER_LEFT0;
 			sx = percent;
 		} break;
 		
 		case Right: {
-			spr = Sprite.PLAYER_RIGHT0;
 			sx = percent;
 			xoff += (1.0f - percent) * Game.TILE_WIDTH;
 		} break;
 		
 		case Up: {
-			spr = Sprite.PLAYER_UP0;
 			sy = percent;
 		} break;
 		
 		case Down: {
-			spr = Sprite.PLAYER_DOWN0;
 			sy = percent;
 			yoff += (1.0f - percent) * Game.TILE_HEIGHT;
+		} break;
+		}
+		
+		switch (faceDirection) {
+		case Left: {
+			spr = Sprite.PLAYER_LEFT0;
+		} break;
+		
+		case Right: {
+			spr = Sprite.PLAYER_RIGHT0;
+		} break;
+		
+		case Up: {
+			spr = Sprite.PLAYER_UP0;
+		} break;
+		
+		case Down: {
+			spr = Sprite.PLAYER_DOWN0;
 		} break;
 		}
 		

@@ -17,11 +17,12 @@ public class Worker extends Entity {
 	private Animation currentAnim;
 	
 	private Direction direction;
-	private boolean dummy;
 	private int points;
 	private int health;
 	
-	public Worker(Grid g, Field f, Direction dir, boolean dummy) {
+	private PlayerControls controls;
+	
+	public Worker(Grid g, Field f, Direction dir, PlayerControls ctrl) {
 		super(g, f);
 		
 		this.playerLeft = new Animation(new Sprite[] { Sprite.PLAYER_LEFT0, Sprite.PLAYER_LEFT1, Sprite.PLAYER_LEFT0, Sprite.PLAYER_LEFT2 }, 5);
@@ -32,34 +33,14 @@ public class Worker extends Entity {
 		this.currentAnim = this.playerRight;
 		
 		this.direction = dir;
-		this.dummy = dummy;
+		this.controls = ctrl;
 	}
 
 	public void updateLogic() {
-		if (dummy) {
-			return;
-		}
-		boolean moved = false;
-		Direction dir = this.direction;
-		if (Keyboard.RIGHT.isDown()) {
-			moved = true;
-			dir = Direction.Right;
-		}
-		else if (Keyboard.LEFT.isDown()) {
-			moved = true;
-			dir = Direction.Left;
-		}
-		else if (Keyboard.UP.isDown()) {
-			moved = true;
-			dir = Direction.Up;
-		}
-		else if (Keyboard.DOWN.isDown()) {
-			moved = true;
-			dir = Direction.Down;
-		}
-		if (moved) {
-			this.direction = dir;
-			step(this, dir);
+		Optional<Direction> moveDir = controls.getControl();
+		if (moveDir.isPresent()) {
+			this.direction = moveDir.get();
+			step(this, this.direction);
 		}
 		else {
 			this.currentAnim.reset();
@@ -184,7 +165,7 @@ public class Worker extends Entity {
 
 	@Override
 	public void hitWall(Direction dir) {
-		enqueueProcess(new DieProcess(this, dir));
+		enqueueProcess(new DieProcess(this, dir, this.direction));
 		System.err.println("Worker hit wall.");
 	}
 

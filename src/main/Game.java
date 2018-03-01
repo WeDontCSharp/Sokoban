@@ -11,7 +11,6 @@ import javax.swing.JFrame;
 
 import gfx.Bitmap;
 import gfx.Brush;
-import gfx.SpriteSheet;
 import io.Keyboard;
 import model.Grid;
 

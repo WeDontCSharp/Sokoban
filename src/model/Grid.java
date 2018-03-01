@@ -10,9 +10,15 @@ import java.util.List;
 
 import gfx.Bitmap;
 import gfx.Brush;
+import io.Keyboard;
 import main.Game;
 
 public class Grid {
+	private static final PlayerControls[] CONTROLS = new PlayerControls[] {
+		new PlayerControls(Keyboard.UP, Keyboard.DOWN, Keyboard.LEFT, Keyboard.RIGHT),
+		new PlayerControls(Keyboard.W, Keyboard.S, Keyboard.A, Keyboard.D),
+	};  
+	
 	private int width;
 	private int height;
 	private Field[] fields;
@@ -65,6 +71,7 @@ public class Grid {
 			}
 			g.setFields(fields);
 			
+			int pcnt = 0;
 			int entCnt = Integer.parseInt(lvlData[3].trim());
 			// XXX: assert that lvlData.length - 4 == entCnt
 			// XXX: Hardcoded
@@ -73,7 +80,7 @@ public class Grid {
 				Entity e = null;
 				switch (Integer.parseInt(entData[0])) {
 				case 0:
-					e = new Worker(g, g.getField(Integer.parseInt(entData[1]), Integer.parseInt(entData[2])), Direction.Down, false);
+					e = new Worker(g, g.getField(Integer.parseInt(entData[1]), Integer.parseInt(entData[2])), Direction.Down, CONTROLS[pcnt++]);
 					break;
 					
 				case 1:
@@ -164,6 +171,7 @@ public class Grid {
 		return fields[xp + yp * width];
 	}
 	
+	@SuppressWarnings("unused")
 	private void setField(int xp, int yp, Field f) {
 		fields[xp + yp * width] = f;
 		renderables.add(f);

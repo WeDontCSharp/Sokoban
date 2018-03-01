@@ -13,43 +13,40 @@ public class Keyboard {
 	public static Key LEFT = new Key();
 	public static Key RIGHT = new Key();
 	
+	public static Key W = new Key();
+	public static Key A = new Key();
+	public static Key S = new Key();
+	public static Key D = new Key();
+	
 	public static void init(JFrame frame) {
 		frame.addKeyListener(new KeyListener() {
+			private Key getKeyFromCode(KeyEvent ev) {
+				switch (ev.getKeyCode()) {
+				case KeyEvent.VK_UP:	return UP;
+				case KeyEvent.VK_DOWN:	return DOWN;
+				case KeyEvent.VK_LEFT:	return LEFT;
+				case KeyEvent.VK_RIGHT:	return RIGHT;
+				
+				case KeyEvent.VK_W:		return W;
+				case KeyEvent.VK_A:		return A;
+				case KeyEvent.VK_S:		return S;
+				case KeyEvent.VK_D:		return D;
+				
+				default: 				return null;
+				}
+			}
+			
 			public void keyTyped(KeyEvent arg0) {
 			}
 			
 			public void keyReleased(KeyEvent ev) {
-				switch (ev.getKeyCode()) {
-				case KeyEvent.VK_UP:
-					UP.setDown(false);
-					break;
-				case KeyEvent.VK_DOWN:
-					DOWN.setDown(false);
-					break;
-				case KeyEvent.VK_LEFT:
-					LEFT.setDown(false);
-					break;
-				case KeyEvent.VK_RIGHT:
-					RIGHT.setDown(false);
-					break;
-				}
+				Key k = getKeyFromCode(ev);
+				k.setDown(false);
 			}
 			
 			public void keyPressed(KeyEvent ev) {
-				switch (ev.getKeyCode()) {
-				case KeyEvent.VK_UP:
-					UP.setDown(true);
-					break;
-				case KeyEvent.VK_DOWN:
-					DOWN.setDown(true);
-					break;
-				case KeyEvent.VK_LEFT:
-					LEFT.setDown(true);
-					break;
-				case KeyEvent.VK_RIGHT:
-					RIGHT.setDown(true);
-					break;
-				}
+				Key k = getKeyFromCode(ev);
+				k.setDown(true);
 			}
 		});
 	}	
