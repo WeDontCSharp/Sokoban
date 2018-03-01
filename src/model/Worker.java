@@ -9,16 +9,7 @@ import gfx.Sprite;
 public class Worker extends Entity {
 
 	private Animation[] playerAnims;
-	//private Animation playerLeft;
-	//private Animation playerRight;
-	//private Animation playerUp;
-	//private Animation playerDown;
-	
 	private Animation[] playerPushAnims;
-	//private Animation playerPushLeft;
-	//private Animation playerPushRight;
-	//private Animation playerPushUp;
-	//private Animation playerPushDown;
 	
 	private Animation currentAnim;
 	
@@ -177,7 +168,6 @@ public class Worker extends Entity {
 	@Override
 	public void hitSpawn() {
 		// TODO Auto-generated method stub
-		
 	}
 	
 	public void resetPosition() {
