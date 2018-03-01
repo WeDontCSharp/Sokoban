@@ -1,11 +1,10 @@
 package model;
 
-import java.util.List;
 import java.util.Optional;
 
-import gfx.Screen;
+import gfx.Bitmap;
+import gfx.Sprite;
 import gfx.SpriteSheet;
-import io.Keyboard;
 
 public class Crate extends Entity {
 
@@ -17,33 +16,24 @@ public class Crate extends Entity {
 		
 	}
 
-	public void renderImage(Screen screen) {
-		screen.drawSprite(getX(), getY(), 2, 2, SpriteSheet.SHEET);
-		screen.drawSprite(getX() + 8, getY(), 3, 2, SpriteSheet.SHEET);
-		screen.drawSprite(getX(), getY() + 8, 2, 3, SpriteSheet.SHEET);
-		screen.drawSprite(getX() + 8, getY() + 8, 3, 3, SpriteSheet.SHEET);
+	public void renderShadow(Bitmap bmp) {
+		Sprite.BOX_SHADOW.render(getLevel().getShadowScreen(), getX(), getY());
+	}
+	
+	@Override
+	public void renderImage(Bitmap bmp, int xoff, int yoff) {
+		//Sprite.BOX_SHADOW.render(getLevel().getShadowScreen(), getX() + xoff, getY() + yoff);
+		
+		SpriteSheet.SHEET.blitSpriteTo(bmp, getX() + xoff, getY() + yoff, 1, 3);
+		SpriteSheet.SHEET.blitSpriteTo(bmp, getX() + xoff, getY() - 16 + yoff, 1, 2);
 	}
 
 	public boolean step(Worker firstPusher, Direction dir) {
-		int dx = 0;
-		int dy = 0;
-		if (dir == Direction.Right) {
-			dx = 16;
-		}
-		else if (dir == Direction.Left) {
-			dx = -16;
-		}
-		else if (dir == Direction.Up) {
-			dy = -16;
-		}
-		else if (dir == Direction.Down) {
-			dy = 16;
-		}
-		Field nextField = level.getFieldPix(getX() + dx, getY() + dy);
+		Field nextField = super.getField().getNeighbor(dir);
 		if (nextField.canStepHere(firstPusher, this)){
 			Optional<Entity> here = nextField.getEntityHere();
 			if (!here.isPresent()) {
-				enqueueProcess(new MoveProcess(this, nextField));
+				enqueueProcess(new MoveProcess(this, nextField, Optional.empty()));
 				super.getField().unsetEntity();
 				super.setField(nextField);
 				nextField.setEntityHere(firstPusher, this);
@@ -52,7 +42,7 @@ public class Crate extends Entity {
 			else {
 				Entity nextEntity = nextField.getEntityHere().get();
 				if (push(firstPusher, nextEntity, dir)) {
-					enqueueProcess(new MoveProcess(this, nextField));
+					enqueueProcess(new MoveProcess(this, nextField, Optional.empty()));
 					super.getField().unsetEntity();
 					super.setField(nextField);
 					nextField.setEntityHere(firstPusher, this);
@@ -85,7 +75,7 @@ public class Crate extends Entity {
 	}
 
 	@Override
-	public void hitWall() {}
+	public void hitWall(Direction dir) {}
 
 	@Override
 	public void useSwitch() {

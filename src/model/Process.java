@@ -1,9 +1,10 @@
 package model;
 
-import gfx.Screen;
+import gfx.Bitmap;
 
 public interface Process {
 	public void update();
-	public void render(Screen screen);
+	public void render(Bitmap bmp, int xoff, int yoff);
 	public boolean isDone();
+	public void terminate();
 }

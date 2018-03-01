@@ -6,28 +6,39 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class SpriteSheet {
-	public static SpriteSheet SHEET;
+public class SpriteSheet extends Bitmap {
 	
-	static {
-		 try {
-			SHEET = new SpriteSheet("src/tileset.png", 8);
-		} catch (IOException e) {
-			e.printStackTrace();
+	public static final SpriteSheet SHEET = fromFile("src/tileset2.png", 16);
+	
+	private final int tileSize;
+	
+	public static SpriteSheet fromFile(String path, int ts) {
+		try {
+			BufferedImage image = ImageIO.read(new File(path));
+			int w = image.getWidth();
+			int h = image.getHeight();
+			int[] pix = image.getRGB(0, 0, w, h, null, 0, w);
+			return new SpriteSheet(w, h, pix, ts);
+		}
+		catch (IOException ex) {
+			return null;
 		}
 	}
 	
-	public final int width;
-	public final int height;
-	public final int tileSize;
-	public final int[] pixels;
+	private SpriteSheet(int w, int h, int[] pixels, int tileSiz) {
+		super(w, h, pixels, Brush.SIMPLE_BRUSH);
+		this.tileSize = tileSiz;
+	}
 	
-	public SpriteSheet(String src, int ts) throws IOException {
-		BufferedImage image = ImageIO.read(new File(src));
-		
-		tileSize = ts;
-		width = image.getWidth();
-		height = image.getHeight();
-		pixels = image.getRGB(0, 0, width, height, null, 0, width);
+	public int getTileSize() {
+		return tileSize;
+	}
+	
+	public void blitSpriteTo(Bitmap targ, int x, int y, int xt, int yt) {
+		targ.blit(x, y, xt * tileSize, yt * tileSize, tileSize, tileSize, this);
+	}
+	
+	public void blitSpriteToScaled(Bitmap targ, int x, int y, int xt, int yt, float sx, float sy) {
+		targ.blitScaled(x, y, xt * tileSize, yt * tileSize, tileSize, tileSize, sx, sy, this);
 	}
 }
