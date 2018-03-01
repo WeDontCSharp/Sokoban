@@ -1,5 +1,9 @@
 package model;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -18,44 +22,99 @@ public class Grid {
 	private int yOff;
 	private ShadowLayer shadowScreen;
 	
-	public Grid(int w, int h, int xoff, int yoff) {	
+	public static Grid fromFile(String path, int xoff, int yoff) {
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(new File(path)));
+			String lvl = "";
+			String line;
+			while ((line = reader.readLine()) != null) {
+				lvl += line + ' ';
+			}
+			String[] lvlData = lvl.split(";");
+			int w = Integer.parseInt(lvlData[0].trim());
+			int h = Integer.parseInt(lvlData[1].trim());
+			
+			String[] fieldsStr = lvlData[2].trim().split(" ");
+			// XXX: assert that fieldsStr.length == w * h
+			
+			Grid g = new Grid(w, h, xoff, yoff);
+			
+			// XXX: Hardcoded
+			Field[] fields = new Field[w * h];
+			for (int y = 0; y < h; y++) {
+				for (int x = 0; x < w; x++) {
+					Field f = null;
+					switch (Integer.parseInt(fieldsStr[x + y * w])) {
+					case 0:
+						f = new Floor(g, x * Game.TILE_WIDTH, y * Game.TILE_HEIGHT);
+						break;
+						
+					case 1:
+						f = new Wall(g, x * Game.TILE_WIDTH, y * Game.TILE_HEIGHT);
+						break;
+					
+					case 2:
+						f = new Target(g, x * Game.TILE_WIDTH, y * Game.TILE_HEIGHT);
+						break;
+						
+					default:
+						// XXX: Error?
+					}
+					fields[x + y * w] = f;
+				}
+			}
+			g.setFields(fields);
+			
+			int entCnt = Integer.parseInt(lvlData[3].trim());
+			// XXX: assert that lvlData.length - 4 == entCnt
+			// XXX: Hardcoded
+			for (int i = 0; i < entCnt; i++) {
+				String[] entData = lvlData[4 + i].trim().split(",");
+				Entity e = null;
+				switch (Integer.parseInt(entData[0])) {
+				case 0:
+					e = new Worker(g, g.getField(Integer.parseInt(entData[1]), Integer.parseInt(entData[2])), Direction.Down, false);
+					break;
+					
+				case 1:
+					e = new Crate(g, g.getField(Integer.parseInt(entData[1]), Integer.parseInt(entData[2])));
+					break;
+				
+				default:
+					// XXX: Error?
+				}
+				g.addEntity(e);
+			}
+			
+			reader.close();
+			return g;
+		}
+		catch (IOException ex) {
+			ex.printStackTrace();
+			return null;
+		}
+	}
+	
+	private Grid(int w, int h, int xoff, int yoff) {	
 		this.width = w;
 		this.height = h;
 		
-		this.fields = new Field[w * h];
 		this.entities = new ArrayList<Entity>();
 		this.renderables = new ArrayList<IRenderable>();
 		
 		this.xOff = xoff;
 		this.yOff = yoff;
 		
-		for (int y = 0; y < h; y++) {
-			for (int x = 0; x < w; x++) {
-				Field f = null;
-				if (x == 0 || y == 0 || x == w - 1 || y == h - 1) {
-					f = new Wall(this, x * Game.TILE_WIDTH, y * Game.TILE_HEIGHT);
-				}
-				else {
-					f = new Floor(this, x * Game.TILE_WIDTH, y * Game.TILE_HEIGHT);
-				}
-				
-				setField(x, y, f);
-			}
-		}
-		
-		setField(5, 5, new Wall(this, 5 * Game.TILE_WIDTH, 5 * Game.TILE_HEIGHT));
-		
-		setUpNeighbors();
-
-		addEntity(new Worker(this, getField(3, 3), Direction.Right, false));
-		addEntity(new Crate(this, getField(5, 3)));
-		addEntity(new Crate(this, getField(6, 3)));
-		addEntity(new Worker(this, getField(7, 3), Direction.Right, true));
-		
 		this.shadowScreen = new ShadowLayer(w * Game.TILE_WIDTH, h * Game.TILE_HEIGHT, Brush.IGNORE_BRUSH);
 		renderables.add(this.shadowScreen);
-		this.shadowScreen.getBitmap().clear(0xffff00ff);
-		//renderables.add(this.shadowScreen);
+	}
+	
+	private void setFields(Field[] fields) {
+		this.fields = fields;
+		for (Field f : fields) {
+			renderables.add(f);
+		}
+		setUpNeighbors();
 	}
 	
 	private void setUpNeighbors() {

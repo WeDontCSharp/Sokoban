@@ -59,7 +59,7 @@ public class Game extends Canvas implements Runnable {
 		screen = new Bitmap(WIDTH, HEIGHT, Brush.IGNORE_BRUSH);
 		Keyboard.init(frame);
 		
-		level = new Grid(14, 14, 48, 48);
+		level = Grid.fromFile("src/level1.lvl", 48, 48);
 	}
 	
 	public synchronized void start() {

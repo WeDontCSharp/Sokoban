@@ -114,6 +114,10 @@ public abstract class Entity implements IRenderable {
 		return level;
 	}
 	
+	public void setLevel(Grid lvl) {
+		this.level = lvl;
+	}
+	
 	public void abortAllProcesses() {
 		processes.clear();
 	}
