@@ -76,8 +76,4 @@ public abstract class Field implements IRenderable {
 	public Grid getLevel() {
 		return level;
 	}
-	
-	public int getDepth() {
-		return 100000000;
-	}
 }

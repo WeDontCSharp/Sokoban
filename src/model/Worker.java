@@ -19,10 +19,11 @@ public class Worker extends Entity {
 	private Direction direction;
 	private int points;
 	private int health;
+	private Start start;
 	
 	private PlayerControls controls;
 	
-	public Worker(Grid g, Field f, Direction dir, PlayerControls ctrl) {
+	public Worker(Grid g, Field f, Direction dir, PlayerControls ctrl, Start st) {
 		super(g, f);
 		
 		this.playerLeft = new Animation(new Sprite[] { Sprite.PLAYER_LEFT0, Sprite.PLAYER_LEFT1, Sprite.PLAYER_LEFT0, Sprite.PLAYER_LEFT2 }, 5);
@@ -34,6 +35,7 @@ public class Worker extends Entity {
 		
 		this.direction = dir;
 		this.controls = ctrl;
+		this.start = st;
 	}
 
 	public void updateLogic() {
@@ -182,7 +184,7 @@ public class Worker extends Entity {
 	}
 	
 	public void resetPosition() {
-		Field f = getLevel().getField(1, 1);
+		Field f = start;
 		this.setPos(f.getX(), f.getY());
 		this.setField(f);
 		f.setEntityHere(this);

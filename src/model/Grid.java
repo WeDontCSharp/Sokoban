@@ -45,33 +45,39 @@ public class Grid {
 			
 			Grid g = new Grid(w, h, xoff, yoff);
 			
+			int pcnt = 0;
 			// XXX: Hardcoded
 			Field[] fields = new Field[w * h];
 			for (int y = 0; y < h; y++) {
 				for (int x = 0; x < w; x++) {
-					Field f = null;
 					switch (Integer.parseInt(fieldsStr[x + y * w])) {
 					case 0:
-						f = new Floor(g, x * Game.TILE_WIDTH, y * Game.TILE_HEIGHT);
+						fields[x + y * w] = new Floor(g, x * Game.TILE_WIDTH, y * Game.TILE_HEIGHT);
 						break;
 						
 					case 1:
-						f = new Wall(g, x * Game.TILE_WIDTH, y * Game.TILE_HEIGHT);
+						fields[x + y * w] = new Wall(g, x * Game.TILE_WIDTH, y * Game.TILE_HEIGHT);
 						break;
 					
 					case 2:
-						f = new Target(g, x * Game.TILE_WIDTH, y * Game.TILE_HEIGHT);
+						fields[x + y * w] = new Target(g, x * Game.TILE_WIDTH, y * Game.TILE_HEIGHT);
+						break;
+						
+					case 3:
+						Start f = new Start(g, x * Game.TILE_WIDTH, y * Game.TILE_HEIGHT);
+						fields[x + y * w] = f;
+						Worker e = new Worker(g, fields[x + y * w], Direction.Down, CONTROLS[pcnt++], f);
+						g.addEntity(e);
+						f.setWorker(e);
 						break;
 						
 					default:
 						// XXX: Error?
 					}
-					fields[x + y * w] = f;
 				}
 			}
 			g.setFields(fields);
 			
-			int pcnt = 0;
 			int entCnt = Integer.parseInt(lvlData[3].trim());
 			// XXX: assert that lvlData.length - 4 == entCnt
 			// XXX: Hardcoded
@@ -80,10 +86,6 @@ public class Grid {
 				Entity e = null;
 				switch (Integer.parseInt(entData[0])) {
 				case 0:
-					e = new Worker(g, g.getField(Integer.parseInt(entData[1]), Integer.parseInt(entData[2])), Direction.Down, CONTROLS[pcnt++]);
-					break;
-					
-				case 1:
 					e = new Crate(g, g.getField(Integer.parseInt(entData[1]), Integer.parseInt(entData[2])));
 					break;
 				

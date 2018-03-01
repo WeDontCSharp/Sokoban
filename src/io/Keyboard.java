@@ -41,12 +41,16 @@ public class Keyboard {
 			
 			public void keyReleased(KeyEvent ev) {
 				Key k = getKeyFromCode(ev);
-				k.setDown(false);
+				if (k != null) {
+					k.setDown(false);
+				}
 			}
 			
 			public void keyPressed(KeyEvent ev) {
 				Key k = getKeyFromCode(ev);
-				k.setDown(true);
+				if (k != null) {
+					k.setDown(true);
+				}
 			}
 		});
 	}	
