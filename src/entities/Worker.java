@@ -1,11 +1,18 @@
-package model;
+package entities;
 
 import java.util.Optional;
 
+import fields.Field;
+import fields.Start;
 import gfx.Animation;
 import gfx.Bitmap;
 import gfx.Brush;
 import gfx.Sprite;
+import model.DieProcess;
+import model.Direction;
+import model.Grid;
+import model.MoveProcess;
+import model.PlayerControls;
 
 public class Worker extends Entity {
 

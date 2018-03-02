@@ -1,5 +1,6 @@
 package model;
 
+import entities.Worker;
 import gfx.Bitmap;
 import gfx.Brush;
 import gfx.Sprite;

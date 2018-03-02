@@ -1,8 +1,11 @@
-package model;
+package fields;
 
+import entities.Crate;
+import entities.Worker;
 import gfx.Bitmap;
 import gfx.Brush;
 import gfx.SpriteSheet;
+import model.Grid;
 
 public class Start extends Field {
 

@@ -2,6 +2,8 @@ package model;
 
 import java.util.Optional;
 
+import entities.Entity;
+import fields.Field;
 import gfx.Animation;
 import gfx.Bitmap;
 

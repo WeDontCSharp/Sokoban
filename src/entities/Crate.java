@@ -1,10 +1,14 @@
-package model;
+package entities;
 
 import java.util.Optional;
 
+import fields.Field;
 import gfx.Bitmap;
 import gfx.Sprite;
 import gfx.SpriteSheet;
+import model.Direction;
+import model.Grid;
+import model.MoveProcess;
 
 public class Crate extends Entity {
 

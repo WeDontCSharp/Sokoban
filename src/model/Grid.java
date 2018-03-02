@@ -8,6 +8,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import entities.Crate;
+import entities.Entity;
+import entities.Worker;
+import fields.Field;
+import fields.Floor;
+import fields.Start;
+import fields.Target;
+import fields.Wall;
 import gfx.Bitmap;
 import gfx.Brush;
 import io.Keyboard;

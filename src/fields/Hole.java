@@ -1,7 +1,10 @@
-package model;
+package fields;
 
+import entities.Crate;
+import entities.Worker;
 import gfx.Bitmap;
 import gfx.SpriteSheet;
+import model.Grid;
 
 public class Hole extends Floor {
 	

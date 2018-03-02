@@ -100,4 +100,29 @@ public class Bitmap {
 			}
 		}
 	}
+	
+	public void blitRect(int xp, int yp, int w, int h, int col) {
+		for (int y = 0; y < h; y++) {
+			int yy = yp + y;
+			if (yy < 0) {
+				y += yy;
+				continue;
+			}
+			if (yy >= height) {
+				break;
+			}
+			int yyp = yy * width;
+			for (int x = 0; x < w; x++) {
+				int xx = x + xp;
+				if (xx < 0) {
+					x += xx;
+					continue;
+				}
+				if (xx >= width) {
+					break;
+				}
+				pixels[yyp + xx] = brush.plot(pixels[yyp + xx], col);
+			}
+		}
+	}
 }

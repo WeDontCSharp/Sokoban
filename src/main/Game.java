@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import gfx.Bitmap;
 import gfx.Brush;
 import io.Keyboard;
+import model.BloodSplatter;
 import model.Grid;
 
 @SuppressWarnings("serial")
@@ -102,8 +103,14 @@ public class Game extends Canvas implements Runnable {
 	
 	private void tick() {
 		level.update();
+		blood.update();
+		if (Keyboard.SPACE.isDown()) {
+			blood = new BloodSplatter(200, 100, 150);
+		}
 	}
 	
+	// XXX: TEST
+	BloodSplatter blood = new BloodSplatter(200, 100, 100);
 	private void render() {
 		BufferStrategy bs = this.getBufferStrategy();
 		if (bs == null) {
@@ -114,6 +121,7 @@ public class Game extends Canvas implements Runnable {
 		/////////////////////////////////
 		
 		level.render(screen);
+		blood.render(screen);
 		
 		/////////////////////////////////
 		for (int i = 0; i < pixels.length; i++) {

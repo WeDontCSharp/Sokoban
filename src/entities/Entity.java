@@ -1,8 +1,13 @@
-package model;
+package entities;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import fields.Field;
 import gfx.Bitmap;
+import model.Direction;
+import model.Grid;
+import model.IRenderable;
+import model.Process;
 
 public abstract class Entity implements IRenderable {
 	protected Grid level;

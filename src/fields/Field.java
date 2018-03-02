@@ -1,7 +1,13 @@
-package model;
+package fields;
 import java.util.Optional;
 
+import entities.Crate;
+import entities.Entity;
+import entities.Worker;
 import gfx.Bitmap;
+import model.Direction;
+import model.Grid;
+import model.IRenderable;
 
 public abstract class Field implements IRenderable {
 	private Grid level;

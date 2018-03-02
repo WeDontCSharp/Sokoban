@@ -1,8 +1,11 @@
-package model;
+package fields;
 
+import entities.Crate;
+import entities.Worker;
 import gfx.Bitmap;
 import gfx.Sprite;
 import gfx.SpriteSheet;
+import model.Grid;
 
 public class Wall extends Field  {
 

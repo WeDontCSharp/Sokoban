@@ -1,11 +1,15 @@
-package model;
+package fields;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import entities.Crate;
+import entities.Entity;
+import entities.Worker;
 import gfx.Bitmap;
 import gfx.SpriteSheet;
+import model.Grid;
 
 public class Switch extends Floor {
 	

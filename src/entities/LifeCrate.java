@@ -1,7 +1,9 @@
-package model;
+package entities;
 
+import fields.Field;
 import gfx.Bitmap;
 import gfx.SpriteSheet;
+import model.Grid;
 
 public class LifeCrate extends Crate {
 

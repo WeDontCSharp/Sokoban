@@ -8,6 +8,8 @@ import javax.swing.JFrame;
 
 public class Keyboard {
 	
+	public static Key SPACE = new Key();
+	
 	public static Key UP = new Key();
 	public static Key DOWN = new Key();
 	public static Key LEFT = new Key();
@@ -32,6 +34,8 @@ public class Keyboard {
 		frame.addKeyListener(new KeyListener() {
 			private Key getKeyFromCode(KeyEvent ev) {
 				switch (ev.getKeyCode()) {
+				case KeyEvent.VK_SPACE:	return SPACE;
+				
 				case KeyEvent.VK_UP:	return UP;
 				case KeyEvent.VK_DOWN:	return DOWN;
 				case KeyEvent.VK_LEFT:	return LEFT;
