@@ -1,6 +1,7 @@
 package model;
 
 import gfx.Bitmap;
+import gfx.Brush;
 import gfx.SpriteSheet;
 
 public class Start extends Field {
@@ -18,7 +19,10 @@ public class Start extends Field {
 	}
 
 	public void render(Bitmap bmp, int xoff, int yoff) {
+		Brush b = bmp.getBrush();
+		bmp.setBrush(owner.getBrush());
 		SpriteSheet.SHEET.blitSpriteTo(bmp, getX() + xoff, getY() + yoff, 9, 4);
+		bmp.setBrush(b);
 	}
 
 	public boolean canStepHere(Worker firstPusher, Worker w) {

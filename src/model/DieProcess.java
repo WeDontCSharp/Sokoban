@@ -1,6 +1,7 @@
 package model;
 
 import gfx.Bitmap;
+import gfx.Brush;
 import gfx.Sprite;
 import main.Game;
 
@@ -78,7 +79,10 @@ public class DieProcess implements Process {
 		} break;
 		}
 		
+		Brush b = bmp.getBrush();
+		bmp.setBrush(worker.getBrush());
 		spr.renderScaled(bmp, worker.getX() + xoff, worker.getY() + yoff, sx, sy);
+		bmp.setBrush(b);
 	}
 
 	@Override

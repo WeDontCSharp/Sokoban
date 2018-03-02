@@ -17,7 +17,16 @@ public class Grid {
 	private static final PlayerControls[] CONTROLS = new PlayerControls[] {
 		new PlayerControls(Keyboard.UP, Keyboard.DOWN, Keyboard.LEFT, Keyboard.RIGHT),
 		new PlayerControls(Keyboard.W, Keyboard.S, Keyboard.A, Keyboard.D),
-	};  
+		new PlayerControls(Keyboard.U, Keyboard.J, Keyboard.H, Keyboard.K),
+		new PlayerControls(Keyboard.NP_8, Keyboard.NP_5, Keyboard.NP_4, Keyboard.NP_6),
+	};
+	
+	private static final Brush[] BRUSHES = new Brush[] {
+		Brush.IGNORE_BRUSH,
+		new Brush.RecolorBrush(new int[] { 0xff661B1B, 0xff51322B, 0xffBA3535, 0xff7C0000, 0xffFF3838, 0xffFF7F59, 0xffA83D2F, 0xffBA2121 }),
+		new Brush.RecolorBrush(new int[] { 0xff1B661B, 0xff2B512B, 0xff40BA35, 0xff0A7C00, 0xff38FF38, 0xff59FF59, 0xff2FA82F, 0xff2EBA21 }),
+		new Brush.RecolorBrush(new int[] { 0xff66581B, 0xff514D2B, 0xffBABA35, 0xff7C7400, 0xffFFE738, 0xffFFF359, 0xffA8A02F, 0xffBAAF21 }),
+	};
 	
 	private int width;
 	private int height;
@@ -66,7 +75,8 @@ public class Grid {
 					case 3:
 						Start f = new Start(g, x * Game.TILE_WIDTH, y * Game.TILE_HEIGHT);
 						fields[x + y * w] = f;
-						Worker e = new Worker(g, fields[x + y * w], Direction.Down, CONTROLS[pcnt++], f);
+						Worker e = new Worker(g, fields[x + y * w], Direction.Down, CONTROLS[pcnt], f, BRUSHES[pcnt]);
+						++pcnt;
 						g.addEntity(e);
 						f.setWorker(e);
 						break;

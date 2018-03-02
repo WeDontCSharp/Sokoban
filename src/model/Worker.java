@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import gfx.Animation;
 import gfx.Bitmap;
+import gfx.Brush;
 import gfx.Sprite;
 
 public class Worker extends Entity {
@@ -19,8 +20,9 @@ public class Worker extends Entity {
 	private Start start;
 	
 	private PlayerControls controls;
+	private Brush brush;
 	
-	public Worker(Grid g, Field f, Direction dir, PlayerControls ctrl, Start st) {
+	public Worker(Grid g, Field f, Direction dir, PlayerControls ctrl, Start st, Brush br) {
 		super(g, f);
 		
 		this.playerAnims = new Animation[Direction.values().length];
@@ -41,6 +43,7 @@ public class Worker extends Entity {
 		this.direction = dir;
 		this.controls = ctrl;
 		this.start = st;
+		this.brush = br;
 	}
 	
 	public void updateLogic() {
@@ -62,7 +65,10 @@ public class Worker extends Entity {
 	
 	@Override
 	public void renderImage(Bitmap bmp, int xoff, int yoff) {
+		Brush b = bmp.getBrush();
+		bmp.setBrush(this.brush);
 		this.currentAnim.render(bmp, getX() + xoff, getY() + yoff);
+		bmp.setBrush(b);
 	}
 	
 	public boolean step(Worker firstPusher, Direction dir) {
@@ -179,6 +185,10 @@ public class Worker extends Entity {
 	
 	public Direction getDirection() {
 		return this.direction;
+	}
+	
+	public Brush getBrush() {
+		return this.brush;
 	}
 	
 }

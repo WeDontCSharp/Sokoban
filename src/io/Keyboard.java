@@ -18,6 +18,16 @@ public class Keyboard {
 	public static Key S = new Key();
 	public static Key D = new Key();
 	
+	public static Key U = new Key();
+	public static Key H = new Key();
+	public static Key J = new Key();
+	public static Key K = new Key();
+	
+	public static Key NP_8 = new Key();
+	public static Key NP_4 = new Key();
+	public static Key NP_5 = new Key();
+	public static Key NP_6 = new Key();
+	
 	public static void init(JFrame frame) {
 		frame.addKeyListener(new KeyListener() {
 			private Key getKeyFromCode(KeyEvent ev) {
@@ -31,6 +41,16 @@ public class Keyboard {
 				case KeyEvent.VK_A:		return A;
 				case KeyEvent.VK_S:		return S;
 				case KeyEvent.VK_D:		return D;
+				
+				case KeyEvent.VK_U:		return U;
+				case KeyEvent.VK_H:		return H;
+				case KeyEvent.VK_J:		return J;
+				case KeyEvent.VK_K:		return K;
+				
+				case KeyEvent.VK_NUMPAD8:	return NP_8;
+				case KeyEvent.VK_NUMPAD4:	return NP_4;
+				case KeyEvent.VK_NUMPAD5:	return NP_5;
+				case KeyEvent.VK_NUMPAD6:	return NP_6;
 				
 				default: 				return null;
 				}
