@@ -121,7 +121,7 @@
 <XPD:OBJ name="NameLabel" type="EdgeLabelView" guid="Zyr6vR0xRkqWueOPZnDAKAAA">
 <XPD:ATTR name="Alpha" type="real">-1.10714791779441</XPD:ATTR>
 <XPD:ATTR name="Distance" type="real">11.1803398874989</XPD:ATTR>
-<XPD:ATTR name="Text" type="string">Switch.unsetEntity() : [ hole is open ] </XPD:ATTR>
+<XPD:ATTR name="Text" type="string">[ crate is removed from hole's switch ] </XPD:ATTR>
 <XPD:REF name="Model">8luRYd+kVUmhuEahhqF0sgAA</XPD:REF>
 </XPD:OBJ>
 <XPD:OBJ name="StereotypeLabel" type="EdgeLabelView" guid="xUP2BQ5s5USChT4HG8IqpwAA">
@@ -180,9 +180,9 @@
 <XPD:REF name="Head">Dbs/rg04vEu3FMMquC+3dwAA</XPD:REF>
 <XPD:REF name="Tail">kf8c8WrK2kG7U6ROfbPIAwAA</XPD:REF>
 <XPD:OBJ name="NameLabel" type="EdgeLabelView" guid="NGeVrROxuUazVRF/icLTcQAA">
-<XPD:ATTR name="Alpha" type="real">4.64108015134974</XPD:ATTR>
-<XPD:ATTR name="Distance" type="real">14.0356688476182</XPD:ATTR>
-<XPD:ATTR name="Text" type="string">Switch.acceptEntity(firstPusher, c)</XPD:ATTR>
+<XPD:ATTR name="Alpha" type="real">1.5707966732051</XPD:ATTR>
+<XPD:ATTR name="Distance" type="real">10</XPD:ATTR>
+<XPD:ATTR name="Text" type="string">[ crate steps on hole's switch ] </XPD:ATTR>
 <XPD:REF name="Model">KkT8HagrTEWcygPXcFh2IgAA</XPD:REF>
 </XPD:OBJ>
 <XPD:OBJ name="StereotypeLabel" type="EdgeLabelView" guid="Xj7lwD19BUGYtp2Sf58xBgAA">
@@ -202,8 +202,7 @@
 </XPD:OBJ>
 <XPD:ATTR name="#Transitions" type="integer">3</XPD:ATTR>
 <XPD:OBJ name="Transitions[0]" type="UMLTransition" guid="8luRYd+kVUmhuEahhqF0sgAA">
-<XPD:ATTR name="Name" type="string">Switch.unsetEntity()</XPD:ATTR>
-<XPD:ATTR name="GuardCondition" type="string">hole is open</XPD:ATTR>
+<XPD:ATTR name="GuardCondition" type="string">crate is removed from hole's switch</XPD:ATTR>
 <XPD:REF name="StateMachine">xtuZFpsyTUSE1zePu8ZCvgAA</XPD:REF>
 <XPD:REF name="Source">qLDFQ1zNx0+aTG74Qn9SwQAA</XPD:REF>
 <XPD:REF name="Target">Jt7+5X92UkmAvzQCv4VjmQAA</XPD:REF>
@@ -224,7 +223,7 @@
 <XPD:REF name="Views[3]">35okqHoB10evDOPNYCUtZwAA</XPD:REF>
 </XPD:OBJ>
 <XPD:OBJ name="Transitions[2]" type="UMLTransition" guid="KkT8HagrTEWcygPXcFh2IgAA">
-<XPD:ATTR name="Name" type="string">Switch.acceptEntity(firstPusher, c)</XPD:ATTR>
+<XPD:ATTR name="GuardCondition" type="string">crate steps on hole's switch</XPD:ATTR>
 <XPD:REF name="StateMachine">xtuZFpsyTUSE1zePu8ZCvgAA</XPD:REF>
 <XPD:REF name="Source">Jt7+5X92UkmAvzQCv4VjmQAA</XPD:REF>
 <XPD:REF name="Target">qLDFQ1zNx0+aTG74Qn9SwQAA</XPD:REF>
