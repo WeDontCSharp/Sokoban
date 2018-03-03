@@ -15,6 +15,7 @@ public class DieProcess implements Process {
 	private Direction faceDirection;
 	private float percent;
 	private float speed;
+	private boolean triggeredBlood;
 	
 	public DieProcess(Worker w, Direction pdir, Direction fdir) {
 		this.worker = w;
@@ -22,6 +23,7 @@ public class DieProcess implements Process {
 		this.faceDirection = fdir;
 		this.percent = 1.0f;
 		this.speed = SPEED;
+		this.triggeredBlood = false;
 	}
 	
 	@Override
@@ -31,6 +33,34 @@ public class DieProcess implements Process {
 		}
 		
 		percent -= speed;
+		
+		if (!this.triggeredBlood && percent <= 0.3f) {
+			this.triggeredBlood = true;
+			
+			int xoff = 0;
+			int yoff = 0;
+			float mindir = 0.0f;
+			switch (this.pushDirection) {
+			case Left: 
+				mindir = -1.57f;
+				break;
+			case Right:
+				mindir = 1.57f;
+				xoff += Game.TILE_WIDTH;
+				break;
+			case Up:
+				mindir = 0.0f;
+				break;
+			case Down:
+				mindir = 3.14f;
+				yoff += Game.TILE_HEIGHT;
+				break;
+			}
+			
+			worker.getLevel().getBloodLayer().add(
+					new BloodSplatter(worker.getX() + xoff, worker.getY() + yoff, 50, mindir, mindir + 3.14f));
+		}
+		
 		if (percent < 0.0f) {
 			percent = 0.0f;
 		}

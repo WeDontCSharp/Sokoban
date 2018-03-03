@@ -43,7 +43,8 @@ public class Grid {
 	private List<IRenderable> renderables;
 	private int xOff;
 	private int yOff;
-	private ShadowLayer shadowScreen;
+	private RenderLayer shadowScreen;
+	private BloodLayer bloodScreen;
 	
 	public static Grid fromFile(String path, int xoff, int yoff) {
 		try {
@@ -122,7 +123,7 @@ public class Grid {
 		}
 	}
 	
-	private Grid(int w, int h, int xoff, int yoff) {	
+	private Grid(int w, int h, int xoff, int yoff) {
 		this.width = w;
 		this.height = h;
 		
@@ -132,8 +133,11 @@ public class Grid {
 		this.xOff = xoff;
 		this.yOff = yoff;
 		
-		this.shadowScreen = new ShadowLayer(w * Game.TILE_WIDTH, h * Game.TILE_HEIGHT, Brush.IGNORE_BRUSH);
+		this.shadowScreen = new RenderLayer(w * Game.TILE_WIDTH, h * Game.TILE_HEIGHT, Brush.IGNORE_BRUSH, Brush.SUBTRACT_BRUSH, 2);
 		renderables.add(this.shadowScreen);
+		
+		this.bloodScreen = new BloodLayer(w * Game.TILE_WIDTH, h * Game.TILE_HEIGHT, Brush.SIMPLE_BRUSH, Brush.BLEND_BRUSH, 3);
+		renderables.add(this.bloodScreen);
 	}
 	
 	private void setFields(Field[] fields) {
@@ -171,12 +175,14 @@ public class Grid {
 		for (Entity e : entities) {
 			e.update();
 		}
+		this.bloodScreen.update();
 		
 		Collections.sort(renderables, (IRenderable r1, IRenderable r2) -> (r2.getDepth() - r1.getDepth()));
 	}
 	
 	public void render(Bitmap bmp) {
 		this.shadowScreen.getBitmap().clear(0xffff00ff);
+		this.bloodScreen.getBitmap().clear(0xffff00ff);
 		for (IRenderable r : renderables) {
 			r.renderShadow(bmp);
 		}
@@ -204,5 +210,9 @@ public class Grid {
 	
 	public Bitmap getShadowScreen() {
 		return shadowScreen.getBitmap();
+	}
+	
+	public BloodLayer getBloodLayer() {
+		return bloodScreen;
 	}
 }

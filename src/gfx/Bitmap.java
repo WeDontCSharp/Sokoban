@@ -50,8 +50,8 @@ public class Bitmap {
 		for (float y = 0.0f; y < h; y += step_y, yo++) {
 			int yy = yo + yp;
 			if (yy < 0) {
-				yo += yy;
-				y += step_y * yy;
+				yo -= yy;
+				y -= step_y * yy;
 				continue;
 			}
 			if (yy >= height) {
@@ -63,8 +63,8 @@ public class Bitmap {
 			for (float x = 0.0f; x < w; x += step_x, xo++) {
 				int xx = xo + xp;
 				if (xx < 0) {
-					xo += xx;
-					x += step_x * xx;
+					xo -= xx;
+					x -= step_x * xx;
 					continue;
 				}
 				if (xx >= width) {
@@ -79,7 +79,7 @@ public class Bitmap {
 		for (int y = 0; y < h; y++) {
 			int yy = yp + y;
 			if (yy < 0) {
-				y += yy;
+				y -= yy;
 				continue;
 			}
 			if (yy >= height) {
@@ -90,7 +90,7 @@ public class Bitmap {
 			for (int x = 0; x < w; x++) {
 				int xx = x + xp;
 				if (xx < 0) {
-					x += xx;
+					x -= xx;
 					continue;
 				}
 				if (xx >= width) {
@@ -105,7 +105,7 @@ public class Bitmap {
 		for (int y = 0; y < h; y++) {
 			int yy = yp + y;
 			if (yy < 0) {
-				y += yy;
+				y -= yy;
 				continue;
 			}
 			if (yy >= height) {
@@ -115,7 +115,7 @@ public class Bitmap {
 			for (int x = 0; x < w; x++) {
 				int xx = x + xp;
 				if (xx < 0) {
-					x += xx;
+					x -= xx;
 					continue;
 				}
 				if (xx >= width) {

@@ -37,10 +37,34 @@ public interface Brush {
 		if (d == 0xffff00ff || d == 0xff800080) {
 			return s;
 		}
-		if (d > s) {
-			return 0;
+		int r1 = (s >> 16) & 0xff;
+		int g1 = (s >> 8) & 0xff;
+		int b1 = s & 0xff;
+		
+		int r2 = (d >> 16) & 0xff;
+		int g2 = (d >> 8) & 0xff;
+		int b2 = d & 0xff;
+		
+		int r3 = Math.max(0, r1 - r2);
+		int g3 = Math.max(0, g1 - g2);
+		int b3 = Math.max(0, b1 - b2);
+		
+		return 0xff000000 | (r3 << 16) | (g3 << 8) | b3;
+	};
+	public static final Brush BLEND_BRUSH = (int s, int d) -> {
+		if (d == 0xffff00ff || d == 0xff800080 || s == 0xffff00ff) {
+			return s;
 		}
-		return s - d;
+		
+		int r1 = (s >> 16) & 0xff;
+		int g1 = (s >> 8) & 0xff;
+		int b1 = s & 0xff;
+		
+		int r2 = (d >> 16) & 0xff;
+		int g2 = (d >> 8) & 0xff;
+		int b2 = d & 0xff;
+		
+		return 0xff000000 | (((r1 + r2 + r2) / 3) << 16) | (((g1 + g2 + g2) / 3) << 8) | ((b1 + b2 + b2) / 3);
 	};
 	
 	public int plot(int src, int dest);

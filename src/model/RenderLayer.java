@@ -3,11 +3,15 @@ package model;
 import gfx.Bitmap;
 import gfx.Brush;
 
-public class ShadowLayer implements IRenderable {
+public class RenderLayer implements IRenderable {
 	private Bitmap bitmap;
+	private Brush blitBrush;
+	private int depth;
 
-	public ShadowLayer(int w, int h, Brush b) {
+	public RenderLayer(int w, int h, Brush b, Brush blitBrush, int d) {
 		this.bitmap = new Bitmap(w, h, b);
+		this.blitBrush = blitBrush;
+		this.depth = d;
 	}
 	
 	public void renderShadow(Bitmap bmp) {
@@ -16,14 +20,14 @@ public class ShadowLayer implements IRenderable {
 	@Override
 	public void render(Bitmap bmp, int xoff, int yoff) {
 		Brush b = bmp.getBrush();
-		bmp.setBrush(Brush.SUBTRACT_BRUSH);
+		bmp.setBrush(blitBrush);
 		bmp.blit(xoff, yoff, 0, 0, bitmap.getWidth(), bitmap.getHeight(), bitmap);
 		bmp.setBrush(b);
 	}
 
 	@Override
 	public int getDepth() {
-		return 2;
+		return this.depth;
 	}
 	
 	public Bitmap getBitmap() {
