@@ -4,6 +4,7 @@ import java.util.Random;
 
 import gfx.Bitmap;
 import gfx.Brush;
+import main.Game;
 
 class BloodParticle {
 	public int x;
@@ -56,6 +57,8 @@ public class BloodSplatter {
 	private static float MAX_SIZE = 8.0f;
 	private static int MAX_PARTS = 16;
 	private static float SPEED_EPS = 0.01f;
+	
+	private static final float Y_SCALE = (float)Game.TILE_HEIGHT / (float)Game.TILE_WIDTH;
 	
 	private int x;
 	private int y;
@@ -110,7 +113,7 @@ public class BloodSplatter {
 		float speed = randFloat(MIN_SPEED, MAX_SPEED);
 		
 		float speed_x = (float)(Math.cos(dir) * speed);
-		float speed_y = (float)(Math.sin(dir) * speed);
+		float speed_y = (float)(Math.sin(dir) * speed) * Y_SCALE;
 		
 		float siz = randFloat(MIN_SIZE, MAX_SIZE);
 		
