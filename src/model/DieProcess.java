@@ -125,6 +125,7 @@ public class DieProcess implements Process {
 	public void terminate() {
 		worker.resetPosition();
 		worker.abortAllProcesses();
+		worker.enqueueProcess(new RespawnProcess(worker));
 	}
 	
 }

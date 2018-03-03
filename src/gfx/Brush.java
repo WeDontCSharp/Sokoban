@@ -31,6 +31,20 @@ public interface Brush {
 		
 	}
 	
+	public class CombineBrush implements Brush {
+		private Brush brush1;
+		private Brush brush2;
+		
+		public CombineBrush(Brush b1, Brush b2) {
+			this.brush1 = b1;
+			this.brush2 = b2;
+		}
+		
+		public int plot(int src, int dest) {
+			return brush1.plot(src, brush2.plot(src, dest));
+		}
+	}
+	
 	public static final Brush SIMPLE_BRUSH = (int s, int d) -> d;
 	public static final Brush IGNORE_BRUSH = (int s, int d) -> (d == 0xffff00ff || d == 0xff800080) ? s : d;
 	public static final Brush SUBTRACT_BRUSH = (int s, int d) -> {

@@ -184,6 +184,7 @@ public class Worker extends Entity {
 	}
 	
 	public void resetPosition() {
+		this.direction = Direction.Down;
 		Field f = start;
 		this.setPos(f.getX(), f.getY());
 		this.setField(f);
@@ -196,6 +197,10 @@ public class Worker extends Entity {
 	
 	public Brush getBrush() {
 		return this.brush;
+	}
+	
+	public void setBrush(Brush b) {
+		this.brush = b;
 	}
 	
 }
