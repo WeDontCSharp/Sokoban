@@ -42,8 +42,9 @@ public class Main {
 		}
 		
 		new AlternativeStatement(
-				new InputCondition(),
-				new PrintStatement("Hooray!"),
+				new Pair[] { 
+					new Pair(new InputCondition(), new PrintStatement("Hooray!")) 
+				},
 				new PrintStatement("Boo!")
 		).execute();
 		

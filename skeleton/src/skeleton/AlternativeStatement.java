@@ -1,29 +1,31 @@
 package skeleton;
 
 public class AlternativeStatement implements IStatement {
-	private ICondition condition;
-	private IStatement thenClause;
+	private Pair<ICondition, IStatement>[] conditionalClauses;
 	private IStatement elseClause;
 	
-	public AlternativeStatement(ICondition cnd, IStatement thencl, IStatement elcl) {
-		this.condition = cnd;
-		this.thenClause = thencl;
-		this.elseClause = elcl;
+	public AlternativeStatement(Pair<ICondition, IStatement>[] conds, IStatement els) {
+		this.conditionalClauses = conds;
+		this.elseClause = els;
 	}
 	
-	public AlternativeStatement(ICondition cnd, IStatement thencl) {
-		this(cnd, thencl, null);
+	public AlternativeStatement(Pair<ICondition, IStatement>[] conds) {
+		this(conds, null);
 	}
 
 	@Override
 	public void execute() {
-		if (condition.evaluate()) {
-			System.out.println("Then clause cosen!");
-			this.thenClause.execute();
+		for (int i = 0; i < this.conditionalClauses.length; i++) {
+			Pair<ICondition, IStatement> cnd = this.conditionalClauses[i];
+			if (cnd.getFirst().evaluate()) {
+				System.out.println("Executing " + (i + 1) + ". alternative clause!");
+				cnd.getSecond().execute();
+				return;
+			}
 		}
-		else if (this.elseClause != null) {
-			System.out.println("Else clause cosen!");
-			this.elseClause.execute();
+		if (elseClause != null) {
+			System.out.println("Executing else (last) alternative clause!");
+			elseClause.execute();
 		}
 	}
 }
