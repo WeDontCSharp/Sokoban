@@ -13,7 +13,7 @@ public class Hole extends Floor {
 	public void acceptEntity(Worker firstPusher, Worker w) {
 		super.acceptEntity(w);
 		if (open) {
-			w.fallDown(firstPusher);
+			w.loseHealth();
 		}
 	}
 	
@@ -22,7 +22,7 @@ public class Hole extends Floor {
 		super.acceptEntity(c);
 		whoPushed = firstPusher;
 		if (open) {
-			c.fallDown(firstPusher);
+			c.remove();
 		}
 	}
 	
@@ -31,7 +31,7 @@ public class Hole extends Floor {
 		super.acceptEntity(lc);
 		whoPushed = firstPusher;
 		if (open) {
-			lc.fallDown(firstPusher);
+			lc.remove(firstPusher);
 		}
 	}
 

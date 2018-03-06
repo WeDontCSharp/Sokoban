@@ -28,6 +28,21 @@ public abstract class Field implements IVisitable {
 		acceptEntity(firstPusher, (Crate)lc);
 	}
 	
+	@Override
+	public void visitBy(Worker firstPusher, Worker w) {
+		acceptEntity(firstPusher, w);
+	}
+
+	@Override
+	public void visitBy(Worker firstPusher, Crate c) {
+		acceptEntity(firstPusher, c);		
+	}
+
+	@Override
+	public void visitBy(Worker firstPusher, LifeCrate lc) {
+		acceptEntity(firstPusher, lc);		
+	}
+	
 	public Optional<Entity> getCurEntity() {
 		return curEntity;
 	}

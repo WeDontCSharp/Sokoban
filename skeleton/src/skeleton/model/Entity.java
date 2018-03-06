@@ -19,12 +19,34 @@ public abstract class Entity implements IVisitor {
 	public abstract boolean pushBy(Worker firstPusher, Crate pusher, Direction dir);
 	
 	public boolean step(Worker firstPusher, Direction dir) {
-		// TODO
+		Field nextField = getCurField().getNeighbourField(dir);
+		if (canVisit(firstPusher, nextField)){
+			if (nextField.isEmpty()) {
+				getCurField().unsetEntity();
+				setCurField(nextField);
+				visit(firstPusher, nextField);
+				return true;
+			}
+			else {
+				Entity nextEntity = nextField.getCurEntity().get();
+				if (push(firstPusher, nextEntity, dir)) {
+					if (this == firstPusher) {
+						// TODO
+					}
+					else {
+						// TODO
+					}
+					getCurField().unsetEntity();
+					setCurField(nextField);
+					visit(firstPusher, nextField);
+					return true;
+				}
+				return false;
+			}
+		}
 		return false;
 	}
-	
-	public abstract void fallDown(Worker firstPusher);
-	
+		
 	public int getX() {
 		return x;
 	}

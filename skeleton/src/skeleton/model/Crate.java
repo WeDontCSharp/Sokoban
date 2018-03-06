@@ -5,29 +5,6 @@ public class Crate extends Entity {
 	public Crate(Warehouse g, Field f) {
 		super(g, f);			
 	}
-	
-	public boolean step(Worker firstPusher, Direction dir) {
-		Field nextField = super.getCurField().getNeighbourField(dir);
-		if (nextField.canVisitBy(firstPusher, this)){
-			if (nextField.isEmpty()) {
-				super.getCurField().unsetEntity();
-				super.setCurField(nextField);
-				nextField.acceptEntity(firstPusher, this);
-				return true;
-			}
-			else {
-				Entity nextEntity = nextField.getCurEntity().get();
-				if (push(firstPusher, nextEntity, dir)) {
-					super.getCurField().unsetEntity();
-					super.setCurField(nextField);
-					nextField.acceptEntity(firstPusher, this);
-					return true;
-				}
-				return false;
-			}
-		}
-		return false;
-	}
 
 	@Override
 	public boolean push(Worker firstPusher, Entity pushed, Direction dir) {
@@ -57,8 +34,8 @@ public class Crate extends Entity {
 	}
 
 	@Override
-	public void fallDown(Worker firstPusher) {
-		remove();
+	public void visit(Worker firstPusher, IVisitable iv) {
+		iv.visitBy(firstPusher, this);
 	}
 	
 }

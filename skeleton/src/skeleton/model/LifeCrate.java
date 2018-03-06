@@ -12,8 +12,8 @@ public class LifeCrate extends Crate {
 	}
 	
 	@Override
-	public void fallDown(Worker firstPusher) {
-		remove(firstPusher);
+	public void visit(Worker firstPusher, IVisitable iv) {
+		iv.visitBy(firstPusher, this);
 	}
 	
 }

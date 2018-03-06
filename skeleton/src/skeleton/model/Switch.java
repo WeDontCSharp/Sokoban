@@ -20,7 +20,7 @@ public class Switch extends Floor {
 			h.setOpen(true);
 			if (!h.isEmpty()) {
 				Entity e = h.getCurEntity().get();
-				e.fallDown(firstPusher);
+				e.visit(firstPusher, h);
 			}
 		}
 	}

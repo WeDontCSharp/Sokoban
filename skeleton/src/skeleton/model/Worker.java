@@ -14,35 +14,6 @@ public class Worker extends Entity {
 	public void move(Direction dir) {
 		step(this, dir);
 	}
-	
-	public boolean step(Worker firstPusher, Direction dir) {
-		Field nextField = super.getCurField().getNeighbourField(dir);
-		if (nextField.canVisitBy(firstPusher, this)){
-			if (nextField.isEmpty()) {
-				super.getCurField().unsetEntity();
-				super.setCurField(nextField);
-				nextField.acceptEntity(firstPusher, this);
-				return true;
-			}
-			else {
-				Entity nextEntity = nextField.getCurEntity().get();
-				if (push(firstPusher, nextEntity, dir)) {
-					if (this == firstPusher) {
-						// TODO
-					}
-					else {
-						// TODO
-					}
-					super.getCurField().unsetEntity();
-					super.setCurField(nextField);
-					nextField.acceptEntity(firstPusher, this);
-					return true;
-				}
-				return false;
-			}
-		}
-		return false;
-	}
 
 	@Override
 	public boolean push(Worker firstPusher, Entity pushed, Direction dir) {
@@ -101,10 +72,10 @@ public class Worker extends Entity {
 	public void die() {
 		// TODO
 	}
-
+	
 	@Override
-	public void fallDown(Worker firstPusher) {
-		loseHealth();
+	public void visit(Worker firstPusher, IVisitable iv) {
+		iv.visitBy(firstPusher, this);
 	}
 	
 }
