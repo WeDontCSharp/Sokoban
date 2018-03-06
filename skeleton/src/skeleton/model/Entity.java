@@ -21,6 +21,7 @@ public abstract class Entity implements IVisitor {
 	public boolean step(Worker firstPusher, Direction dir) {
 		Field nextField = getCurField().getNeighbourField(dir);
 		if (canVisit(firstPusher, nextField)){
+			// TODO Ask the user whether the field is empty or not.
 			if (nextField.isEmpty()) {
 				getCurField().unsetEntity();
 				setCurField(nextField);
@@ -28,14 +29,9 @@ public abstract class Entity implements IVisitor {
 				return true;
 			}
 			else {
+				// TODO Ask the user to select an entity type to the field, because the field is chosen not to be empty.
 				Entity nextEntity = nextField.getCurEntity().get();
 				if (push(firstPusher, nextEntity, dir)) {
-					if (this == firstPusher) {
-						// TODO
-					}
-					else {
-						// TODO
-					}
 					getCurField().unsetEntity();
 					setCurField(nextField);
 					visit(firstPusher, nextField);

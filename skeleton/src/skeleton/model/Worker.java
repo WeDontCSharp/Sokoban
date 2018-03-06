@@ -12,7 +12,10 @@ public class Worker extends Entity {
 	}
 	
 	public void move(Direction dir) {
-		step(this, dir);
+		// TODO Ask the user to select a field type, then create that field and step onto it.
+		// Step returns whether the worker could step or not. This should be checked and put on the screen somehow.
+		// Maybe this could be main starting point of the shown sequences, as the result can be viewed here.
+		step(this, dir); 
 	}
 
 	@Override
@@ -70,7 +73,7 @@ public class Worker extends Entity {
 	}
 	
 	public void die() {
-		// TODO
+		// TODO Remove worker from game.
 	}
 	
 	@Override

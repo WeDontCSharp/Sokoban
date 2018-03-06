@@ -30,7 +30,7 @@ public class Crate extends Entity {
 	}
 	
 	public void remove() {
-		// TODO
+		// TODO Remove crate from game.
 	}
 
 	@Override
