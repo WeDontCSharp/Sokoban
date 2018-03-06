@@ -1,4 +1,6 @@
-package skeleton;
+package skeleton.meta;
+
+import skeleton.Pair;
 
 public class AlternativeStatement implements IStatement {
 	private Pair<ICondition, IStatement>[] conditionalClauses;

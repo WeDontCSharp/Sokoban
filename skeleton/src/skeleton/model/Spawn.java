@@ -1,4 +1,4 @@
-package skeleton;
+package skeleton.model;
 
 public class Spawn extends Floor {
 

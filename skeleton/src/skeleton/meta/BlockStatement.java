@@ -1,4 +1,4 @@
-package skeleton;
+package skeleton.meta;
 
 public class BlockStatement implements IStatement {
 	private IStatement[] statements;

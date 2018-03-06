@@ -1,4 +1,4 @@
-package skeleton;
+package skeleton.model;
 
 public abstract class Entity implements IVisitor {
 	protected Warehouse level;

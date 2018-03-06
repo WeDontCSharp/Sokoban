@@ -1,29 +1,30 @@
-package skeleton;
+package skeleton.model;
 
-public class Floor extends Field {
+public class Wall extends Field  {
 
-	public Floor(Warehouse level, int x, int y) {
+	public Wall(Warehouse level, int x, int y) {
 		super(level, x, y);
 	}
 
 	@Override
 	public boolean canVisitBy(Worker firstPusher, Worker w) {
-		return true;
+		return w != firstPusher;
 	}
 
 	@Override
 	public boolean canVisitBy(Worker firstPusher, Crate c) {
-		return true;
+		return false;
 	}
 
 	@Override
 	public void acceptEntity(Worker firstPusher, Worker w) {
-		super.acceptEntity(w);
+		w.loseHealth();
 	}
 
 	@Override
 	public void acceptEntity(Worker firstPusher, Crate c) {
-		super.acceptEntity(c);
+		// Chillin' & savin' its class from being abstract.
 	}
 
 }
+

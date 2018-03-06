@@ -1,18 +1,9 @@
-package skeleton;
+package skeleton.model;
 
-public class Worker extends Entity {
-	
-	private Direction direction;
-	private int points;
-	private int health;
-	
-	public Worker(Warehouse g, Field f, Direction dir) {
+public class Crate extends Entity {
+		
+	public Crate(Warehouse g, Field f) {
 		super(g, f);			
-		this.direction = dir;
-	}
-	
-	public void move(Direction dir) {
-		step(this, dir);
 	}
 	
 	public boolean step(Worker firstPusher, Direction dir) {
@@ -27,12 +18,6 @@ public class Worker extends Entity {
 			else {
 				Entity nextEntity = nextField.getCurEntity().get();
 				if (push(firstPusher, nextEntity, dir)) {
-					if (this == firstPusher) {
-						// TODO
-					}
-					else {
-						// TODO
-					}
 					super.getCurField().unsetEntity();
 					super.setCurField(nextField);
 					nextField.acceptEntity(firstPusher, this);
@@ -67,44 +52,13 @@ public class Worker extends Entity {
 		return iv.canVisitBy(firstPusher, this);
 	}
 	
-	public void gainPoint() {
-		points++;
-	}
-	
-	public void losePoint() {
-		points--;
-	}
-	
-	public int getPoints() {
-		return points;
-	}
-	
-	public void gainHealth() {
-		health++;
-	}
-	
-	public void loseHealth() {
-		health--;
-	}
-	
-	public int getHealth() {
-		return health;
-	}
-	
-	public void reSpawn() {
-		Field f = getLevel().getField(1, 1);
-		this.setPos(f.getX(), f.getY());
-		this.setCurField(f);
-		f.setCurEntity(this);
-	}
-	
-	public void die() {
+	public void remove() {
 		// TODO
 	}
 
 	@Override
 	public void fallDown(Worker firstPusher) {
-		loseHealth();
+		remove();
 	}
 	
 }

@@ -1,4 +1,4 @@
-package skeleton;
+package skeleton.model;
 
 import java.util.Optional;
 

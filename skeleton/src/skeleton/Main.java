@@ -2,6 +2,10 @@ package skeleton;
 
 import java.util.Scanner;
 
+import skeleton.meta.AlternativeStatement;
+import skeleton.meta.ICondition;
+import skeleton.meta.IStatement;
+
 public class Main {
 	public static void main(String[] args) {
 		// An example for simple decision-making
