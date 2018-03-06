@@ -15916,7 +15916,7 @@
 <XPD:ATTR name="Left" type="integer">40</XPD:ATTR>
 <XPD:ATTR name="Top" type="integer">92</XPD:ATTR>
 <XPD:ATTR name="Width" type="integer">649</XPD:ATTR>
-<XPD:ATTR name="Height" type="integer">365</XPD:ATTR>
+<XPD:ATTR name="Height" type="integer">313</XPD:ATTR>
 <XPD:REF name="Model">ujQfYXDdhUiEJWD1s2mXpwAA</XPD:REF>
 <XPD:OBJ name="NameLabel" type="LabelView" guid="18BmuPE63Ee2s8QBQC6YxgAA">
 <XPD:ATTR name="Text" type="string">Visitor visits something visitable</XPD:ATTR>
