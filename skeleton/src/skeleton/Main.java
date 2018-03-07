@@ -5,6 +5,7 @@ import java.util.Scanner;
 import skeleton.meta.AutomaticQuestionHandler;
 import skeleton.meta.ManualQuestionHandler;
 import skeleton.meta.PrettyPrinter;
+import skeleton.meta.RecorderQuestionHandler;
 import skeleton.model.Direction;
 import skeleton.model.Warehouse;
 import skeleton.model.Worker;
@@ -14,7 +15,9 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
-		PrettyPrinter.setQuestionHandler(new ManualQuestionHandler());
+		//PrettyPrinter.setQuestionHandler(new ManualQuestionHandler());
+		RecorderQuestionHandler rqh = new RecorderQuestionHandler();
+		PrettyPrinter.setQuestionHandler(rqh);
 		
 		System.out.println("What do you want to do?");
 		System.out.println(" 1 - Worker Move");
@@ -29,6 +32,8 @@ public class Main {
 			System.err.println("No such action!");
 		}
 		
+		System.out.println("Your input was: " + rqh.getInput());
+		
 		in.close();
 	}
 	
@@ -36,6 +41,8 @@ public class Main {
 		System.out.println(" More specifically?");
 		System.out.println("  1 - Worker Move On Empty Floor");
 		System.out.println("  2 - Worker Move On Wall");
+		System.out.println("  3 - Worker Pushes Crate On Empty Floor");
+		System.out.println("  4 - Worker Pushes Worker");
 		
 		String answers = "";
 		switch (Integer.parseInt(in.nextLine())) {
@@ -47,11 +54,18 @@ public class Main {
 			answers = "RWN";
 			break;
 			
+		case 3:
+			answers = "RFYCFN";
+			break;
+			
+		case 4:
+			answers = "RFYW";
+			break;
+			
 		default:
 			System.err.println("No such action!");
 			return;
 		}
-		
 		PrettyPrinter.setQuestionHandler(new AutomaticQuestionHandler(answers));
 		
 		Warehouse wh = new Warehouse(14, 14, 48, 48);

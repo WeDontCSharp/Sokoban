@@ -68,7 +68,14 @@ public abstract class Field implements IVisitable {
 					"Is an entity already on this field? [Y - yes, N - no] : ", 
 					"YN", new Boolean[] { true, false });
 			if (answ.booleanValue()) {
-				// XXX
+				// XXX: More?
+				Entity e = PrettyPrinter.askQuestion(
+					"What kind of entity? [W - Worker, C - Crate] : ", 
+					"WC", new Entity[] { 
+							new Worker(getLevel(), this, Direction.Right), 
+							new Crate(getLevel(), this)
+				});
+				this.curEntity = Optional.of(e);
 			}
 			else {
 				this.curEntity = Optional.empty();
