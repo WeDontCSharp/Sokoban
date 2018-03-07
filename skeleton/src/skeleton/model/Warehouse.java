@@ -31,7 +31,6 @@ public class Warehouse {
 		}
 		
 		setUpNeighbors();
-		
 	}
 	
 	private void setUpNeighbors() {

@@ -1,10 +1,12 @@
 package skeleton.meta;
 
-import java.util.Scanner;
-
 public abstract class PrettyPrinter {
-	private static Scanner in = new Scanner(System.in);
+	private static IQuestionHandler questionHandler;
 	private static int indent = 0;
+	
+	public static void setQuestionHandler(IQuestionHandler qh) {
+		questionHandler = qh;
+	}
 	
 	private static void startIndent() {
 		++indent;
@@ -53,7 +55,15 @@ public abstract class PrettyPrinter {
 		System.out.println(ret + " <- " + className + "::" + sign + ":");
 	}
 	
-	public static String getAnswer() {
-		return in.nextLine().trim();
+	public static <T> T askQuestion(String q, char[] chtbl, T[] anwtbl) {
+		if (questionHandler.visible()) {
+			indentate();
+			System.out.print(q);
+		}
+		return questionHandler.chooseOneQuestion(chtbl, anwtbl);
+	}
+	
+	public static <T> T askQuestion(String q, String chtbl, T[] anwtbl) {
+		return askQuestion(q, chtbl.toCharArray(), anwtbl);
 	}
 }

@@ -8,8 +8,13 @@ public class Wall extends Field  {
 
 	@Override
 	public boolean acceptEntity(Worker firstPusher, Worker w) {
-		w.loseHealth();
-		return true;
+		if (firstPusher != w) {
+			w.loseHealth();
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	@Override

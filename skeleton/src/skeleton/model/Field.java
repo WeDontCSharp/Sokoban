@@ -64,9 +64,10 @@ public abstract class Field implements IVisitable {
 		PrettyPrinter.startFunction("Field", "isEmpty()");
 		if (this.curEntity == null) {
 			// We haven't handled this field! We need to ask the user what he wants here
-			PrettyPrinter.printText("Is an entity already on this field? [Y - yes, N - no] : ");
-			char ans = Character.toUpperCase(PrettyPrinter.getAnswer().charAt(0));
-			if (ans == 'Y') {
+			Boolean answ = PrettyPrinter.askQuestion(
+					"Is an entity already on this field? [Y - yes, N - no] : ", 
+					"YN", new Boolean[] { true, false });
+			if (answ.booleanValue()) {
 				// XXX
 			}
 			else {
@@ -86,17 +87,10 @@ public abstract class Field implements IVisitable {
 		PrettyPrinter.startFunction("Field", "getNeighbourField(dir)");
 		if (neighbours[dir.ordinal()] == null) {
 			// We haven't handled this field! We need to ask the user what he wants here
-			Field n = null;
-			
 			// XXX: more types?
-			PrettyPrinter.printText("What kind of field is the neighbor? [F - floor, W - wall] : ");
-			char ans = Character.toUpperCase(PrettyPrinter.getAnswer().charAt(0));
-			if (ans == 'F') {
-				n = new Floor(this.level);
-			}
-			else {
-				n = new Wall(this.level);
-			}
+			Field n = PrettyPrinter.askQuestion(
+					"What kind of field is the neighbor? [F - floor, W - wall] : ",
+					"FW", new Field[] { new Floor(this.level), new Wall(this.level) });
 			
 			neighbours[dir.ordinal()] = n;
 		}
