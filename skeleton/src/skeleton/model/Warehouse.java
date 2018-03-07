@@ -16,8 +16,6 @@ public class Warehouse {
 	private int height;
 	private Field[] fields;
 	private List<Entity> entities;
-	private int xOff;
-	private int yOff;
 	
 	public Warehouse(int w, int h, int xoff, int yoff) {	
 		this.width = w;
@@ -25,9 +23,6 @@ public class Warehouse {
 		
 		this.fields = new Field[w * h];
 		this.entities = new ArrayList<Entity>();
-		
-		this.xOff = xoff;
-		this.yOff = yoff;
 		
 		for (int y = 0; y < h; y++) {
 			for (int x = 0; x < w; x++) {
@@ -43,14 +38,7 @@ public class Warehouse {
 			}
 		}
 		
-		setField(5, 5, new Wall(this, 5 * TILE_WIDTH, 5 * TILE_HEIGHT));
-		
 		setUpNeighbors();
-
-		addEntity(new Worker(this, getField(3, 3), Direction.Right));
-		addEntity(new Crate(this, getField(5, 3)));
-		addEntity(new Crate(this, getField(6, 3)));
-		addEntity(new Worker(this, getField(7, 3), Direction.Right));
 		
 	}
 	
@@ -78,11 +66,11 @@ public class Warehouse {
 		return fields[xp + yp * width];
 	}
 	
-	private void setField(int xp, int yp, Field f) {
+	public void setField(int xp, int yp, Field f) {
 		fields[xp + yp * width] = f;
 	}
 	
-	private void addEntity(Entity e) {
+	public void addEntity(Entity e) {
 		entities.add(e);
 	}
 	

@@ -14,7 +14,7 @@ public class Switch extends Floor {
 	}
 	
 	@Override
-	public void acceptEntity(Worker firstPusher, Crate c) {
+	public boolean acceptEntity(Worker firstPusher, Crate c) {
 		super.acceptEntity(c);
 		for (Hole h : holes) {
 			h.setOpen(true);
@@ -23,6 +23,7 @@ public class Switch extends Floor {
 				e.visit(firstPusher, h);
 			}
 		}
+		return true;
 	}
 	
 	public void unsetEntity() {

@@ -10,29 +10,32 @@ public class Hole extends Floor {
 	}
 	
 	@Override
-	public void acceptEntity(Worker firstPusher, Worker w) {
+	public boolean acceptEntity(Worker firstPusher, Worker w) {
 		super.acceptEntity(w);
 		if (open) {
 			w.loseHealth();
 		}
+		return true;
 	}
 	
 	@Override
-	public void acceptEntity(Worker firstPusher, Crate c) {
+	public boolean acceptEntity(Worker firstPusher, Crate c) {
 		super.acceptEntity(c);
 		whoPushed = firstPusher;
 		if (open) {
 			c.remove();
 		}
+		return true;
 	}
 	
 	@Override
-	public void acceptEntity(Worker firstPusher, LifeCrate lc) {
+	public boolean acceptEntity(Worker firstPusher, LifeCrate lc) {
 		super.acceptEntity(lc);
 		whoPushed = firstPusher;
 		if (open) {
 			lc.remove(firstPusher);
 		}
+		return true;
 	}
 
 	public boolean isOpen() {

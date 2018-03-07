@@ -7,23 +7,15 @@ public class Floor extends Field {
 	}
 
 	@Override
-	public boolean canVisitBy(Worker firstPusher, Worker w) {
-		return true;
-	}
-
-	@Override
-	public boolean canVisitBy(Worker firstPusher, Crate c) {
-		return true;
-	}
-
-	@Override
-	public void acceptEntity(Worker firstPusher, Worker w) {
+	public boolean acceptEntity(Worker firstPusher, Worker w) {
 		super.acceptEntity(w);
+		return true;
 	}
 
 	@Override
-	public void acceptEntity(Worker firstPusher, Crate c) {
+	public boolean acceptEntity(Worker firstPusher, Crate c) {
 		super.acceptEntity(c);
+		return true;
 	}
 
 }

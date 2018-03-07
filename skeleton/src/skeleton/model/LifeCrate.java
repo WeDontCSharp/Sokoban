@@ -12,8 +12,8 @@ public class LifeCrate extends Crate {
 	}
 	
 	@Override
-	public void visit(Worker firstPusher, IVisitable iv) {
-		iv.visitBy(firstPusher, this);
+	public boolean visit(Worker firstPusher, IVisitable iv) {
+		return iv.visitByLifeCrate(firstPusher, this);
 	}
 	
 }

@@ -15,31 +15,29 @@ public abstract class Entity implements IVisitor {
 	}
 	
 	public abstract boolean push(Worker firstPusher, Entity pushed, Direction dir);
-	public abstract boolean pushBy(Worker firstPusher, Worker pusher, Direction dir);
-	public abstract boolean pushBy(Worker firstPusher, Crate pusher, Direction dir);
+	public abstract boolean pushByWorker(Worker firstPusher, Worker pusher, Direction dir);
+	public abstract boolean pushByCrate(Worker firstPusher, Crate pusher, Direction dir);
 	
 	public boolean step(Worker firstPusher, Direction dir) {
+		System.out.println("> [:Entity].step(firstPusher, dir)");
 		Field nextField = getCurField().getNeighbourField(dir);
-		if (canVisit(firstPusher, nextField)){
-			// TODO Ask the user whether the field is empty or not.
-			if (nextField.isEmpty()) {
+		if (nextField.isEmpty()) {
+			if (visit(firstPusher, nextField)) {
 				getCurField().unsetEntity();
 				setCurField(nextField);
-				visit(firstPusher, nextField);
+				System.out.println("< TRUE [:Entity].step(firstPusher, dir)");
 				return true;
 			}
-			else {
-				// TODO Ask the user to select an entity type to the field, because the field is chosen not to be empty.
-				Entity nextEntity = nextField.getCurEntity().get();
-				if (push(firstPusher, nextEntity, dir)) {
-					getCurField().unsetEntity();
-					setCurField(nextField);
-					visit(firstPusher, nextField);
-					return true;
-				}
-				return false;
+		} else {
+			Entity nextEntity = nextField.getCurEntity().get();
+			if (push(firstPusher, nextEntity, dir)) {
+				getCurField().unsetEntity();
+				setCurField(nextField);
+				System.out.println("< TRUE [:Entity].step(firstPusher, dir)");
+				return true;
 			}
 		}
+		System.out.println("< FALSE  [:Entity].step(firstPusher, dir)");
 		return false;
 	}
 		

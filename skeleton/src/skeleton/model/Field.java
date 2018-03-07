@@ -21,26 +21,26 @@ public abstract class Field implements IVisitable {
 		setCurEntity(e);
 	}
 	
-	public abstract void acceptEntity(Worker firstPusher, Worker w);
-	public abstract void acceptEntity(Worker firstPusher, Crate c);
+	public abstract boolean acceptEntity(Worker firstPusher, Worker w);
+	public abstract boolean acceptEntity(Worker firstPusher, Crate c);
 	
-	public void acceptEntity(Worker firstPusher, LifeCrate lc) {
-		acceptEntity(firstPusher, (Crate)lc);
+	public boolean acceptEntity(Worker firstPusher, LifeCrate lc) {
+		return acceptEntity(firstPusher, (Crate)lc);
 	}
 	
 	@Override
-	public void visitBy(Worker firstPusher, Worker w) {
-		acceptEntity(firstPusher, w);
+	public boolean visitByWorker(Worker firstPusher, Worker w) {
+		return acceptEntity(firstPusher, w);
 	}
 
 	@Override
-	public void visitBy(Worker firstPusher, Crate c) {
-		acceptEntity(firstPusher, c);		
+	public boolean visitByCrate(Worker firstPusher, Crate c) {
+		return acceptEntity(firstPusher, c);		
 	}
 
 	@Override
-	public void visitBy(Worker firstPusher, LifeCrate lc) {
-		acceptEntity(firstPusher, lc);		
+	public boolean visitByLifeCrate(Worker firstPusher, LifeCrate lc) {
+		return acceptEntity(firstPusher, lc);		
 	}
 	
 	public Optional<Entity> getCurEntity() {

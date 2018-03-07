@@ -1,6 +1,7 @@
 package skeleton.model;
 
 public interface IVisitor {
-	public abstract boolean canVisit(Worker firstPusher, IVisitable iv);
-	public abstract void visit(Worker firstPusher, IVisitable iv);
+	public abstract boolean visit(Worker firstPusher, IVisitable iv);
+
+	boolean pushByWorker(Worker firstPusher, Worker pusher, Direction dir);
 }

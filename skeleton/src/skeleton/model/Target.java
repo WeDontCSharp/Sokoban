@@ -17,10 +17,11 @@ public class Target extends Floor {
 	}
 	
 	@Override
-	public void acceptEntity(Worker firstPusher, Crate c) {
+	public boolean acceptEntity(Worker firstPusher, Crate c) {
 		super.acceptEntity(c);
 		whoPushed = firstPusher;
 		firstPusher.gainPoint();
+		return true;
 	}
 
 }
