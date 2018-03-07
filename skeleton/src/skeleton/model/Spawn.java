@@ -1,5 +1,9 @@
 package skeleton.model;
 
+import java.util.Optional;
+
+import skeleton.meta.PrettyPrinter;
+
 public class Spawn extends Floor {
 
 	private Worker owner;
@@ -21,6 +25,10 @@ public class Spawn extends Floor {
 	
 	public Worker getOwner() {
 		return owner;
+	}
+	
+	public boolean isEmpty() {
+		return true;
 	}
 
 }

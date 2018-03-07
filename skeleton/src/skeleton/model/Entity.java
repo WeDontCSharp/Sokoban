@@ -18,21 +18,23 @@ public abstract class Entity implements IVisitor {
 	
 	public boolean step(Worker firstPusher, Direction dir) {
 		PrettyPrinter.startFunction("Entity", "step(firstPusher, dir)");
-		Field neighbor = curField.getNeighbourField(dir);
-		if (neighbor.isEmpty()) {
-			if (visit(firstPusher, neighbor)) {
+		Field neighbour = curField.getNeighbourField(dir);
+		if (neighbour.isEmpty()) {
+			if (visit(firstPusher, neighbour)) {
 				curField.unsetEntity();
-				setCurField(neighbor);
+				setCurField(neighbour);
 				PrettyPrinter.endFunction("Entity", "step(firstPusher, dir)", "true");
 				return true;
 			}
 		} else {
-			Entity nextEntity = neighbor.getCurEntity().get();
+			Entity nextEntity = neighbour.getCurEntity().get();
 			if (push(firstPusher, nextEntity, dir)) {
-				getCurField().unsetEntity();
-				setCurField(neighbor);
-				System.out.println("< TRUE [:Entity].step(firstPusher, dir)");
-				return true;
+				if (visit(firstPusher, neighbour)) {
+					curField.unsetEntity();
+					setCurField(neighbour);
+					PrettyPrinter.endFunction("Entity", "step(firstPusher, dir)", "true");
+					return true;
+				}
 			}
 		}
 		PrettyPrinter.endFunction("Entity", "step(firstPusher, dir)", "false");
