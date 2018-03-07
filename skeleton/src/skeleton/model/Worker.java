@@ -1,5 +1,7 @@
 package skeleton.model;
 
+import skeleton.meta.PrettyPrinter;
+
 public class Worker extends Entity {
 	private int points;
 	private int health;
@@ -9,7 +11,9 @@ public class Worker extends Entity {
 	}
 	
 	public void move(Direction dir) {
+		PrettyPrinter.startFunction("Worker", "move(dir)");
 		step(this, dir);
+		PrettyPrinter.endFunction("Worker", "move(dir)");
 	}
 
 	@Override
@@ -56,7 +60,6 @@ public class Worker extends Entity {
 	
 	public void reSpawn() {
 		Field f = getLevel().getField(1, 1);
-		this.setPos(f.getX(), f.getY());
 		this.setCurField(f);
 		f.setCurEntity(this);
 	}
@@ -67,7 +70,10 @@ public class Worker extends Entity {
 	
 	@Override
 	public boolean visit(Worker firstPusher, IVisitable iv) {
-		return iv.visitByWorker(firstPusher, this);
+		PrettyPrinter.startFunction("Worker", "visit(firstPusher, iv)");
+		boolean ret = iv.visitByWorker(firstPusher, this);
+		PrettyPrinter.endFunction("Worker", "visit(firstPusher, iv)", ret ? "true" : "false");
+		return ret;
 	}
 	
 }

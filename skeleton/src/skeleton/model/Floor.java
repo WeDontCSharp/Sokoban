@@ -1,14 +1,18 @@
 package skeleton.model;
 
+import skeleton.meta.PrettyPrinter;
+
 public class Floor extends Field {
 
-	public Floor(Warehouse level, int x, int y) {
-		super(level, x, y);
+	public Floor(Warehouse level) {
+		super(level);
 	}
 
 	@Override
 	public boolean acceptEntity(Worker firstPusher, Worker w) {
+		PrettyPrinter.startFunction("Floor", "acceptEntity(firstPusher, w)");
 		super.acceptEntity(w);
+		PrettyPrinter.endFunction("Floor", "acceptEntity(firstPusher, w)", "true");
 		return true;
 	}
 

@@ -4,8 +4,8 @@ public class Spawn extends Floor {
 
 	private Worker owner;
 	
-	public Spawn(Warehouse level, int x, int y, Worker owner) {
-		super(level, x, y);
+	public Spawn(Warehouse level, Worker owner) {
+		super(level);
 		this.owner = owner;
 	}
 

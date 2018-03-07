@@ -5,8 +5,8 @@ public class Hole extends Floor {
 	private boolean open = false;
 	private Worker whoPushed;
 	
-	public Hole(Warehouse level, int x, int y) {
-		super(level, x, y);
+	public Hole(Warehouse level) {
+		super(level);
 	}
 	
 	@Override

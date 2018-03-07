@@ -2,8 +2,8 @@ package skeleton.model;
 
 public class Wall extends Field  {
 
-	public Wall(Warehouse level, int x, int y) {
-		super(level, x, y);
+	public Wall(Warehouse level) {
+		super(level);
 	}
 
 	@Override

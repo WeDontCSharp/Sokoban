@@ -1,14 +1,7 @@
 package skeleton;
 
-import java.util.Scanner;
-
-import skeleton.model.Crate;
+import skeleton.meta.PrettyPrinter;
 import skeleton.model.Direction;
-import skeleton.model.Field;
-import skeleton.model.Floor;
-import skeleton.model.Hole;
-import skeleton.model.Spawn;
-import skeleton.model.Switch;
 import skeleton.model.Wall;
 import skeleton.model.Warehouse;
 import skeleton.model.Worker;
@@ -16,19 +9,52 @@ import skeleton.model.Worker;
 public class Main {
 	
 	public static void main(String[] args) {
-		Main m = new Main();
-		m.WorkerSteps();
+		
+		System.out.println("What do you want to do?");
+		System.out.println(" 1 - Worker Step");
+		System.out.println(" 2 - Idk not implemented yet");
+		
+		switch (Integer.parseInt(PrettyPrinter.getAnswer())) {
+		case 1:
+			workerMoves();
+			break;
+			
+		default:
+			System.err.println("No such action!");
+		}
 	}
 	
-	public void WorkerSteps() {
+	public static void workerMoves() {
 		Warehouse wh = new Warehouse(14, 14, 48, 48);
 		
 		// Worker steps to the right on an empty field
 		Worker w = new Worker(wh, wh.getField(1, 1), Direction.Right);
-		wh.setField(2, 2, new Wall(wh, 5 * Warehouse.TILE_WIDTH, 5 * Warehouse.TILE_HEIGHT));
 		wh.addEntity(w);
 		
-		w.move(Direction.Right);
-		
+		PrettyPrinter.startSequence("1.", "Worker Moves");
+		PrettyPrinter.printText("What direction to move? [L - left, R - right, U - up, D - down] : ");
+		Direction dir = null;
+		String ans = PrettyPrinter.getAnswer();
+		char d = Character.toUpperCase(ans.charAt(0));
+		switch (d) {
+		case 'L':
+			dir = Direction.Left;
+			break;
+				
+		case 'R':
+			dir = Direction.Right;
+			break;
+				
+		case 'U':
+			dir = Direction.Up;
+			break;
+				
+		case 'D':
+			dir = Direction.Down;
+			break;
+		}
+			
+		w.move(dir);
+		PrettyPrinter.endSequence();
 	}
 }

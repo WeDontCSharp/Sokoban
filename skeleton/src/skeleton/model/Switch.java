@@ -2,14 +2,13 @@ package skeleton.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class Switch extends Floor {
 	
-	List<Hole> holes;
+	private List<Hole> holes;
 
-	public Switch(Warehouse level, int x, int y) {
-		super(level, x, y);
+	public Switch(Warehouse level) {
+		super(level);
 		holes = new ArrayList<Hole>();
 	}
 	

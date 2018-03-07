@@ -1,17 +1,9 @@
 package skeleton.model;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Warehouse {
-	
-	public static final int WIDTH = 320;
-	public static final int HEIGHT = 240;
-	public static final int SCALE = 2;
-	public static final int TILE_WIDTH = 16;
-	public static final int TILE_HEIGHT = 11;
-	
 	private int width;
 	private int height;
 	private Field[] fields;
@@ -28,10 +20,10 @@ public class Warehouse {
 			for (int x = 0; x < w; x++) {
 				Field f = null;
 				if (x == 0 || y == 0 || x == w - 1 || y == h - 1) {
-					f = new Wall(this, x * TILE_WIDTH, y * TILE_HEIGHT);
+					f = new Wall(this);
 				}
 				else {
-					f = new Floor(this, x * TILE_WIDTH, y * TILE_HEIGHT);
+					f = new Floor(this);
 				}
 				
 				setField(x, y, f);
@@ -43,6 +35,7 @@ public class Warehouse {
 	}
 	
 	private void setUpNeighbors() {
+		/*
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
 				Field cur = fields[x + y * width];
@@ -60,6 +53,7 @@ public class Warehouse {
 				}
 			}
 		}
+		*/
 	}
 	
 	public Field getField(int xp, int yp) {

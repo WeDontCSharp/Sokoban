@@ -4,8 +4,8 @@ public class Target extends Floor {
 	
 	private Worker whoPushed;
 
-	public Target(Warehouse level, int x, int y) {
-		super(level, x, y);
+	public Target(Warehouse level) {
+		super(level);
 	}
 	
 	public void unsetEntity() {
