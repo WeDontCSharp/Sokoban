@@ -1,9 +1,5 @@
 package skeleton.model;
 
-import java.util.Optional;
-
-import skeleton.meta.PrettyPrinter;
-
 public class Spawn extends Floor {
 
 	private Worker owner;

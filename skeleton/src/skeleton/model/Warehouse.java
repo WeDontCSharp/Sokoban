@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Warehouse {
 	private int width;
+	@SuppressWarnings("unused")
 	private int height;
 	private Field[] fields;
 	private List<Entity> entities;

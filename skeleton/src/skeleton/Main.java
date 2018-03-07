@@ -3,7 +3,6 @@ package skeleton;
 import java.util.Scanner;
 
 import skeleton.meta.AutomaticQuestionHandler;
-import skeleton.meta.ManualQuestionHandler;
 import skeleton.meta.PrettyPrinter;
 import skeleton.meta.RecorderQuestionHandler;
 import skeleton.model.Direction;

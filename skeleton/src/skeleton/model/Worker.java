@@ -18,20 +18,30 @@ public class Worker extends Entity {
 
 	@Override
 	public boolean push(Worker firstPusher, Entity pushed, Direction dir) {
-		return pushed.pushByWorker(firstPusher, this, dir);
+		PrettyPrinter.startFunction("Worker", "push(firstPusher, pushed, dir)");
+		boolean res = pushed.pushByWorker(firstPusher, this, dir);
+		PrettyPrinter.endFunction("Worker", "push(firstPusher, pushed, dir)", res ? "true" : "false");
+		return res;
 	}
 
 	@Override
 	public boolean pushByWorker(Worker firstPusher, Worker pusher, Direction dir) {
+		PrettyPrinter.startFunction("Worker", "pushByWorker(firstPusher, pusher, dir)");
 		if (firstPusher == pusher) {
+			PrettyPrinter.endFunction("Worker", "pushByWorker(firstPusher, pusher, dir)", "false");
 			return false;
 		}
-		return step(firstPusher, dir);	
+		boolean res = step(firstPusher, dir);
+		PrettyPrinter.endFunction("Worker", "pushByWorker(firstPusher, pusher, dir)", res ? "true" : "false");
+		return res;
 	}
 
 	@Override
 	public boolean pushByCrate(Worker firstPusher, Crate pusher, Direction dir) {
-		return step(firstPusher, dir);
+		PrettyPrinter.startFunction("Worker", "pushByCrate(firstPusher, pusher, dir)");
+		boolean res = step(firstPusher, dir);
+		PrettyPrinter.endFunction("Worker", "pushByCrate(firstPusher, pusher, dir)", res ? "true" : "false");
+		return res;
 	}
 	
 	public void gainPoint() {
