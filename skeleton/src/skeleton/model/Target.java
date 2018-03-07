@@ -18,7 +18,7 @@ public class Target extends Floor {
 	
 	@Override
 	public boolean acceptEntity(Worker firstPusher, Crate c) {
-		super.acceptEntity(c);
+		super.setEntity(c);
 		whoPushed = firstPusher;
 		firstPusher.gainPoint();
 		return true;

@@ -14,8 +14,8 @@ public abstract class Field implements IVisitable {
 		this.neighbours = new Field[Direction.values().length];
 	}
 	
-	// XXX: Shouldn't it be set entity?
-	public void acceptEntity(Entity e) {
+	// XXX: Shouldn't it be set entity? Elnézést, hogy csak most változtattam meg a nevét.
+	public void setEntity(Entity e) {
 		PrettyPrinter.startFunction("Field", "acceptEntity(e)");
 		setCurEntity(e);
 		PrettyPrinter.endFunction("Field", "acceptEntity(e)");

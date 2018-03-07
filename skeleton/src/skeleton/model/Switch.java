@@ -14,7 +14,7 @@ public class Switch extends Floor {
 	
 	@Override
 	public boolean acceptEntity(Worker firstPusher, Crate c) {
-		super.acceptEntity(c);
+		super.setEntity(c);
 		for (Hole h : holes) {
 			h.setOpen(true);
 			if (!h.isEmpty()) {

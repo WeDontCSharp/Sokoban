@@ -11,7 +11,7 @@ public class Hole extends Floor {
 	
 	@Override
 	public boolean acceptEntity(Worker firstPusher, Worker w) {
-		super.acceptEntity(w);
+		super.setEntity(w);
 		if (open) {
 			w.loseHealth();
 		}
@@ -20,7 +20,7 @@ public class Hole extends Floor {
 	
 	@Override
 	public boolean acceptEntity(Worker firstPusher, Crate c) {
-		super.acceptEntity(c);
+		super.setEntity(c);
 		whoPushed = firstPusher;
 		if (open) {
 			c.remove();
@@ -30,7 +30,7 @@ public class Hole extends Floor {
 	
 	@Override
 	public boolean acceptEntity(Worker firstPusher, LifeCrate lc) {
-		super.acceptEntity(lc);
+		super.setEntity(lc);
 		whoPushed = firstPusher;
 		if (open) {
 			lc.remove(firstPusher);
