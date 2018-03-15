@@ -46,13 +46,13 @@ public abstract class PrettyPrinter {
 	public static void endFunction(String className, String sign) {
 		endIndent();
 		indentate();
-		System.out.println("<- " + className + "::" + sign + ":");
+		System.out.println("<- " + className + "::" + sign);
 	}
 	
 	public static void endFunction(String className, String sign, String ret) {
 		endIndent();
 		indentate();
-		System.out.println(ret + " <- " + className + "::" + sign + ":");
+		System.out.println(ret + " <- " + className + "::" + sign);
 	}
 	
 	public static <T> T askQuestion(String q, char[] chtbl, T[] anwtbl) {

@@ -20,7 +20,8 @@ public class Main {
 		
 		System.out.println("What do you want to do?");
 		System.out.println(" 1 - Worker Move");
-		System.out.println(" 2 - Idk not implemented yet");
+		System.out.println(" 2 - Worker Dies");
+		System.out.println(" 3 - Crate Moves");
 		
 		switch (Integer.parseInt(in.nextLine())) {
 		case 1:
@@ -65,7 +66,7 @@ public class Main {
 			System.err.println("No such action!");
 			return;
 		}
-		PrettyPrinter.setQuestionHandler(new AutomaticQuestionHandler(answers));
+		//PrettyPrinter.setQuestionHandler(new AutomaticQuestionHandler(answers));
 		
 		Warehouse wh = new Warehouse(14, 14, 48, 48);
 		
