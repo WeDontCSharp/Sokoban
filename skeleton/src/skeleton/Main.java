@@ -10,15 +10,18 @@ import skeleton.model.Floor;
 import skeleton.model.Warehouse;
 import skeleton.model.Worker;
 
+/**
+ * @author Peter Lenkefi
+ *
+ * The starting-point for the application.
+ */
 public class Main {
+	/**
+	 * The input stream used for user input.
+	 */
 	static Scanner in = new Scanner(System.in);
 	
 	public static void main(String[] args) {
-		
-		//PrettyPrinter.setQuestionHandler(new ManualQuestionHandler());
-		RecorderQuestionHandler rqh = new RecorderQuestionHandler();
-		PrettyPrinter.setQuestionHandler(rqh);
-		
 		System.out.println("What do you want to do?");
 		System.out.println(" 1 - Move Worker");
 		System.out.println(" 2 - Push Crate");
@@ -44,10 +47,29 @@ public class Main {
 		in.close();
 	}
 	
+	/**
+	 * A syntax-sugar for string pairs.
+	 * 
+	 * @param mi First string.
+	 * @param inp Second string.
+	 * @return The string pair as an array.
+	 */
 	private static String[] pair(String mi, String inp) {
 		return new String[] { mi, inp };
 	}
 	
+	/**
+	 * Asks for a submenu item.
+	 * First it prints the provided question, then asks for a number for the answer list.
+	 * It returns the corresponding argument from the string arrays. 
+	 * 
+	 * @param q The asked question.
+	 * @param answ The answer string arrays.
+	 * @return The corresponding answer string array.
+	 * 
+	 * @see workerMoves()
+	 * @see cratePush()
+	 */
 	private static String[] getMenuItem(String q, String[]... answ) {
 		System.out.println(" " + q + " [Choose from 1 to " + answ.length + "]");
 		int n = 1;
@@ -62,6 +84,9 @@ public class Main {
 		return new String[] { (c + 1) + ".", answ[c][0], answ[c][1] };
 	}
 	
+	/**
+	 * Sets up a basic situation and asks for a specific worker moving sequence.
+	 */
 	private static void workerMoves() {
 		String[] answ = getMenuItem("How do you want the worker to move?",
 				
@@ -88,6 +113,9 @@ public class Main {
 		PrettyPrinter.endSequence();
 	}
 	
+	/**
+	 * Sets up a basic situation and asks for a specific crate pushing sequence.
+	 */
 	private static void cratePush() {
 		String[] answ = getMenuItem("How do you want to push the crate?",
 				
@@ -114,6 +142,10 @@ public class Main {
 		PrettyPrinter.endSequence();
 	}
 	
+	/**
+	 * Runs a generic situation in developer mode, so the user has to provide every
+	 * element of the situation manually.
+	 */
 	private static void devMode() {
 		RecorderQuestionHandler rqh = new RecorderQuestionHandler();
 		PrettyPrinter.setQuestionHandler(rqh);
@@ -123,6 +155,9 @@ public class Main {
 		System.out.println("Your input was: " + rqh.getInput());
 	}
 	
+	/**
+	 * Sets up the generic situation that is used by every sequence.
+	 */
 	private static void handleSituation() {
 		Warehouse wh = new Warehouse(0, 0);
 		
