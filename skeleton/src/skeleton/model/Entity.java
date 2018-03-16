@@ -9,7 +9,7 @@ public abstract class Entity implements IVisitor {
 	public Entity(Warehouse level, Field f) {
 		this.level = level;
 		this.curField = f;
-		f.setCurEntity(this);
+		f.setEntity(this);
 	}
 	
 	public abstract boolean push(Worker firstPusher, Entity pushed, Direction dir);
@@ -27,7 +27,7 @@ public abstract class Entity implements IVisitor {
 				return true;
 			}
 		} else {
-			Entity nextEntity = neighbour.getCurEntity().get();
+			Entity nextEntity = neighbour.getEntity().get();
 			if (push(firstPusher, nextEntity, dir)) {
 				if (visit(firstPusher, neighbour)) {
 					curField.unsetEntity();

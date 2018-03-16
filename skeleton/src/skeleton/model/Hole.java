@@ -12,40 +12,46 @@ public class Hole extends Floor {
 	}
 	
 	@Override
-	public boolean acceptEntity(Worker firstPusher, Worker w) {
-		PrettyPrinter.startFunction("Hole", "acceptEntity(firstPusher, w)");
-		super.setEntity(w);
+	public boolean visitByWorker(Worker firstPusher, Worker w) {
+		PrettyPrinter.startFunction("Hole", "visitByWorker(firstPusher, w)");
 		if (isOpen()) {
 			w.loseHealth();
 		}
-		PrettyPrinter.endFunction("Hole", "acceptEntity(firstPusher, w)", "true");
+		else {
+			super.setEntity(w);
+		}
+		PrettyPrinter.endFunction("Hole", "visitByWorker(firstPusher, w)", "true");
 		return true;
 	}
-	
+
 	@Override
-	public boolean acceptEntity(Worker firstPusher, Crate c) {
-		PrettyPrinter.startFunction("Hole", "acceptEntity(firstPusher, c)");
-		super.setEntity(c);
+	public boolean visitByCrate(Worker firstPusher, Crate c) {
+		PrettyPrinter.startFunction("Hole", "visitByCrate(firstPusher, c)");
 		whoPushed = firstPusher;
 		if (isOpen()) {
 			c.remove();
 		}
-		PrettyPrinter.endFunction("Hole", "acceptEntity(firstPusher, c)", "true");
+		else {
+			super.setEntity(c);
+		}
+		PrettyPrinter.endFunction("Hole", "visitByCrate(firstPusher, c)", "true");
 		return true;
 	}
 	
 	@Override
-	public boolean acceptEntity(Worker firstPusher, LifeCrate lc) {
-		PrettyPrinter.startFunction("Hole", "acceptEntity(firstPusher, lc)");
-		super.setEntity(lc);
+	public boolean visitByLifeCrate(Worker firstPusher, LifeCrate lc) {
+		PrettyPrinter.startFunction("Hole", "visitByLifeCrate(firstPusher, lc)");
 		whoPushed = firstPusher;
 		if (isOpen()) {
 			lc.remove(firstPusher);
 		}
-		PrettyPrinter.endFunction("Hole", "acceptEntity(firstPusher, lc)", "true");
+		else {
+			super.setEntity(lc);
+		}
+		PrettyPrinter.endFunction("Hole", "visitByLifeCrate(firstPusher, lc)", "true");
 		return true;
 	}
-
+	
 	public boolean isOpen() {
 		PrettyPrinter.startFunction("Hole", "isOpen()");
 		if (open == null) {

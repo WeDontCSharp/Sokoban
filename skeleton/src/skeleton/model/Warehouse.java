@@ -10,7 +10,15 @@ public class Warehouse {
 		this.entities = new ArrayList<Entity>();
 	}
 	
-	public void addEntity(Entity e) {
+	public void addEntity(Entity e, int x, int y) {
 		entities.add(e);
+	}
+	
+	public void setField(Field f, int x, int y) {
+		// XXX: Stub
+	}
+	
+	public void initialize() {
+		// XXX: Stub
 	}
 }

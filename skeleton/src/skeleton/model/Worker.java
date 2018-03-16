@@ -85,7 +85,7 @@ public class Worker extends Entity {
 	public void reSpawn() {
 		PrettyPrinter.startFunction("Worker", "reSpawn()");
 		this.setCurField(spawnField);
-		spawnField.setCurEntity(this);
+		spawnField.setEntity(this);
 		PrettyPrinter.endFunction("Worker", "reSpawn()");
 	}
 	

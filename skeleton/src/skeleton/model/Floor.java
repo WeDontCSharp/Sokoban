@@ -9,18 +9,18 @@ public class Floor extends Field {
 	}
 
 	@Override
-	public boolean acceptEntity(Worker firstPusher, Worker w) {
-		PrettyPrinter.startFunction("Floor", "acceptEntity(firstPusher, w)");
+	public boolean visitByWorker(Worker firstPusher, Worker w) {
+		PrettyPrinter.startFunction("Floor", "visitByWorker(firstPusher, w)");
 		super.setEntity(w);
-		PrettyPrinter.endFunction("Floor", "acceptEntity(firstPusher, w)", "true");
+		PrettyPrinter.endFunction("Floor", "visitByWorker(firstPusher, w)", "true");
 		return true;
 	}
 
 	@Override
-	public boolean acceptEntity(Worker firstPusher, Crate c) {
-		PrettyPrinter.startFunction("Floor", "acceptEntity(firstPusher, c)");
+	public boolean visitByCrate(Worker firstPusher, Crate c) {
+		PrettyPrinter.startFunction("Floor", "visitByCrate(firstPusher, c)");
 		super.setEntity(c);
-		PrettyPrinter.endFunction("Floor", "acceptEntity(firstPusher, c)", "true");
+		PrettyPrinter.endFunction("Floor", "visitByCrate(firstPusher, c)", "true");
 		return true;
 	}
 

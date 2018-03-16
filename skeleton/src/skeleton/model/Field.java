@@ -13,58 +13,25 @@ public abstract class Field implements IVisitable {
 		this.level = level;
 		this.neighbours = new Field[Direction.values().length];
 	}
-	
-	// XXX: Shouldn't it be set entity? Elnézést, hogy csak most változtattam meg a nevét.
-	public void setEntity(Entity e) {
-		PrettyPrinter.startFunction("Field", "acceptEntity(e)");
-		setCurEntity(e);
-		PrettyPrinter.endFunction("Field", "acceptEntity(e)");
-	}
-	
-	public abstract boolean acceptEntity(Worker firstPusher, Worker w);
-	public abstract boolean acceptEntity(Worker firstPusher, Crate c);
-	
-	public boolean acceptEntity(Worker firstPusher, LifeCrate lc) {
-		PrettyPrinter.startFunction("Field", "acceptEntity(firstPusher, lc)");
-		boolean ret = acceptEntity(firstPusher, (Crate)lc);
-		PrettyPrinter.endFunction("Field", "acceptEntity(firstPusher, lc)", ret ? "true" : "false");
-		return ret;
-	}
-	
-	@Override
-	public boolean visitByWorker(Worker firstPusher, Worker w) {
-		PrettyPrinter.startFunction("Field", "visitByWorker(firstPusher, w)");
-		boolean ret = acceptEntity(firstPusher, w);
-		PrettyPrinter.endFunction("Field", "visitByWorker(firstPusher, w)", ret ? "true" : "false");
-		return ret;
-	}
-
-	@Override
-	public boolean visitByCrate(Worker firstPusher, Crate c) {
-		PrettyPrinter.startFunction("Field", "visitByCrate(firstPusher, c)");
-		boolean res = acceptEntity(firstPusher, c);
-		PrettyPrinter.endFunction("Field", "visitByCrate(firstPusher, c)", res ? "true" : "false");
-		return res;
-	}
 
 	@Override
 	public boolean visitByLifeCrate(Worker firstPusher, LifeCrate lc) {
 		PrettyPrinter.startFunction("Field", "visitByLifeCrate(firstPusher, lc)");
-		boolean res = acceptEntity(firstPusher, lc);
+		boolean res = visitByCrate(firstPusher, lc);
 		PrettyPrinter.endFunction("Field", "visitByLifeCrate(firstPusher, lc)", res ? "true" : "false");
 		return res;
 	}
 	
-	public Optional<Entity> getCurEntity() {
-		PrettyPrinter.startFunction("Field", "getCurEntity()");
-		PrettyPrinter.endFunction("Field", "getCurEntity()", "curEntity");
+	public Optional<Entity> getEntity() {
+		PrettyPrinter.startFunction("Field", "getEntity()");
+		PrettyPrinter.endFunction("Field", "getEntity()", "curEntity");
 		return curEntity;
 	}
 	
-	public void setCurEntity(Entity e) {
-		PrettyPrinter.startFunction("Field", "setCurEntity(e)");
+	public void setEntity(Entity e) {
+		PrettyPrinter.startFunction("Field", "setEntity(e)");
 		curEntity = Optional.of(e);
-		PrettyPrinter.endFunction("Field", "setCurEntity(e)");
+		PrettyPrinter.endFunction("Field", "setEntity(e)");
 	}
 	
 	public void unsetEntity() {

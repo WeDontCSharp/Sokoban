@@ -15,17 +15,17 @@ public class Switch extends Floor {
 	}
 	
 	@Override
-	public boolean acceptEntity(Worker firstPusher, Crate c) {
-		PrettyPrinter.startFunction("Switch", "acceptEntity(firstPusher, c)");
+	public boolean visitByCrate(Worker firstPusher, Crate c) {
+		PrettyPrinter.startFunction("Switch", "visitByCrate(firstPusher, c)");
 		super.setEntity(c);
 		for (Hole h : holes) {
 			h.setOpen(true);
 			if (!h.isEmpty()) {
-				Entity e = h.getCurEntity().get();
+				Entity e = h.getEntity().get();
 				e.visit(firstPusher, h);
 			}
 		}
-		PrettyPrinter.endFunction("Switch", "acceptEntity(firstPusher, c)", "true");
+		PrettyPrinter.endFunction("Switch", "visitByCrate(firstPusher, c)", "true");
 		return true;
 	}
 	

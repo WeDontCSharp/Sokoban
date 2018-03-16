@@ -112,7 +112,7 @@ public class Main {
 		);
 		if (ch == 'W') {
 			Worker w = new Worker(wh, emptyField, Direction.Right);
-			wh.addEntity(w);
+			wh.addEntity(w, 0, 0);
 			
 			ch = PrettyPrinter.askQuestion(
 					"What method to call? [M - move()] : ", 

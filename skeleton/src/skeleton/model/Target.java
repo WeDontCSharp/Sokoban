@@ -21,12 +21,12 @@ public class Target extends Floor {
 	}
 	
 	@Override
-	public boolean acceptEntity(Worker firstPusher, Crate c) {
-		PrettyPrinter.startFunction("Target", "acceptEntity(firstPusher, c)");
+	public boolean visitByCrate(Worker firstPusher, Crate c) {
+		PrettyPrinter.startFunction("Target", "visitByCrate(firstPusher, c)");
 		super.setEntity(c);
 		whoPushed = firstPusher;
 		firstPusher.gainPoint();
-		PrettyPrinter.endFunction("Target", "acceptEntity(firstPusher, c)", "true");
+		PrettyPrinter.endFunction("Target", "visitByCrate(firstPusher, c)", "true");
 		return true;
 	}
 
