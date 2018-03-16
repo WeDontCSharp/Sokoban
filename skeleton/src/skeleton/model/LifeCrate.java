@@ -1,5 +1,7 @@
 package skeleton.model;
 
+import skeleton.meta.PrettyPrinter;
+
 public class LifeCrate extends Crate {
 		
 	public LifeCrate(Warehouse g, Field f) {
@@ -13,7 +15,10 @@ public class LifeCrate extends Crate {
 	
 	@Override
 	public boolean visit(Worker firstPusher, IVisitable iv) {
-		return iv.visitByLifeCrate(firstPusher, this);
+		PrettyPrinter.startFunction("LifeCrate", "visit(firstPusher, iv)");
+		boolean res = iv.visitByLifeCrate(firstPusher, this);
+		PrettyPrinter.endFunction("LifeCrate", "visit(firstPusher, iv)", res ? "true" : "false");
+		return res;
 	}
 	
 }

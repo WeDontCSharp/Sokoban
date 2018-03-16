@@ -3,7 +3,11 @@ package skeleton.meta;
 import java.util.Scanner;
 
 public class ManualQuestionHandler implements IQuestionHandler {
-	private Scanner in = new Scanner(System.in);
+	private Scanner in;
+	
+	public ManualQuestionHandler(Scanner in) {
+		this.in = in;
+	}
 	
 	@Override
 	public boolean visible() {
@@ -19,11 +23,6 @@ public class ManualQuestionHandler implements IQuestionHandler {
 			}
 		}
 		return null;
-	}
-	
-	@Override
-	public void finalize() {
-		in.close();
 	}
 
 }

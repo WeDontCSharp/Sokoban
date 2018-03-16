@@ -5,9 +5,11 @@ import skeleton.meta.PrettyPrinter;
 public class Worker extends Entity {
 	private int points;
 	private int health;
+	private Field spawnField;
 	
 	public Worker(Warehouse g, Field f, Direction dir) {
-		super(g, f);			
+		super(g, f);
+		this.spawnField = f;
 	}
 	
 	public void move(Direction dir) {
@@ -45,36 +47,50 @@ public class Worker extends Entity {
 	}
 	
 	public void gainPoint() {
+		PrettyPrinter.startFunction("Worker", "gainPoint()");
 		points++;
+		PrettyPrinter.endFunction("Worker", "gainPoint()");
 	}
 	
 	public void losePoint() {
+		PrettyPrinter.startFunction("Worker", "losePoint()");
 		points--;
+		PrettyPrinter.endFunction("Worker", "losePoint()");
 	}
 	
 	public int getPoints() {
+		PrettyPrinter.startFunction("Worker", "getPoints()");
+		PrettyPrinter.endFunction("Worker", "getPoints()", "points");
 		return points;
 	}
 	
 	public void gainHealth() {
+		PrettyPrinter.startFunction("Worker", "gainHealth()");
 		health++;
+		PrettyPrinter.endFunction("Worker", "losePoint()");
 	}
 	
 	public void loseHealth() {
+		PrettyPrinter.startFunction("Worker", "loseHealth()");
 		health--;
+		PrettyPrinter.endFunction("Worker", "loseHealth()");
 	}
 	
 	public int getHealth() {
+		PrettyPrinter.startFunction("Worker", "getHealth()");
+		PrettyPrinter.endFunction("Worker", "getHealth()", "health");
 		return health;
 	}
 	
 	public void reSpawn() {
-		Field f = getLevel().getField(1, 1);
-		this.setCurField(f);
-		f.setCurEntity(this);
+		PrettyPrinter.startFunction("Worker", "reSpawn()");
+		this.setCurField(spawnField);
+		spawnField.setCurEntity(this);
+		PrettyPrinter.endFunction("Worker", "reSpawn()");
 	}
 	
 	public void die() {
+		throw new RuntimeException("Unimplemented!");
 		// TODO Remove worker from game.
 	}
 	

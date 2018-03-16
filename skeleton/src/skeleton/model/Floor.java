@@ -18,7 +18,9 @@ public class Floor extends Field {
 
 	@Override
 	public boolean acceptEntity(Worker firstPusher, Crate c) {
+		PrettyPrinter.startFunction("Floor", "acceptEntity(firstPusher, c)");
 		super.setEntity(c);
+		PrettyPrinter.endFunction("Floor", "acceptEntity(firstPusher, c)", "true");
 		return true;
 	}
 

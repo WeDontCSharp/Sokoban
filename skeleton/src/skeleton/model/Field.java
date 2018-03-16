@@ -25,7 +25,10 @@ public abstract class Field implements IVisitable {
 	public abstract boolean acceptEntity(Worker firstPusher, Crate c);
 	
 	public boolean acceptEntity(Worker firstPusher, LifeCrate lc) {
-		return acceptEntity(firstPusher, (Crate)lc);
+		PrettyPrinter.startFunction("Field", "acceptEntity(firstPusher, lc)");
+		boolean ret = acceptEntity(firstPusher, (Crate)lc);
+		PrettyPrinter.endFunction("Field", "acceptEntity(firstPusher, lc)", ret ? "true" : "false");
+		return ret;
 	}
 	
 	@Override
@@ -38,20 +41,30 @@ public abstract class Field implements IVisitable {
 
 	@Override
 	public boolean visitByCrate(Worker firstPusher, Crate c) {
-		return acceptEntity(firstPusher, c);		
+		PrettyPrinter.startFunction("Field", "visitByCrate(firstPusher, c)");
+		boolean res = acceptEntity(firstPusher, c);
+		PrettyPrinter.endFunction("Field", "visitByCrate(firstPusher, c)", res ? "true" : "false");
+		return res;
 	}
 
 	@Override
 	public boolean visitByLifeCrate(Worker firstPusher, LifeCrate lc) {
-		return acceptEntity(firstPusher, lc);		
+		PrettyPrinter.startFunction("Field", "visitByLifeCrate(firstPusher, lc)");
+		boolean res = acceptEntity(firstPusher, lc);
+		PrettyPrinter.endFunction("Field", "visitByLifeCrate(firstPusher, lc)", res ? "true" : "false");
+		return res;
 	}
 	
 	public Optional<Entity> getCurEntity() {
+		PrettyPrinter.startFunction("Field", "getCurEntity()");
+		PrettyPrinter.endFunction("Field", "getCurEntity()", "curEntity");
 		return curEntity;
 	}
 	
 	public void setCurEntity(Entity e) {
+		PrettyPrinter.startFunction("Field", "setCurEntity(e)");
 		curEntity = Optional.of(e);
+		PrettyPrinter.endFunction("Field", "setCurEntity(e)");
 	}
 	
 	public void unsetEntity() {
@@ -86,9 +99,10 @@ public abstract class Field implements IVisitable {
 		
 	}
 	
-	public void setNeighbourField(Direction dir, Field f) {
-		neighbours[dir.ordinal()] = f;
-	}
+	// XXX: Not used anywhere for now
+	//public void setNeighbourField(Direction dir, Field f) {
+	//	neighbours[dir.ordinal()] = f;
+	//}
 	
 	public Field getNeighbourField(Direction dir) {
 		PrettyPrinter.startFunction("Field", "getNeighbourField(dir)");
@@ -106,6 +120,8 @@ public abstract class Field implements IVisitable {
 	}
 	
 	public Warehouse getLevel() {
+		PrettyPrinter.startFunction("Field", "getLevel()");
+		PrettyPrinter.endFunction("Field", "getLevel()", "level");
 		return level;
 	}
 }

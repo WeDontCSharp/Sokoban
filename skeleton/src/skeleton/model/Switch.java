@@ -3,6 +3,8 @@ package skeleton.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import skeleton.meta.PrettyPrinter;
+
 public class Switch extends Floor {
 	
 	private List<Hole> holes;
@@ -14,6 +16,7 @@ public class Switch extends Floor {
 	
 	@Override
 	public boolean acceptEntity(Worker firstPusher, Crate c) {
+		PrettyPrinter.startFunction("Switch", "acceptEntity(firstPusher, c)");
 		super.setEntity(c);
 		for (Hole h : holes) {
 			h.setOpen(true);
@@ -22,14 +25,18 @@ public class Switch extends Floor {
 				e.visit(firstPusher, h);
 			}
 		}
+		PrettyPrinter.endFunction("Switch", "acceptEntity(firstPusher, c)", "true");
 		return true;
 	}
 	
+	@Override
 	public void unsetEntity() {
+		PrettyPrinter.startFunction("Switch", "unsetEntity()");
 		super.unsetEntity();
 		for (Hole h : holes) {
 			h.setOpen(false);
 		}
+		PrettyPrinter.endFunction("Switch", "unsetEntity()");
 	}
 
 }

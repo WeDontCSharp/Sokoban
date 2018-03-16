@@ -48,10 +48,14 @@ public abstract class Entity implements IVisitor {
 	}
 	
 	public Field getCurField() {
+		PrettyPrinter.startFunction("Entity", "getCurField()");
+		PrettyPrinter.endFunction("Entity", "getCurField()", "curField");
 		return this.curField;
 	}
 	
 	public Warehouse getLevel() {
+		PrettyPrinter.startFunction("Entity", "getLevel()");
+		PrettyPrinter.endFunction("Entity", "getLevel()", "level");
 		return level;
 	}
 	

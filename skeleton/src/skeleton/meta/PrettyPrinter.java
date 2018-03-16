@@ -3,6 +3,7 @@ package skeleton.meta;
 public abstract class PrettyPrinter {
 	private static IQuestionHandler questionHandler;
 	private static int indent = 0;
+	private static boolean silent = true;
 	
 	public static void setQuestionHandler(IQuestionHandler qh) {
 		questionHandler = qh;
@@ -23,6 +24,7 @@ public abstract class PrettyPrinter {
 	}
 	
 	public static void startSequence(String seqNum, String seqName) {
+		silent = false;
 		indentate();
 		System.out.println(seqNum + " " + seqName);
 		startIndent();
@@ -30,26 +32,39 @@ public abstract class PrettyPrinter {
 	
 	public static void endSequence() {
 		endIndent();
+		silent = true;
 	}
 	
 	public static void printText(String q) {
+		if (silent) {
+			return;
+		}
 		indentate();
 		System.out.print(q);
 	}
 	
 	public static void startFunction(String className, String sign) {
+		if (silent) {
+			return;
+		}
 		indentate();
 		System.out.println("-> " + className + "::" + sign + ":");
 		startIndent();
 	}
 	
 	public static void endFunction(String className, String sign) {
+		if (silent) {
+			return;
+		}
 		endIndent();
 		indentate();
 		System.out.println("<- " + className + "::" + sign);
 	}
 	
 	public static void endFunction(String className, String sign, String ret) {
+		if (silent) {
+			return;
+		}
 		endIndent();
 		indentate();
 		System.out.println(ret + " <- " + className + "::" + sign);
