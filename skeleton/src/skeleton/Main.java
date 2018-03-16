@@ -89,7 +89,29 @@ public class Main {
 	}
 	
 	private static void cratePush() {
-		throw new RuntimeException();
+		String[] answ = getMenuItem("How do you want to push the crate?",
+				
+				pair("Worker Pushes Crate On Empty Floor", 		"WMRFYCFN"),
+				pair("Worker Pushes Crate On Empty Hole", 		"WMRFYCHN#"),
+				pair("Worker Pushes LifeCrate On Empty Hole", 	"WMRFYLHN#"),
+				pair("Worker Pushes Crate On Empty Target", 	"WMRFYCTN"),
+				pair("Worker Pushes Crate On Empty Switch", 	"WMRFYCSNN"),
+				pair("Worker Pushes Crate On Wall", 			"WMRFYCWN"),
+				pair("Worker Pushes Crate On Spawn", 			"WMRFYCP"),
+				pair("Worker Pushes Crate From Switch", 		"WMRSYCFN"),
+				pair("Worker Pushes Crate From Target", 		"WMRTYCFN")
+				
+		);
+		if (answ == null) {
+			return;
+		}
+		
+		PrettyPrinter.setQuestionHandler(new AutomaticQuestionHandler(in, answ[2]));
+		PrettyPrinter.startSequence(answ[0], answ[1]);
+		
+		handleSituation();
+		
+		PrettyPrinter.endSequence();
 	}
 	
 	private static void devMode() {
@@ -106,9 +128,9 @@ public class Main {
 		
 		Floor emptyField = new Floor(wh);
 		Character ch = PrettyPrinter.askQuestion(
-				"What kind of situation? [W - Worker, C - Crate] : ", 
-				"WC", 
-				new Character[] { 'W', 'C' }
+				"What kind of situation? [W - Worker] : ", 
+				"W", 
+				new Character[] { 'W' }
 		);
 		if (ch == 'W') {
 			Worker w = new Worker(wh, emptyField, Direction.Right);

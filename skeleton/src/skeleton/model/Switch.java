@@ -12,6 +12,9 @@ public class Switch extends Floor {
 	public Switch(Warehouse level) {
 		super(level);
 		holes = new ArrayList<Hole>();
+		
+		// XXX: For now we add a hole
+		holes.add(new Hole(level));
 	}
 	
 	@Override

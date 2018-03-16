@@ -50,10 +50,11 @@ public abstract class Field implements IVisitable {
 			if (answ.booleanValue()) {
 				// XXX: More?
 				Entity e = PrettyPrinter.askQuestion(
-					"What kind of entity? [W - Worker, C - Crate] : ", 
-					"WC", new Entity[] { 
+					"What kind of entity? [W - Worker, C - Crate, L - LifeCrate] : ", 
+					"WCL", new Entity[] { 
 							new Worker(getLevel(), this, Direction.Right), 
-							new Crate(getLevel(), this)
+							new Crate(getLevel(), this),
+							new LifeCrate(getLevel(), this)
 				});
 				this.curEntity = Optional.of(e);
 			}

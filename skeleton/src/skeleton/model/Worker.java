@@ -67,7 +67,7 @@ public class Worker extends Entity {
 	public void gainHealth() {
 		PrettyPrinter.startFunction("Worker", "gainHealth()");
 		health++;
-		PrettyPrinter.endFunction("Worker", "losePoint()");
+		PrettyPrinter.endFunction("Worker", "gainHealth()");
 	}
 	
 	public void loseHealth() {

@@ -33,8 +33,9 @@ public class Crate extends Entity {
 	}
 	
 	public void remove() {
-		// TODO Remove crate from game.
-		throw new RuntimeException("Unimplemented!");
+		PrettyPrinter.startFunction("Crate", "remove()");
+		// XXX: Stub
+		PrettyPrinter.endFunction("Crate", "remove()");
 	}
 
 	@Override
