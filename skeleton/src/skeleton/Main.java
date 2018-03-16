@@ -67,13 +67,13 @@ public class Main {
 				
 				pair("Move Worker On Empty Floor", 				"WMRFN"),
 				pair("Move Worker On Empty Hole", 				"WMRHN#"),
-				pair("Move Worker On Empty Target", 			""),
-				pair("Move Worker On Empty Switch", 			""),
-				pair("Move Worker On Wall", 					""),
-				pair("Move Worker On Spawn", 					""),
-				pair("Worker Pushes Worker", 					""),
-				pair("Worker Pushes Worker In Chain On Wall", 	""),
-				pair("Worker Pushes Worker In Chain On Spawn", 	"")
+				pair("Move Worker On Empty Target", 			"WMRTN"),
+				pair("Move Worker On Empty Switch", 			"WMRSN"),
+				pair("Move Worker On Wall", 					"WMRWN"),
+				pair("Move Worker On Spawn", 					"WMRP#"),
+				pair("Worker Pushes Worker", 					"WMRFYW"),
+				pair("Worker Pushes Worker In Chain On Wall", 	"WMRFYCFYWWN"),
+				pair("Worker Pushes Worker In Chain On Spawn", 	"WMRFYCFYWP#")
 				
 		);
 		if (answ == null) {
