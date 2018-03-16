@@ -4,7 +4,7 @@ import skeleton.meta.PrettyPrinter;
 
 public class Hole extends Floor {
 	
-	private boolean open = false;
+	private Boolean open = null;
 	private Worker whoPushed;
 	
 	public Hole(Warehouse level) {
@@ -15,7 +15,7 @@ public class Hole extends Floor {
 	public boolean acceptEntity(Worker firstPusher, Worker w) {
 		PrettyPrinter.startFunction("Hole", "acceptEntity(firstPusher, w)");
 		super.setEntity(w);
-		if (open) {
+		if (isOpen()) {
 			w.loseHealth();
 		}
 		PrettyPrinter.endFunction("Hole", "acceptEntity(firstPusher, w)", "true");
@@ -27,7 +27,7 @@ public class Hole extends Floor {
 		PrettyPrinter.startFunction("Hole", "acceptEntity(firstPusher, c)");
 		super.setEntity(c);
 		whoPushed = firstPusher;
-		if (open) {
+		if (isOpen()) {
 			c.remove();
 		}
 		PrettyPrinter.endFunction("Hole", "acceptEntity(firstPusher, c)", "true");
@@ -39,7 +39,7 @@ public class Hole extends Floor {
 		PrettyPrinter.startFunction("Hole", "acceptEntity(firstPusher, lc)");
 		super.setEntity(lc);
 		whoPushed = firstPusher;
-		if (open) {
+		if (isOpen()) {
 			lc.remove(firstPusher);
 		}
 		PrettyPrinter.endFunction("Hole", "acceptEntity(firstPusher, lc)", "true");
@@ -48,6 +48,14 @@ public class Hole extends Floor {
 
 	public boolean isOpen() {
 		PrettyPrinter.startFunction("Hole", "isOpen()");
+		if (open == null) {
+			// It is not decided yet
+			open = PrettyPrinter.askQuestion(
+					"Is the hole open? [Y - yes, N - no] : ", 
+					"YN", 
+					new Boolean[] { true, false }
+			);
+		}
 		PrettyPrinter.endFunction("Hole", "isOpen()", open ? "true" : "false");
 		return open;
 	}

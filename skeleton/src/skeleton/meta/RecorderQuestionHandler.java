@@ -16,6 +16,9 @@ public class RecorderQuestionHandler implements IQuestionHandler {
 	public <T> T chooseOneQuestion(char[] chtbl, T[] answ) {
 		char ch = Character.toUpperCase(in.nextLine().trim().charAt(0));
 		input += ch;
+		if (ch == '#') {
+			ch = Character.toUpperCase(in.nextLine().trim().charAt(0));
+		}
 		for (int i =  0; i < chtbl.length; i++) {
 			if (chtbl[i] == ch) {
 				return answ[i];

@@ -66,7 +66,7 @@ public class Main {
 		String[] answ = getMenuItem("How do you want the worker to move?",
 				
 				pair("Move Worker On Empty Floor", 				"WMRFN"),
-				pair("Move Worker On Empty Hole", 				""),
+				pair("Move Worker On Empty Hole", 				"WMRHN#"),
 				pair("Move Worker On Empty Target", 			""),
 				pair("Move Worker On Empty Switch", 			""),
 				pair("Move Worker On Wall", 					""),
@@ -80,7 +80,7 @@ public class Main {
 			return;
 		}
 		
-		PrettyPrinter.setQuestionHandler(new AutomaticQuestionHandler(answ[2]));
+		PrettyPrinter.setQuestionHandler(new AutomaticQuestionHandler(in, answ[2]));
 		PrettyPrinter.startSequence(answ[0], answ[1]);
 		
 		handleSituation();

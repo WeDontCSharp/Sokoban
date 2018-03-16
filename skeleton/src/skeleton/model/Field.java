@@ -110,8 +110,12 @@ public abstract class Field implements IVisitable {
 			// We haven't handled this field! We need to ask the user what he wants here
 			// XXX: more types?
 			Field n = PrettyPrinter.askQuestion(
-					"What kind of field is the neighbor? [F - floor, W - wall] : ",
-					"FW", new Field[] { new Floor(this.level), new Wall(this.level) });
+					"What kind of field is the neighbor? [F - floor, W - wall, H - hole] : ",
+					"FWH", new Field[] { 
+							new Floor(this.level),
+							new Wall(this.level),
+							new Hole(this.level)
+			});
 			
 			neighbours[dir.ordinal()] = n;
 		}
