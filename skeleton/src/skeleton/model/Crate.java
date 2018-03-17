@@ -3,7 +3,13 @@ package skeleton.model;
 import skeleton.meta.PrettyPrinter;
 
 public class Crate extends Entity {
-		
+	
+	/**
+	 * Crate's construstor.
+	 * 
+	 * @param g Warehouse, where the entities are listed and specifies the level.
+	 * @param f	The field, where the create appears.
+	 */
 	public Crate(Warehouse g, Field f) {
 		super(g, f);			
 	}
@@ -32,6 +38,9 @@ public class Crate extends Entity {
 		return res;
 	}
 	
+	/**
+	 * Removes the Crate from the game.
+	 */
 	public void remove() {
 		PrettyPrinter.startFunction("Crate", "remove()");
 		// XXX: Stub
