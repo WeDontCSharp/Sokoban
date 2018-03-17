@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import skeleton.meta.PrettyPrinter;
 
-
 /**
  * An abstract class representing a field.
  */

@@ -3,8 +3,6 @@ package skeleton.meta;
 import java.util.Scanner;
 
 /**
- * @author Peter Lenkefi
- *
  * This answering strategy is used when in developer mode. Every question is asked and answered explicitly.
  * All the answers are recorded and can be used as answers for a new sequence with an automatic question
  * handler. If a question is needed to be answered by the user in automatic mode too, a '#' can be used

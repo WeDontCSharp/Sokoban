@@ -10,7 +10,7 @@ import skeleton.meta.PrettyPrinter;
 public class Spawn extends Floor {
 
 	/**
-	 * The worker associated with this spawn.
+	 * The worker associated with this spawn, beeing the only one to step here.
 	 */
     private Worker owner;
 	
@@ -24,13 +24,9 @@ public class Spawn extends Floor {
 		this.owner = owner;
 	}
 
-	
-    /**
-	 * Tries to step a worker onto the spawn. If the non-owner is pushed against the spawn, in a chain, they lose a health point.
-	 * @param firstPusher The worker who initiates the push.
-     * @param w The worker being pushed to the spawn.
-     * @return True if the worker is pushed into the spawn or he is associated with this spawn, otherwise false.
-	 */
+    /* (non-Javadoc)
+     * @see skeleton.model.Floor#visitByWorker(skeleton.model.Worker, skeleton.model.Worker)
+     */
     @Override
 	public boolean visitByWorker(Worker firstPusher, Worker w) {
 		PrettyPrinter.startFunction("Floor", "visitByWorker(firstPusher, w)");
@@ -57,12 +53,9 @@ public class Spawn extends Floor {
 		}
 	}
 
-	/**
-	 * Tries to step a crate onto the spawn.
-	 * @param firstPusher The worker who initiates the push.
-     * @param c The crate being pushed.
-     * @return False as a crate cannot be pushed onto a spawn.
-	 */
+    /* (non-Javadoc)
+     * @see skeleton.model.Floor#visitByCrate(skeleton.model.Worker, skeleton.model.Crate)
+     */
     @Override
 	public boolean visitByCrate(Worker firstPusher, Crate c) {
 		PrettyPrinter.startFunction("Floor", "visitByCrate(firstPusher, c)");
@@ -80,10 +73,9 @@ public class Spawn extends Floor {
 		return owner;
 	}
 	
-	/**
-	 * Tells if there's an entity on the spawn.
-     * @return True
-	 */
+    /* (non-Javadoc)
+     * @see skeleton.model.Field#isEmpty()
+     */
     @Override
 	public boolean isEmpty() {
 		PrettyPrinter.startFunction("Spawn", "isEmpty()");

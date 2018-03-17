@@ -3,8 +3,6 @@ package skeleton.meta;
 import java.util.Scanner;
 
 /**
- * @author Peter Lenkefi
- *
  * This question handling strategy is used when the user chooses the non-developer mode where the
  * sequences are (mostly) automatic. The only exception is when a '#' is encountered in the input sequence,
  * in that case the question needs to be answered manually.

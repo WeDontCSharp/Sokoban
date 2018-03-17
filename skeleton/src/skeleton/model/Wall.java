@@ -17,11 +17,8 @@ public class Wall extends Field  {
 		super(level);
 	}
 	
-    /**
-	 * Tries to step the worker into the wall. If the worker is pushed against the wall, in a chain, they lose a health point.
-	 * @param firstPusher The worker who initiates the push.
-     * @param w The worker being pushed.
-     * @return True if the worker is pushed in a chain into the wall, otherwise false.
+	/* (non-Javadoc)
+	 * @see skeleton.model.IVisitable#visitByWorker(skeleton.model.Worker, skeleton.model.Worker)
 	 */
 	@Override
 	public boolean visitByWorker(Worker firstPusher, Worker w) {
@@ -37,12 +34,9 @@ public class Wall extends Field  {
 		}
 	}
 
-	/**
-	 * Tries to step the crate into the wall.
-	 * @param firstPusher The worker who initiates the push.
-     * @param c The crate being pushed.
-     * @return False because a crate cannot be pushed into the wall.
-	 */
+    /* (non-Javadoc)
+     * @see skeleton.model.IVisitable#visitByCrate(skeleton.model.Worker, skeleton.model.Crate)
+     */
     @Override
 	public boolean visitByCrate(Worker firstPusher, Crate c) {
 		PrettyPrinter.startFunction("Wall", "visitByCrate(firstPusher, c)");

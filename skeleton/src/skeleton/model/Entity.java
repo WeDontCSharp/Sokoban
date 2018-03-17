@@ -2,8 +2,17 @@ package skeleton.model;
 
 import skeleton.meta.PrettyPrinter;
 
+/**
+ * An abstract class representing an entity.
+ */
 public abstract class Entity implements IVisitor {
+	/**
+	 * The warehouse the entity is in.
+	 */
 	protected Warehouse level;
+	/**
+	 * The field where the entity is currently standing.
+	 */
 	private Field curField;
 	
 	/**

@@ -16,12 +16,9 @@ public class Floor extends Field {
 		super(level);
 	}
 
-	/**
-	 * Tries to step a worker onto the floor.
-	 * @param firstPusher The worker who initiates the push.
-     * @param w The worker being pushed to the floor.
-     * @return True, as the worker is put on the floor.
-	 */
+    /* (non-Javadoc)
+     * @see skeleton.model.IVisitable#visitByWorker(skeleton.model.Worker, skeleton.model.Worker)
+     */
     @Override
 	public boolean visitByWorker(Worker firstPusher, Worker w) {
 		PrettyPrinter.startFunction("Floor", "visitByWorker(firstPusher, w)");
@@ -30,12 +27,9 @@ public class Floor extends Field {
 		return true;
 	}
 
-	/**
-	 * Tries to step a crate onto the floor.
-	 * @param firstPusher The worker who initiates the push.
-     * @param c The crate being pushed to the floor.
-     * @return True, as the crate is put on the floor.
-	 */
+    /* (non-Javadoc)
+     * @see skeleton.model.IVisitable#visitByCrate(skeleton.model.Worker, skeleton.model.Crate)
+     */
     @Override
 	public boolean visitByCrate(Worker firstPusher, Crate c) {
 		PrettyPrinter.startFunction("Floor", "visitByCrate(firstPusher, c)");

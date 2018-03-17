@@ -2,6 +2,10 @@ package skeleton.model;
 
 import skeleton.meta.PrettyPrinter;
 
+/**
+ * A class representing a crate with a heart symbol on it.
+ * This crate gives a health to the worker who pushes it in an open hole.
+ */
 public class LifeCrate extends Crate {
 	
 	/**
@@ -23,6 +27,9 @@ public class LifeCrate extends Crate {
 		firstPusher.gainHealth();
 	}
 	
+	/* (non-Javadoc)
+	 * @see skeleton.model.Crate#visit(skeleton.model.Worker, skeleton.model.IVisitable)
+	 */
 	@Override
 	public boolean visit(Worker firstPusher, IVisitable iv) {
 		PrettyPrinter.startFunction("LifeCrate", "visit(firstPusher, iv)");

@@ -1,8 +1,6 @@
 package skeleton.meta;
 
 /**
- * @author Peter Lenkefi
- *
  * This is the common interface for the question handling and answer input strategies we define.
  * The pretty printer uses this to ask questions from the user. Mainly used to separate developer and user mode.
  * 

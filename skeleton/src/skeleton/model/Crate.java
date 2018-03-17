@@ -2,6 +2,9 @@ package skeleton.model;
 
 import skeleton.meta.PrettyPrinter;
 
+/**
+ * A class representing a crate.
+ */
 public class Crate extends Entity {
 	
 	/**

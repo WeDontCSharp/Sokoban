@@ -11,8 +11,6 @@ import skeleton.model.Warehouse;
 import skeleton.model.Worker;
 
 /**
- * @author Peter Lenkefi
- *
  * The starting-point for the application.
  */
 public class Main {

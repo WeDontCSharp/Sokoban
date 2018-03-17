@@ -2,6 +2,9 @@ package skeleton.model;
 
 import skeleton.meta.PrettyPrinter;
 
+/**
+ * A class representing a worker.
+ */
 public class Worker extends Entity {
 	private int points;
 	private int health;
@@ -31,6 +34,9 @@ public class Worker extends Entity {
 		PrettyPrinter.endFunction("Worker", "move(dir)");
 	}
 	
+	/* (non-Javadoc)
+	 * @see skeleton.model.Entity#push(skeleton.model.Worker, skeleton.model.Entity, skeleton.model.Direction)
+	 */
 	@Override
 	public boolean push(Worker firstPusher, Entity pushed, Direction dir) {
 		PrettyPrinter.startFunction("Worker", "push(firstPusher, pushed, dir)");
@@ -39,7 +45,9 @@ public class Worker extends Entity {
 		return res;
 	}
 
-	
+	/* (non-Javadoc)
+	 * @see skeleton.model.Entity#pushByWorker(skeleton.model.Worker, skeleton.model.Worker, skeleton.model.Direction)
+	 */
 	@Override
 	public boolean pushByWorker(Worker firstPusher, Worker pusher, Direction dir) {
 		PrettyPrinter.startFunction("Worker", "pushByWorker(firstPusher, pusher, dir)");
@@ -52,7 +60,9 @@ public class Worker extends Entity {
 		return res;
 	}
 
-	
+	/* (non-Javadoc)
+	 * @see skeleton.model.Entity#pushByCrate(skeleton.model.Worker, skeleton.model.Crate, skeleton.model.Direction)
+	 */
 	@Override
 	public boolean pushByCrate(Worker firstPusher, Crate pusher, Direction dir) {
 		PrettyPrinter.startFunction("Worker", "pushByCrate(firstPusher, pusher, dir)");
@@ -136,7 +146,9 @@ public class Worker extends Entity {
 		// TODO Remove worker from game.
 	}
 	
-	
+	/* (non-Javadoc)
+	 * @see skeleton.model.IVisitor#visit(skeleton.model.Worker, skeleton.model.IVisitable)
+	 */
 	@Override
 	public boolean visit(Worker firstPusher, IVisitable iv) {
 		PrettyPrinter.startFunction("Worker", "visit(firstPusher, iv)");

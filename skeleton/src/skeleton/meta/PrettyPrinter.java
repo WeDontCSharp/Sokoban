@@ -1,8 +1,6 @@
 package skeleton.meta;
 
 /**
- * @author Peter Lenkefi
- *
  * A sort-of singleton for pretty-printing sequences and asking choose-one questions from
  * question handling strategies.
  * 

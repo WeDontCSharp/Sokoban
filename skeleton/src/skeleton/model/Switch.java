@@ -29,13 +29,9 @@ public class Switch extends Floor {
 		holes.add(new Hole(level));
 	}
 	
-	/**
-	 * Tries to step a crate onto the switch.
-     * Puts the crate on the switch, opens the assocaited holes and has all entities that stand on them fall down.
-	 * @param firstPusher The worker who initiates the push.
-     * @param c The crate being pushed onto the switch.
-     * @return True, as the crate is put on the swich.
-	 */
+    /* (non-Javadoc)
+     * @see skeleton.model.Floor#visitByCrate(skeleton.model.Worker, skeleton.model.Crate)
+     */
     @Override
 	public boolean visitByCrate(Worker firstPusher, Crate c) {
 		PrettyPrinter.startFunction("Switch", "visitByCrate(firstPusher, c)");
@@ -52,9 +48,9 @@ public class Switch extends Floor {
 	}
 	
 	
-    /**
-	 * When the crate is removed from the switch, all associated holes close.
-	 */
+    /* (non-Javadoc)
+     * @see skeleton.model.Field#unsetEntity()
+     */
     @Override
 	public void unsetEntity() {
 		PrettyPrinter.startFunction("Switch", "unsetEntity()");

@@ -22,9 +22,9 @@ public class Target extends Floor {
 		super(level);
 	}
 	
-	/**
-	 * When the crate is removed from the target, the worker who got a point for it loses that point.
-	 */
+    /* (non-Javadoc)
+     * @see skeleton.model.Field#unsetEntity()
+     */
     @Override
 	public void unsetEntity() {
 		PrettyPrinter.startFunction("Target", "unsetEntity()");
@@ -36,13 +36,9 @@ public class Target extends Floor {
 		PrettyPrinter.endFunction("Target", "unsetEntity()");
 	}
 	
-	/**
-	 * Tries to step a crate onto the target.
-     * Puts the crate on the target, stores the pusher and gives them a point.
-	 * @param firstPusher The worker who initiates the push.
-     * @param c The crate being pushed onto the target.
-     * @return True, as the crate is put on the target.
-	 */
+    /* (non-Javadoc)
+     * @see skeleton.model.Floor#visitByCrate(skeleton.model.Worker, skeleton.model.Crate)
+     */
     @Override
 	public boolean visitByCrate(Worker firstPusher, Crate c) {
 		PrettyPrinter.startFunction("Target", "visitByCrate(firstPusher, c)");
