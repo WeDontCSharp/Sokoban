@@ -2,15 +2,33 @@ package skeleton.model;
 
 import skeleton.meta.PrettyPrinter;
 
+/**
+ * A class representing a hole. A hole is always
+ * reachable by the entities. If the hole is open 
+ * and an entity steps on it, it falls down.
+ */
 public class Hole extends Floor {
 	
+	/**
+	 * The state of the hole.
+	 */
 	private Boolean open = null;
+	/**
+	 * The worker who pushed a crate on the hole.
+	 */
 	private Worker whoPushed;
 	
+	/**
+	 * Creates a hole.
+	 * @param level The warehouse to the create the hole in.
+	 */
 	public Hole(Warehouse level) {
 		super(level);
 	}
 	
+	/* (non-Javadoc)
+	 * @see skeleton.model.Floor#visitByWorker(skeleton.model.Worker, skeleton.model.Worker)
+	 */
 	@Override
 	public boolean visitByWorker(Worker firstPusher, Worker w) {
 		PrettyPrinter.startFunction("Hole", "visitByWorker(firstPusher, w)");
@@ -24,6 +42,9 @@ public class Hole extends Floor {
 		return true;
 	}
 
+	/* (non-Javadoc)
+	 * @see skeleton.model.Floor#visitByCrate(skeleton.model.Worker, skeleton.model.Crate)
+	 */
 	@Override
 	public boolean visitByCrate(Worker firstPusher, Crate c) {
 		PrettyPrinter.startFunction("Hole", "visitByCrate(firstPusher, c)");
@@ -38,6 +59,9 @@ public class Hole extends Floor {
 		return true;
 	}
 	
+	/* (non-Javadoc)
+	 * @see skeleton.model.Field#visitByLifeCrate(skeleton.model.Worker, skeleton.model.LifeCrate)
+	 */
 	@Override
 	public boolean visitByLifeCrate(Worker firstPusher, LifeCrate lc) {
 		PrettyPrinter.startFunction("Hole", "visitByLifeCrate(firstPusher, lc)");
@@ -52,6 +76,10 @@ public class Hole extends Floor {
 		return true;
 	}
 	
+	/**
+	 * Tells whether the hole is open or not.
+	 * @return True if the hole is open, false otherwise.
+	 */
 	public boolean isOpen() {
 		PrettyPrinter.startFunction("Hole", "isOpen()");
 		if (open == null) {
@@ -66,12 +94,20 @@ public class Hole extends Floor {
 		return open;
 	}
 
+	/**
+	 * Opens or closes the hole.
+	 * @param open True, if the hole is intended to be opened, false if closed.
+	 */
 	public void setOpen(boolean open) {
 		PrettyPrinter.startFunction("Hole", "setOpen(open)");
 		this.open = open;
 		PrettyPrinter.endFunction("Hole", "setOpen(open)");
 	}
 	
+	/**
+	 * If a crate is standing on the hole, it gets the worker who pushed it.
+	 * @return The worker.
+	 */
 	public Worker getWhoPushed() {
 		PrettyPrinter.startFunction("Hole", "getWhoPushed()");
 		PrettyPrinter.endFunction("Hole", "getWhoPushed()", "whoPushed");
