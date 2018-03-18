@@ -19,30 +19,45 @@ public class Main {
 	 */
 	static Scanner in = new Scanner(System.in);
 	
-	public static void main(String[] args) {
-		System.out.println("What do you want to do?");
+	public static void main(String[] args) {		
+		int selection;
+		
+		do {	
+			printMainMenu();
+			selection = Integer.parseInt(in.nextLine());
+			switch (selection) {
+			case 1:
+				workerMoves();
+				break;
+				
+			case 2:
+				cratePush();
+				break;
+				
+			case 3:
+				devMode();
+				break;
+				
+			case 0:
+				System.out.println("This is the end, my beautiful friend.");
+				break;
+				
+			default:
+				System.err.println("No such action!");
+			}
+						
+		} while (selection != 0);
+		
+		in.close();
+	}
+	
+	private static void printMainMenu() {
+		System.out.println("\nWhat do you want to do? [Choose from 1 to 3 play, or 0 to exit]");
 		System.out.println(" 1 - Move Worker");
 		System.out.println(" 2 - Push Crate");
 		System.out.println(" 3 - Create Own Sequence (Dev. Mode)");
-		
-		switch (Integer.parseInt(in.nextLine())) {
-		case 1:
-			workerMoves();
-			break;
-			
-		case 2:
-			cratePush();
-			break;
-			
-		case 3:
-			devMode();
-			break;
-			
-		default:
-			System.err.println("No such action!");
-		}
-		
-		in.close();
+		System.out.println(" ---");
+		System.out.println(" 0 - Exit");
 	}
 	
 	/**
