@@ -30,9 +30,6 @@ public abstract class Field implements IVisitable {
 		this.neighbours = new Field[Direction.values().length];
 	}
 
-	/* (non-Javadoc)
-	 * @see skeleton.model.IVisitable#visitByLifeCrate(skeleton.model.Worker, skeleton.model.LifeCrate)
-	 */
 	@Override
 	public boolean visitByLifeCrate(Worker firstPusher, LifeCrate lc) {
 		PrettyPrinter.startFunction("Field", "visitByLifeCrate(firstPusher, lc)");
@@ -101,10 +98,15 @@ public abstract class Field implements IVisitable {
 		
 	}
 	
-	// XXX: Not used anywhere for now
-	//public void setNeighbourField(Direction dir, Field f) {
-	//	neighbours[dir.ordinal()] = f;
-	//}
+	/**
+	 * Sets the neighbor in a given direction.
+	 * 
+	 * @param dir The direction the neighbor is in.
+	 * @param f The neighbor field.
+	 */
+	public void setNeighbourField(Direction dir, Field f) {
+		neighbours[dir.ordinal()] = f;
+	}
 	
 	/**
 	 * Gets a neighbouring field.
