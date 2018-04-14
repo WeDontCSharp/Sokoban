@@ -26,6 +26,15 @@ public class Hole extends Floor {
 		super(level);
 	}
 	
+	/**
+	 * Sets the slipperiness of a hole.
+	 * @param slipFactor The new value that replaces the current factor.
+	 * @return False, because the slipFactor of a hole can never be changed.
+	 */
+	public boolean placeSlipFactor(double slipFactor) {
+		return false;
+	}
+	
 	/* (non-Javadoc)
 	 * @see skeleton.model.Floor#visitByWorker(skeleton.model.Worker, skeleton.model.Worker)
 	 */

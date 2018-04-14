@@ -23,6 +23,15 @@ public class Spawn extends Floor {
 		super(level);
 		this.owner = owner;
 	}
+    
+    /**
+	 * Sets the slipperiness of a spawn.
+	 * @param slipFactor The new value that replaces the current factor.
+	 * @return False, because the slipFactor of a spawn can never be changed.
+	 */
+	public boolean placeSlipFactor(double slipFactor) {
+		return false;
+	}
 
     /* (non-Javadoc)
      * @see skeleton.model.Floor#visitByWorker(skeleton.model.Worker, skeleton.model.Worker)

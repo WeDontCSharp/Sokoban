@@ -16,6 +16,15 @@ public class Wall extends Field  {
     public Wall(Warehouse level) {
 		super(level);
 	}
+    
+    /**
+	 * Sets the slipperiness of a wall.
+	 * @param slipFactor The new value that replaces the current factor.
+	 * @return False, because the slipFactor of a wall can never be changed.
+	 */
+	public boolean placeSlipFactor(double slipFactor) {
+		return false;
+	}
 	
 	/* (non-Javadoc)
 	 * @see skeleton.model.IVisitable#visitByWorker(skeleton.model.Worker, skeleton.model.Worker)

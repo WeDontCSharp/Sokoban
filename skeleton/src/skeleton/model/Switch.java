@@ -28,6 +28,15 @@ public class Switch extends Floor {
 		// XXX: For now we add a hole
 		holes.add(new Hole(level));
 	}
+    
+    /**
+	 * Sets the slipperiness of a switch.
+	 * @param slipFactor The new value that replaces the current factor.
+	 * @return False, because the slipFactor of a switch can never be changed.
+	 */
+	public boolean placeSlipFactor(double slipFactor) {
+		return false;
+	}
 	
     /* (non-Javadoc)
      * @see skeleton.model.Floor#visitByCrate(skeleton.model.Worker, skeleton.model.Crate)

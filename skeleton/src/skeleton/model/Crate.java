@@ -28,6 +28,10 @@ public class Crate extends Entity {
 	@Override
 	public boolean pushByWorker(Worker firstPusher, Worker pusher, Direction dir) {
 		PrettyPrinter.startFunction("Crate", "pushByWorker(firstPusher, pusher, dir)");
+		double remPower = firstPusher.consumePower(getCurField().getSlipFactor() * getWeight());
+		if (remPower < 0) {
+			return false;
+		}
 		boolean res = step(firstPusher, dir);
 		PrettyPrinter.endFunction("Crate", "pushByWorker(firstPusher, pusher, dir)", res ? "true" : "false");
 		return res;
@@ -36,6 +40,10 @@ public class Crate extends Entity {
 	@Override
 	public boolean pushByCrate(Worker firstPusher, Crate pusher, Direction dir) {
 		PrettyPrinter.startFunction("Crate", "pushByCrate(firstPusher, pusher, dir)");
+		double remPower = firstPusher.consumePower(getCurField().getSlipFactor() * getWeight());
+		if (remPower < 0) {
+			return false;
+		}
 		boolean res = step(firstPusher, dir);
 		PrettyPrinter.endFunction("Crate", "pushByCrate(firstPusher, pusher, dir)", res ? "true" : "false");
 		return res;

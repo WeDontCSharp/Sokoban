@@ -21,6 +21,15 @@ public class Target extends Floor {
     public Target(Warehouse level) {
 		super(level);
 	}
+    
+    /**
+	 * Sets the slipperiness of a target.
+	 * @param slipFactor The new value that replaces the current factor.
+	 * @return False, because the slipFactor of a target can never be changed.
+	 */
+	public boolean placeSlipFactor(double slipFactor) {
+		return false;
+	}
 	
     /* (non-Javadoc)
      * @see skeleton.model.Field#unsetEntity()

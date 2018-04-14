@@ -6,13 +6,39 @@ import skeleton.meta.PrettyPrinter;
  * A class representing a worker.
  */
 public class Worker extends Entity {
+	/**
+	 * The points of the worker.
+	 */
 	private int points;
+	/**
+	 * The health of the worker. The worker dies
+	 * if their helath reaches 0.
+	 */
 	private int health;
+	/**
+	 * The current power of the worker that decreases
+	 * when trying to push something.
+	 */
+	private double power;
+	/**
+	 * The original power of the worker.
+	 */
+	private double orgPower;
+	/**
+	 * The item the worker can change a field's
+	 * slipperines with.
+	 */
+	private PlaceableItem item;
+	/**
+	 * The field where the worker starts the game
+	 * and respawns when losing a life.
+	 * @see PlaceableItem
+	 */
 	private Field spawnField;
 	
 	/**
 	 * Worker's constructor. The generated worker appears ion it's spawner field,
-	 *  which is specified in the constuctor.
+	 * which is specified in the constuctor.
 	 * 
 	 * @param g 	Warehouse, where the entities are listed and specifies the level.
 	 * @param f 	The new worker's spawnField, spawns here immediately.
@@ -21,6 +47,35 @@ public class Worker extends Entity {
 	public Worker(Warehouse g, Field f, Direction dir) {
 		super(g, f);
 		this.spawnField = f;
+		this.orgPower = 2.0;
+		this.power = 2.0;
+	}
+	
+	/**
+	 * The worker's power decreases by the taken value,
+	 * because they're trying to push something.
+	 * @param power The amount of power required to push
+	 * the entity the worker is trying to.
+	 * @return The reduced power of the worker. The negative
+	 * power represents that the worker does not have
+	 * enough power to push the entity.
+	 */
+	public double consumePower(double power) {
+		return this.power - power;
+	}
+	
+	/**
+	 * Places the item the worker currently holds onto
+	 * the field the worker is currently staying on.
+	 */
+	public void placeItem() {
+		// TODO: What to do on successfull/failed place? 
+		if (item == PlaceableItem.Honey) {
+			getCurField().placeSlipFactor(2.0);
+		}
+		else if (item == PlaceableItem.Oil) {
+			getCurField().placeSlipFactor(0.0);
+		}
 	}
 	
 	/**
@@ -55,6 +110,10 @@ public class Worker extends Entity {
 			PrettyPrinter.endFunction("Worker", "pushByWorker(firstPusher, pusher, dir)", "false");
 			return false;
 		}
+		double remPower = firstPusher.consumePower(getCurField().getSlipFactor() * getWeight());
+		if (remPower < 0) {
+			return false;
+		}
 		boolean res = step(firstPusher, dir);
 		PrettyPrinter.endFunction("Worker", "pushByWorker(firstPusher, pusher, dir)", res ? "true" : "false");
 		return res;
@@ -66,6 +125,10 @@ public class Worker extends Entity {
 	@Override
 	public boolean pushByCrate(Worker firstPusher, Crate pusher, Direction dir) {
 		PrettyPrinter.startFunction("Worker", "pushByCrate(firstPusher, pusher, dir)");
+		double remPower = firstPusher.consumePower(getCurField().getSlipFactor() * getWeight());
+		if (remPower < 0) {
+			return false;
+		}
 		boolean res = step(firstPusher, dir);
 		PrettyPrinter.endFunction("Worker", "pushByCrate(firstPusher, pusher, dir)", res ? "true" : "false");
 		return res;

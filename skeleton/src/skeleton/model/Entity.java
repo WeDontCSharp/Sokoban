@@ -16,6 +16,12 @@ public abstract class Entity implements IVisitor {
 	private Field curField;
 	
 	/**
+	 * The weight of an entity. The heavier an entity is,
+	 * the more power is required to push it.
+	 */
+	private double weight;
+	
+	/**
 	 * The entity's constructor.
 	 * 
 	 * @param g Warehouse, where the entities are listed and specifies the level.
@@ -25,7 +31,9 @@ public abstract class Entity implements IVisitor {
 		this.level = level;
 		this.curField = f;
 		f.setEntity(this);
+		this.weight = 1.0;
 	}
+	
 	/**
 	 * An abstract method, where the entity pushes an other entity directly, or in a chain.
 	 * 
@@ -88,6 +96,20 @@ public abstract class Entity implements IVisitor {
 		}
 		PrettyPrinter.endFunction("Entity", "step(firstPusher, dir)", "false");
 		return false;
+	}
+	
+	/**
+	 * @return The weight of the entity.
+	 */
+	public double getWeight() {
+		return weight;
+	}
+	
+	/**
+	 * @param weight The weight of the entity.
+	 */
+	public void setWeight(double weight) {
+		this.weight = weight;
 	}
 	
 	/**

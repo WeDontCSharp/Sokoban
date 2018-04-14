@@ -21,6 +21,17 @@ public abstract class Field implements IVisitable {
 	 */
 	private Optional<Entity> curEntity;
 	
+	
+	/**
+	 * Represents the slipperiness of a field. If it's above
+	 * 1.0, the field is sticky (it contains honey), if it's
+	 * below 1.0, the field is slippery (it contains oil). The
+	 * slipFactor tends to 1.0.
+	 * The larger the slipFactor on a field is, the more power 
+	 * is required to push an entity from it.
+	 */
+	private double slipFactor;
+
 	/**
 	 * Creates a field.
 	 * @param level The warehouse to the create the field in.
@@ -28,6 +39,30 @@ public abstract class Field implements IVisitable {
 	public Field(Warehouse level) {
 		this.level = level;
 		this.neighbours = new Field[Direction.values().length];
+		this.slipFactor = 1.0;
+	}
+
+	/**
+	 * Sets the slipperiness of a field.
+	 * @param slipFactor The new value that replaces the current factor.
+	 * @return True, if the change was successfull, false otherwise.
+	 */
+	public boolean placeSlipFactor(double slipFactor) {
+		return false;
+	}
+	
+	/**
+	 * @return The slipperiness of the field.
+	 */
+	public double getSlipFactor() {
+		return slipFactor;
+	}
+
+	/**
+	 * @param slipFactor The slipperiness of the field.
+	 */
+	public void setSlipFactor(double slipFactor) {
+		this.slipFactor = slipFactor;
 	}
 
 	@Override
