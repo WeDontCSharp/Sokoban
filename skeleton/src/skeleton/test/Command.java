@@ -27,7 +27,20 @@ public interface Command {
 
 		@Override
 		public void exec(TestEnvironment env) {
-			
+			// XXX
+		}
+	}
+	
+	public static class Level implements Command {
+		private String path;
+		
+		public Level(String path) {
+			this.path = path;
+		}
+		
+		@Override
+		public void exec(TestEnvironment env) {
+			// XXX
 		}
 	}
 }

@@ -33,15 +33,23 @@ public abstract class TestReader {
 				
 				Direction dir = null;
 				switch (dirStr.charAt(0)) {
-				case 'L': dir = Direction.Left; break;
-				case 'R': dir = Direction.Right; break;
-				case 'U': dir = Direction.Up; break;
-				case 'D': dir = Direction.Down; break;
+				case 'l': dir = Direction.Left; break;
+				case 'r': dir = Direction.Right; break;
+				case 'u': dir = Direction.Up; break;
+				case 'd': dir = Direction.Down; break;
 				// XXX: Info
 				default: throw new InputLanguageException();
 				}
 				
 				clist.add(new Command.Step(sync, pid, dir));
+			}
+			else if (cmd.equals("level")) {
+				String pth = parts[1].trim();
+				if (pth.length() < 2 || pth.charAt(0) != '"' || pth.charAt(pth.length() - 1) != '"') {
+					throw new InputLanguageException();
+				}
+				
+				clist.add(new Command.Level(pth.substring(1, pth.length() - 1)));
 			}
 			else {
 				// XXX: Info like line number

@@ -2,6 +2,7 @@ package skeleton;
 
 import java.io.IOException;
 
+import skeleton.test.InputLanguageException;
 import skeleton.test.TestReader;
 
 /**
@@ -13,6 +14,8 @@ public class Main {
 		try {
 			TestReader.fromFile("C:/TMP/sokoban_tests.txt");
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (InputLanguageException e) {
 			e.printStackTrace();
 		}
 	}
