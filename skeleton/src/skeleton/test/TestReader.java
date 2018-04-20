@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import skeleton.model.Direction;
+import skeleton.test.commands.LevelCommand;
+import skeleton.test.commands.StepCommand;
 
 public abstract class TestReader {
 	public static Test fromFile(String path) throws IOException, InputLanguageException {
@@ -41,7 +43,7 @@ public abstract class TestReader {
 				default: throw new InputLanguageException();
 				}
 				
-				clist.add(new Command.Step(sync, pid, dir));
+				clist.add(new StepCommand(sync, pid, dir));
 			}
 			else if (cmd.equals("level")) {
 				String pth = parts[1].trim();
@@ -49,7 +51,7 @@ public abstract class TestReader {
 					throw new InputLanguageException();
 				}
 				
-				clist.add(new Command.Level(pth.substring(1, pth.length() - 1)));
+				clist.add(new LevelCommand(pth.substring(1, pth.length() - 1)));
 			}
 			else {
 				// XXX: Info like line number

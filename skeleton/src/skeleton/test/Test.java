@@ -14,8 +14,13 @@ public class Test {
 	}
 	
 	public void run() {
-		for (Command cmd : commands) {
-			cmd.exec(this.environment);
+		try {
+			for (Command cmd : commands) {
+				cmd.exec(this.environment);
+			}
+		}
+		catch (TestExecutionException ex) {
+			ex.printStackTrace();
 		}
 	}
 }
