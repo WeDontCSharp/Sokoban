@@ -31,6 +31,8 @@ public class Warehouse {
 	 */
 	private Field[] fields;
 
+	private Worker[] workers;
+	
 	/**
 	 * Creates a warehouse (as a level).
 	 * 
@@ -43,6 +45,8 @@ public class Warehouse {
 
 		this.entities = new ArrayList<Entity>();
 		this.fields = new Field[w * h];
+		
+		this.workers = new Worker[4];
 	}
 
 	/**
@@ -105,6 +109,20 @@ public class Warehouse {
 				f.setNeighbourField(Direction.Down, this.getFieldChecked(x, y + 1));
 			}
 		}
+	}
+	
+	public void update() {
+		for (Entity e : this.entities) {
+			e.update();
+		}
+	}
+	
+	private void setWorker(int i, Entity e) {
+		this.workers[i] = (Worker)e;
+	}
+	
+	public Worker getWorker(int i) {
+		return this.workers[i];
 	}
 
 	public static Warehouse fromFile(String path) throws LevelFormatException, FileNotFoundException {
@@ -187,15 +205,19 @@ public class Warehouse {
 						break;
 					case 11:
 						ent = new Worker(wh, wh.getField(index % width, index / width), Direction.Down);
+						wh.setWorker(0, ent);
 						break;
 					case 12:
 						ent = new Worker(wh, wh.getField(index % width, index / width), Direction.Down);
+						wh.setWorker(1, ent);
 						break;
 					case 13:
 						ent = new Worker(wh, wh.getField(index % width, index / width), Direction.Down);
+						wh.setWorker(2, ent);
 						break;
 					case 14:
 						ent = new Worker(wh, wh.getField(index % width, index / width), Direction.Down);
+						wh.setWorker(3, ent);
 						break;
 					case 15:
 						ent = new LifeCrate(wh, wh.getField(index % width, index / width));

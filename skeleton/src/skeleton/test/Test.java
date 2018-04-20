@@ -18,6 +18,11 @@ public class Test {
 			for (Command cmd : commands) {
 				cmd.exec(this.environment);
 			}
+			/*
+			while (true) {
+				this.environment.getLevel().update();
+			}
+			*/
 		}
 		catch (TestExecutionException ex) {
 			ex.printStackTrace();

@@ -1,5 +1,7 @@
 package skeleton.model;
 
+import java.util.Stack;
+
 /**
  * An abstract class representing an entity.
  */
@@ -19,6 +21,8 @@ public abstract class Entity implements IVisitor {
 	 */
 	private double weight;
 	
+	private Stack<Process> processes;
+	
 	/**
 	 * The entity's constructor.
 	 * 
@@ -30,6 +34,7 @@ public abstract class Entity implements IVisitor {
 		this.curField = f;
 		f.setEntity(this);
 		this.weight = 1.0;
+		this.processes = new Stack<Process>();
 	}
 	
 	/**
@@ -73,18 +78,19 @@ public abstract class Entity implements IVisitor {
 	 */
 	public boolean step(Worker firstPusher, Direction dir) {
 		Field neighbour = curField.getNeighbourField(dir);
+		if (neighbour.isLocked()) {
+			return false;
+		}
 		if (neighbour.isEmpty()) {											//If the next field is empty
 			if (visit(firstPusher, neighbour)) {
-				curField.unsetEntity();
-				setCurField(neighbour);
+				this.pushProcess(new StepProcess(this, curField, neighbour));
 				return true;
 			}
 		} else {												//If the next field is occupied, tries to push
 			Entity nextEntity = neighbour.getEntity().get();
 			if (push(firstPusher, nextEntity, dir)) {
 				if (visit(firstPusher, neighbour)) {
-					curField.unsetEntity();
-					setCurField(neighbour);
+					this.pushProcess(new StepProcess(this, curField, neighbour));
 					return true;
 				}
 			}
@@ -133,4 +139,29 @@ public abstract class Entity implements IVisitor {
 		return level;
 	}
 	
+	public void update() {
+		Process p = this.getTopProcess();
+		if (p == null) {
+			return;
+		}
+		p.update();
+	}
+	
+	public void pushProcess(Process proc) {
+		this.processes.push(proc);
+		proc.start();
+	}
+	
+	public Process getTopProcess() {
+		if (processes.isEmpty()) {
+			return null;
+		}
+		while (processes.peek().isOver()) {
+			processes.pop().end();
+			if (processes.isEmpty()) {
+				return null;
+			}
+		}
+		return processes.peek();
+	}
 }

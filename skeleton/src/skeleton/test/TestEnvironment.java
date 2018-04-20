@@ -11,4 +11,8 @@ public class TestEnvironment {
 	public void setLevel(Warehouse wh) {
 		this.level = wh;
 	}
+	
+	public Warehouse getLevel() {
+		return this.level;
+	}
 }

@@ -30,7 +30,7 @@ public abstract class TestReader {
 			
 			if (cmd.equals("step") || cmd.equals("!step")) {
 				boolean sync = cmd.charAt(0) == '!';
-				int pid = Integer.parseInt(parts[1].trim());
+				int pid = Integer.parseInt(parts[1].trim()) - 1;
 				String dirStr = parts[2].trim();
 				
 				Direction dir = null;
