@@ -1,7 +1,5 @@
 package skeleton.model;
 
-import skeleton.meta.PrettyPrinter;
-
 /**
  * A class representing a worker.
  */
@@ -84,9 +82,7 @@ public class Worker extends Entity {
 	 * @param dir 	Direction of the moving.
 	 */
 	public void move(Direction dir) {
-		PrettyPrinter.startFunction("Worker", "move(dir)");
 		step(this, dir);
-		PrettyPrinter.endFunction("Worker", "move(dir)");
 	}
 	
 	/* (non-Javadoc)
@@ -94,10 +90,7 @@ public class Worker extends Entity {
 	 */
 	@Override
 	public boolean push(Worker firstPusher, Entity pushed, Direction dir) {
-		PrettyPrinter.startFunction("Worker", "push(firstPusher, pushed, dir)");
-		boolean res = pushed.pushByWorker(firstPusher, this, dir);
-		PrettyPrinter.endFunction("Worker", "push(firstPusher, pushed, dir)", res ? "true" : "false");
-		return res;
+		return pushed.pushByWorker(firstPusher, this, dir);
 	}
 
 	/* (non-Javadoc)
@@ -105,18 +98,14 @@ public class Worker extends Entity {
 	 */
 	@Override
 	public boolean pushByWorker(Worker firstPusher, Worker pusher, Direction dir) {
-		PrettyPrinter.startFunction("Worker", "pushByWorker(firstPusher, pusher, dir)");
 		if (firstPusher == pusher) {
-			PrettyPrinter.endFunction("Worker", "pushByWorker(firstPusher, pusher, dir)", "false");
 			return false;
 		}
 		double remPower = firstPusher.consumePower(getCurField().getSlipFactor() * getWeight());
 		if (remPower < 0) {
 			return false;
 		}
-		boolean res = step(firstPusher, dir);
-		PrettyPrinter.endFunction("Worker", "pushByWorker(firstPusher, pusher, dir)", res ? "true" : "false");
-		return res;
+		return step(firstPusher, dir);
 	}
 
 	/* (non-Javadoc)
@@ -124,31 +113,24 @@ public class Worker extends Entity {
 	 */
 	@Override
 	public boolean pushByCrate(Worker firstPusher, Crate pusher, Direction dir) {
-		PrettyPrinter.startFunction("Worker", "pushByCrate(firstPusher, pusher, dir)");
 		double remPower = firstPusher.consumePower(getCurField().getSlipFactor() * getWeight());
 		if (remPower < 0) {
 			return false;
 		}
-		boolean res = step(firstPusher, dir);
-		PrettyPrinter.endFunction("Worker", "pushByCrate(firstPusher, pusher, dir)", res ? "true" : "false");
-		return res;
+		return step(firstPusher, dir);
 	}
 	
 	/**
 	 *The Worker gets one point. 
 	 */
 	public void gainPoint() {
-		PrettyPrinter.startFunction("Worker", "gainPoint()");
 		points++;
-		PrettyPrinter.endFunction("Worker", "gainPoint()");
 	}
 	/**
 	 * The Worker loses one point.
 	 */
 	public void losePoint() {
-		PrettyPrinter.startFunction("Worker", "losePoint()");
 		points--;
-		PrettyPrinter.endFunction("Worker", "losePoint()");
 	}
 	
 	/**
@@ -157,8 +139,6 @@ public class Worker extends Entity {
 	 * @return points	The Worker's points.
 	 */
 	public int getPoints() {
-		PrettyPrinter.startFunction("Worker", "getPoints()");
-		PrettyPrinter.endFunction("Worker", "getPoints()", "points");
 		return points;
 	}
 	
@@ -166,18 +146,14 @@ public class Worker extends Entity {
 	 * The worker gets one healthpoint.
 	 */
 	public void gainHealth() {
-		PrettyPrinter.startFunction("Worker", "gainHealth()");
 		health++;
-		PrettyPrinter.endFunction("Worker", "gainHealth()");
 	}
 	
 	/**
 	 * The Worker loses one healthpoint.
 	 */
 	public void loseHealth() {
-		PrettyPrinter.startFunction("Worker", "loseHealth()");
 		health--;
-		PrettyPrinter.endFunction("Worker", "loseHealth()");
 	}
 	
 	/**
@@ -186,8 +162,6 @@ public class Worker extends Entity {
 	 * @return health	The Worker's healtpoints.
 	 */
 	public int getHealth() {
-		PrettyPrinter.startFunction("Worker", "getHealth()");
-		PrettyPrinter.endFunction("Worker", "getHealth()", "health");
 		return health;
 	}
 	
@@ -195,10 +169,8 @@ public class Worker extends Entity {
 	 * The Worker respawns at their spawnField.
 	 */
 	public void reSpawn() {
-		PrettyPrinter.startFunction("Worker", "reSpawn()");
 		this.setCurField(spawnField);
 		spawnField.setEntity(this);
-		PrettyPrinter.endFunction("Worker", "reSpawn()");
 	}
 	
 	/**
@@ -214,10 +186,7 @@ public class Worker extends Entity {
 	 */
 	@Override
 	public boolean visit(Worker firstPusher, IVisitable iv) {
-		PrettyPrinter.startFunction("Worker", "visit(firstPusher, iv)");
-		boolean ret = iv.visitByWorker(firstPusher, this);
-		PrettyPrinter.endFunction("Worker", "visit(firstPusher, iv)", ret ? "true" : "false");
-		return ret;
+		return iv.visitByWorker(firstPusher, this);
 	}
 	
 }

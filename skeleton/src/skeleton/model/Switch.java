@@ -3,8 +3,6 @@ package skeleton.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import skeleton.meta.PrettyPrinter;
-
 /**
  * A class representing a switch. Switches are always
  * reachable by entities. Switches control holes
@@ -40,7 +38,6 @@ public class Switch extends Floor {
      */
     @Override
 	public boolean visitByCrate(Worker firstPusher, Crate c) {
-		PrettyPrinter.startFunction("Switch", "visitByCrate(firstPusher, c)");
 		super.setEntity(c);
 		for (Hole h : holes) {
 			h.setOpen(true);
@@ -49,7 +46,6 @@ public class Switch extends Floor {
 				e.visit(firstPusher, h);
 			}
 		}
-		PrettyPrinter.endFunction("Switch", "visitByCrate(firstPusher, c)", "true");
 		return true;
 	}
 	
@@ -59,12 +55,10 @@ public class Switch extends Floor {
      */
     @Override
 	public void unsetEntity() {
-		PrettyPrinter.startFunction("Switch", "unsetEntity()");
 		super.unsetEntity();
 		for (Hole h : holes) {
 			h.setOpen(false);
 		}
-		PrettyPrinter.endFunction("Switch", "unsetEntity()");
 	}
     
     public void addHole(Hole h) {

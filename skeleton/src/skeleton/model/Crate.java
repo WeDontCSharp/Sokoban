@@ -1,7 +1,5 @@
 package skeleton.model;
 
-import skeleton.meta.PrettyPrinter;
-
 /**
  * A class representing a crate.
  */
@@ -19,51 +17,37 @@ public class Crate extends Entity {
 
 	@Override
 	public boolean push(Worker firstPusher, Entity pushed, Direction dir) {
-		PrettyPrinter.startFunction("Crate", "push(firstPusher, pushed, dir)");
-		boolean res = pushed.pushByCrate(firstPusher, this, dir);
-		PrettyPrinter.endFunction("Crate", "push(firstPusher, pushed, dir)", res ? "true" : "false");
-		return res;
+		return pushed.pushByCrate(firstPusher, this, dir);
 	}
 
 	@Override
 	public boolean pushByWorker(Worker firstPusher, Worker pusher, Direction dir) {
-		PrettyPrinter.startFunction("Crate", "pushByWorker(firstPusher, pusher, dir)");
 		double remPower = firstPusher.consumePower(getCurField().getSlipFactor() * getWeight());
 		if (remPower < 0) {
 			return false;
 		}
-		boolean res = step(firstPusher, dir);
-		PrettyPrinter.endFunction("Crate", "pushByWorker(firstPusher, pusher, dir)", res ? "true" : "false");
-		return res;
+		return step(firstPusher, dir);
 	}
 
 	@Override
 	public boolean pushByCrate(Worker firstPusher, Crate pusher, Direction dir) {
-		PrettyPrinter.startFunction("Crate", "pushByCrate(firstPusher, pusher, dir)");
 		double remPower = firstPusher.consumePower(getCurField().getSlipFactor() * getWeight());
 		if (remPower < 0) {
 			return false;
 		}
-		boolean res = step(firstPusher, dir);
-		PrettyPrinter.endFunction("Crate", "pushByCrate(firstPusher, pusher, dir)", res ? "true" : "false");
-		return res;
+		return step(firstPusher, dir);
 	}
 	
 	/**
 	 * Removes the Crate from the game.
 	 */
 	public void remove() {
-		PrettyPrinter.startFunction("Crate", "remove()");
 		// XXX: Stub
-		PrettyPrinter.endFunction("Crate", "remove()");
 	}
 
 	@Override
 	public boolean visit(Worker firstPusher, IVisitable iv) {
-		PrettyPrinter.startFunction("Crate", "visit(firstPusher, iv)");
-		boolean res = iv.visitByCrate(firstPusher, this);
-		PrettyPrinter.endFunction("Crate", "visit(firstPusher, iv)", res ? "true" : "false");
-		return res;
+		return iv.visitByCrate(firstPusher, this);
 	}
 	
 }

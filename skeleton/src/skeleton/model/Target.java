@@ -1,7 +1,5 @@
 package skeleton.model;
 
-import skeleton.meta.PrettyPrinter;
-
 /**
  * A class representing a target. Targets act like
  * floors but if a crate is pushed onto them, the
@@ -36,13 +34,11 @@ public class Target extends Floor {
      */
     @Override
 	public void unsetEntity() {
-		PrettyPrinter.startFunction("Target", "unsetEntity()");
 		super.unsetEntity();
 		if (whoPushed != null) {
 			whoPushed.losePoint();
 			whoPushed = null;
 		}
-		PrettyPrinter.endFunction("Target", "unsetEntity()");
 	}
 	
     /* (non-Javadoc)
@@ -50,11 +46,9 @@ public class Target extends Floor {
      */
     @Override
 	public boolean visitByCrate(Worker firstPusher, Crate c) {
-		PrettyPrinter.startFunction("Target", "visitByCrate(firstPusher, c)");
 		super.setEntity(c);
 		whoPushed = firstPusher;
 		firstPusher.gainPoint();
-		PrettyPrinter.endFunction("Target", "visitByCrate(firstPusher, c)", "true");
 		return true;
 	}
 
