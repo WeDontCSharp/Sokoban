@@ -27,6 +27,11 @@ public class Worker extends Entity {
 	 * slipperines with.
 	 */
 	private PlaceableItem item;
+	
+	public PlaceableItem getItem() {
+		return item;
+	}
+
 	/**
 	 * The field where the worker starts the game
 	 * and respawns when losing a life.
@@ -34,6 +39,10 @@ public class Worker extends Entity {
 	 */
 	private Field spawnField;
 	
+	public Field getSpawnField() {
+		return spawnField;
+	}
+
 	/**
 	 * Worker's constructor. The generated worker appears ion it's spawner field,
 	 * which is specified in the constuctor.
@@ -45,8 +54,8 @@ public class Worker extends Entity {
 	public Worker(Warehouse g, Field f, Direction dir) {
 		super(g, f);
 		this.spawnField = f;
-		this.orgPower = 2.0;
-		this.power = 2.0;
+		this.orgPower = 5.0;
+		this.health = 3;
 	}
 	
 	/**
@@ -59,7 +68,8 @@ public class Worker extends Entity {
 	 * enough power to push the entity.
 	 */
 	public double consumePower(double power) {
-		return this.power - power;
+		this.power -= power;
+		return this.power;
 	}
 	
 	/**
@@ -85,6 +95,7 @@ public class Worker extends Entity {
 		if (this.getCurrentProcess() != null) {
 			return;
 		}
+		this.power = this.orgPower;
 		step(this, dir);
 	}
 	
@@ -157,6 +168,11 @@ public class Worker extends Entity {
 	 */
 	public void loseHealth() {
 		health--;
+		if (health == 0) {
+			die();
+		} else {
+			reSpawn();
+		}
 	}
 	
 	/**
@@ -172,8 +188,7 @@ public class Worker extends Entity {
 	 * The Worker respawns at their spawnField.
 	 */
 	public void reSpawn() {
-		this.setCurField(spawnField);
-		spawnField.setEntity(this);
+		this.pushProcess(new WorkerRespawnProcess(this, this.getCurField()));
 	}
 	
 	/**
@@ -190,6 +205,11 @@ public class Worker extends Entity {
 	@Override
 	public boolean visit(Worker firstPusher, IVisitable iv) {
 		return iv.visitByWorker(firstPusher, this);
+	}
+	
+	public void reSpawnProcess(Process proc) {
+		this.processes.addLast(proc);
+		proc.start();
 	}
 	
 }

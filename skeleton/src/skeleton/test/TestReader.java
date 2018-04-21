@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import skeleton.model.Direction;
 import skeleton.test.commands.LevelCommand;
+import skeleton.test.commands.PlayerInfoCommand;
 import skeleton.test.commands.StepCommand;
 
 public abstract class TestReader {
@@ -52,6 +53,12 @@ public abstract class TestReader {
 				}
 				
 				clist.add(new LevelCommand(pth.substring(1, pth.length() - 1)));
+			}
+			else if (cmd.equals("playerinfo")) {
+				int pid = Integer.parseInt(parts[1].trim()) - 1;
+				String typeStr = parts[2].trim();
+
+				clist.add(new PlayerInfoCommand(pid, typeStr));
 			}
 			else {
 				// XXX: Info like line number

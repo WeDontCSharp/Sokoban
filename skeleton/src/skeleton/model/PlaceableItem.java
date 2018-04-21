@@ -7,5 +7,17 @@ package skeleton.model;
  * as a field's original slipFactor is 1.0.
  */
 public enum PlaceableItem {
-	Nothing, Honey, Oil
+	Nothing, Honey, Oil;
+	
+	public static char toChar(PlaceableItem item) {
+		if (item == null) {
+			return '?';
+		}
+		switch (item) {
+		case Nothing: return 'N';
+		case Honey: return 'H';
+		case Oil: return 'O';
+		}
+		return '?';
+	}
 }

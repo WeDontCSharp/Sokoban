@@ -23,7 +23,7 @@ public abstract class Entity implements IVisitor {
 	 */
 	private double weight;
 	
-	private LinkedList<Process> processes;
+	protected LinkedList<Process> processes;
 	
 	/**
 	 * The entity's constructor.

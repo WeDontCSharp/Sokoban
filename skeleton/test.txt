@@ -1,5 +1,5 @@
 LEVEL "sokoban_testlvl.json"
-!STEP 1 U
-!STEP 1 U
-!STEP 1 U
-!STEP 1 U
+PLAYERINFO 2 HP
+!STEP 1 R
+!STEP 1 R
+PLAYERINFO 2 HP
