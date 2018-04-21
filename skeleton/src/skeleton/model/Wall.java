@@ -29,15 +29,12 @@ public class Wall extends Field  {
 	 */
 	@Override
 	public boolean visitByWorker(Worker firstPusher, Worker w) {
-		System.err.println("a");
 		if (firstPusher != w) {
 			super.setEntity(w);
 			w.loseHealth();
-			System.err.println("a");
 			return true;
 		}
 		else {
-			System.err.println("a");
 			return false;
 		}
 	}

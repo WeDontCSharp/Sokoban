@@ -188,7 +188,7 @@ public class Worker extends Entity {
 	 * The Worker respawns at their spawnField.
 	 */
 	public void reSpawn() {
-		this.pushProcess(new WorkerRespawnProcess(this, this.getCurField()));
+		this.pushProcess(new StepProcess(this, this.getCurField(), spawnField));
 	}
 	
 	/**
@@ -205,11 +205,6 @@ public class Worker extends Entity {
 	@Override
 	public boolean visit(Worker firstPusher, IVisitable iv) {
 		return iv.visitByWorker(firstPusher, this);
-	}
-	
-	public void reSpawnProcess(Process proc) {
-		this.processes.addLast(proc);
-		proc.start();
 	}
 	
 }

@@ -23,7 +23,7 @@ public abstract class Entity implements IVisitor {
 	 */
 	private double weight;
 	
-	protected LinkedList<Process> processes;
+	private LinkedList<Process> processes;
 	
 	/**
 	 * The entity's constructor.
@@ -158,12 +158,12 @@ public abstract class Entity implements IVisitor {
 		if (processes.isEmpty()) {
 			return null;
 		}
-		while (processes.getFirst().isOver()) {
+		while (processes.peekFirst().isOver()) {
 			processes.removeFirst().end();
 			if (processes.isEmpty()) {
 				return null;
 			}
 		}
-		return processes.getFirst();
+		return processes.peekFirst();
 	}
 }
