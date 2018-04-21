@@ -50,6 +50,24 @@ public class Warehouse {
 	}
 
 	/**
+	 * Gets the width of the warehouse.
+	 *
+	 * @return The width of the warehouse.
+	 */
+	public int getWidth(){
+		return this.width;
+	}
+
+	/**
+	 * Gets the height of the warehouse.
+	 *
+	 * @return The height of the warehouse.
+	 */
+	public int getHeight(){
+		return this.height;
+	}
+
+	/**
 	 * Adds an entity to the warehouse.
 	 * 
 	 * @param e The entity.

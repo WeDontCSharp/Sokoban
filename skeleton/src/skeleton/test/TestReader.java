@@ -10,6 +10,8 @@ import skeleton.model.Direction;
 import skeleton.test.commands.LevelCommand;
 import skeleton.test.commands.PlayerInfoCommand;
 import skeleton.test.commands.StepCommand;
+import skeleton.test.commands.CNTCommand;
+import skeleton.test.commands.HoleInfoCommand;
 
 public abstract class TestReader {
 	public static Test fromFile(String path) throws IOException, InputLanguageException {
@@ -59,6 +61,17 @@ public abstract class TestReader {
 				String typeStr = parts[2].trim();
 
 				clist.add(new PlayerInfoCommand(pid, typeStr));
+			}
+			else if (cmd.equals("holeinfo")) {
+				int x = Integer.parseInt(parts[1].trim());
+				int y = Integer.parseInt(parts[2].trim());
+
+				clist.add(new HoleInfoCommand(x, y));
+			}
+			else if (cmd.equals("cnt")) {
+				String arg = parts[1].trim();
+
+				clist.add(new CNTCommand(arg));
 			}
 			else {
 				// XXX: Info like line number
