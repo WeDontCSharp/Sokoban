@@ -13,7 +13,7 @@ public class Main {
 	
 	public static void main(String[] args) {		
 		try {
-			Test t = TestReader.fromFile("C:/TMP/sokoban_tests.txt");
+			Test t = TestReader.fromFile("test.txt");
 			t.run();
 		} catch (IOException e) {
 			e.printStackTrace();

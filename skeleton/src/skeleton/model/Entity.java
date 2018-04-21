@@ -1,5 +1,7 @@
 package skeleton.model;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Stack;
 
 /**
@@ -21,7 +23,7 @@ public abstract class Entity implements IVisitor {
 	 */
 	private double weight;
 	
-	private Stack<Process> processes;
+	private LinkedList<Process> processes;
 	
 	/**
 	 * The entity's constructor.
@@ -34,7 +36,7 @@ public abstract class Entity implements IVisitor {
 		this.curField = f;
 		f.setEntity(this);
 		this.weight = 1.0;
-		this.processes = new Stack<Process>();
+		this.processes = new LinkedList<Process>();
 	}
 	
 	/**
@@ -140,7 +142,7 @@ public abstract class Entity implements IVisitor {
 	}
 	
 	public void update() {
-		Process p = this.getTopProcess();
+		Process p = this.getCurrentProcess();
 		if (p == null) {
 			return;
 		}
@@ -148,20 +150,20 @@ public abstract class Entity implements IVisitor {
 	}
 	
 	public void pushProcess(Process proc) {
-		this.processes.push(proc);
+		this.processes.addLast(proc);
 		proc.start();
 	}
 	
-	public Process getTopProcess() {
+	public Process getCurrentProcess() {
 		if (processes.isEmpty()) {
 			return null;
 		}
-		while (processes.peek().isOver()) {
-			processes.pop().end();
+		while (processes.getFirst().isOver()) {
+			processes.removeFirst().end();
 			if (processes.isEmpty()) {
 				return null;
 			}
 		}
-		return processes.peek();
+		return processes.getFirst();
 	}
 }

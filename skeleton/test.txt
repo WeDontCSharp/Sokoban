@@ -1,0 +1,5 @@
+LEVEL "sokoban_testlvl.json"
+!STEP 1 U
+!STEP 1 U
+!STEP 1 U
+!STEP 1 U

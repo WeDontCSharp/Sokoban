@@ -25,7 +25,7 @@ public class StepCommand implements Command {
 			throw new TestExecutionException();
 		}
 		w.move(this.direction);
-		Process proc = w.getTopProcess();
+		Process proc = w.getCurrentProcess();
 		if (proc == null) {
 			System.out.println("STEP_FAIL " + (playerID + 1) + " " + Direction.toChar(this.direction));
 			return;

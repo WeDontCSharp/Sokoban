@@ -82,7 +82,7 @@ public class Worker extends Entity {
 	 * @param dir 	Direction of the moving.
 	 */
 	public void move(Direction dir) {
-		if (this.getTopProcess() != null) {
+		if (this.getCurrentProcess() != null) {
 			return;
 		}
 		step(this, dir);
