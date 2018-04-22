@@ -24,15 +24,18 @@ public class PlayerInfoCommand implements Command {
 			throw new TestExecutionException();
 		}
 		if (type.equals("hp")) {
-			System.out.println("PLAYER_HP " + (playerID + 1) + " " + w.getHealth());
+			//System.out.println("PLAYER_HP " + (playerID + 1) + " " + w.getHealth());
+			result.add("PLAYER_HP " + (playerID + 1) + " " + w.getHealth());
 			return;
 		}
 		if (type.equals("pts")) {
-			System.out.println("PLAYER_PTS " + (playerID + 1) + " " + w.getPoints());
+			//System.out.println("PLAYER_PTS " + (playerID + 1) + " " + w.getPoints());
+			result.add("PLAYER_PTS " + (playerID + 1) + " " + w.getPoints());
 			return;
 		}
 		if (type.equals("item")) {
-			System.out.println("PLAYER_ITEM " + (playerID + 1) + " " + PlaceableItem.toChar(w.getItem()));
+			//System.out.println("PLAYER_ITEM " + (playerID + 1) + " " + PlaceableItem.toChar(w.getItem()));
+			result.add("PLAYER_ITEM " + (playerID + 1) + " " + PlaceableItem.toChar(w.getItem()));
 			return;
 		}
 	}

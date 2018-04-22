@@ -37,6 +37,15 @@ public class Main {
 		// XXX: Add tests here with their name only!
 		src.add("Move worker on empty field");
 		src.add("Worker pushes crate to empty field");
+		src.add("Worker pushes other worker directly");
+		src.add("Worker pushes other worker in chain");
+		
+		src.add("Worker smashed by wall");
+		src.add("Worker smashed by spawn");
+		//src.add("Worker falls into hole");
+		//src.add("Worker pushes lifecrate into hole");
+		//src.add("Target activation test");
+		//src.add("Switch activation test");
 		
 		try {
 			Test t = null;

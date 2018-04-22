@@ -1,0 +1,4 @@
+LEVEL "testlevel2.json"
+PLAYERINFO 3 HP
+!STEP 1 D
+PLAYERINFO 3 HP
