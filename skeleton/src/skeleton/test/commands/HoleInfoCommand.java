@@ -17,11 +17,11 @@ public class HoleInfoCommand implements Command {
 
 	@Override
 	public void exec(TestEnvironment env) throws TestExecutionException {
-		Hole h = env.getLevel().getField(this.posX, this.posY);
+		Hole h = (Hole) env.getLevel().getField(this.posX, this.posY);
 		if (h == null) {
 			throw new TestExecutionException();
 		}
-		if (h.IsOpen()){
+		if (h.isOpen()){
 			System.out.println("OPEN " + posX + "," + posY);
 			return;
 		} else {

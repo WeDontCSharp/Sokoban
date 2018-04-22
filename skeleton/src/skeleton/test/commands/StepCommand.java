@@ -35,10 +35,7 @@ public class StepCommand implements Command {
 			while (!proc.isOver()) {
 				env.getLevel().update();
 			}
-			// TODO: Added this to fix not unlocking! Seems to be working...
-			if (proc.isOver()) {
-				env.getLevel().update();
-			}
+			env.getLevel().update();
 		}
 	}
 }

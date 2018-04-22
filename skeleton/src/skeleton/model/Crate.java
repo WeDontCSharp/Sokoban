@@ -50,6 +50,7 @@ public class Crate extends Entity {
 	 * @return
 	 */
 	public boolean isStuck() {
+		return false;
 		// XXX: Stub
 	}
 
@@ -58,6 +59,7 @@ public class Crate extends Entity {
 	 * @return
 	 */
 	public boolean isOnTarget() {
+		return false;
 		// XXX: Stub
 	}
 

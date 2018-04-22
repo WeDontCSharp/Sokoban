@@ -3,6 +3,8 @@ package skeleton.test.commands;
 import skeleton.model.Warehouse;
 import skeleton.model.Worker;
 import skeleton.model.Crate;
+import skeleton.model.Entity;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +14,7 @@ import skeleton.test.TestExecutionException;
 
 public class CNTCommand implements Command {
 	private String param;
-	private List<Crate> crates;
+	private ArrayList<Entity> crates;
 
 	public CNTCommand(String args) {
 		this.param = args;
@@ -21,10 +23,10 @@ public class CNTCommand implements Command {
 
 	public void CrateFinder(Warehouse wh){
 		crates.clear();
-		for (int i = 0; i <= wh.getHeight()){
-			for (int j = 0; j <= wh.getWidth()){
+		for (int i = 0; i <= wh.getHeight(); ++i){
+			for (int j = 0; j <= wh.getWidth(); ++i){
 				if (!wh.getField(i, j).isEmpty());
-					crates.add(wh.getField(i, j).getEntity());
+					crates.add((wh.getField(i, j).getEntity().get()));
 			}
 		}
 		for (int i = 0; i < 4; i++){
@@ -65,7 +67,7 @@ public class CNTCommand implements Command {
 			int cnt = 0;
 			CrateFinder(w);
 			for (Entity c : crates){
-				if((Crate)c.isOnTarget())
+				if(((Crate)c).isOnTarget())
 					cnt++;
 			}
 			System.out.println("CNT_CR " + cnt);
@@ -75,7 +77,7 @@ public class CNTCommand implements Command {
 			int cnt = 0;
 			CrateFinder(w);
 			for (Entity c : crates){
-				if(!(Crate)c.isOnTarget())
+				if(!((Crate)c).isOnTarget())
 					cnt++;
 			}
 			System.out.println("CNT_CW " + cnt);
@@ -85,7 +87,7 @@ public class CNTCommand implements Command {
 			int cnt = 0;
 			CrateFinder(w);
 			for (Entity c : crates){
-				if((Crate)c.isStuck())
+				if(((Crate)c).isStuck())
 					cnt++;
 			}
 			System.out.println("CNT_CS " + cnt);
