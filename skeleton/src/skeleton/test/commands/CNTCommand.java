@@ -38,7 +38,7 @@ public class CNTCommand implements Command {
 				if (w.getWorker(i) != null)
 					cnt++;
 			}
-			System.out.println("CNT_WA " + cnt);
+			result.add("CNT_WA " + cnt);
 			return;
 		}
 		if (param.equals("wd")) {
@@ -47,12 +47,12 @@ public class CNTCommand implements Command {
 				if (w.getWorker(i) == null)
 					cnt++;
 			}
-			System.out.println("CNT_WD " + cnt);
+			result.add("CNT_WD " + cnt);
 			return;
 		}
 		if (param.equals("c")) {
 			CrateFinder(w);
-			System.out.println("CNT_C " + crates.size());
+			result.add("CNT_C " + crates.size());
 			return;
 		}
 		if (param.equals("cr")) {
@@ -62,7 +62,7 @@ public class CNTCommand implements Command {
 				if(c.isOnTarget())
 					cnt++;
 			}
-			System.out.println("CNT_CR " + cnt);
+			result.add("CNT_CR " + cnt);
 			return;
 		}
 		if (param.equals("cw")) {
@@ -72,7 +72,7 @@ public class CNTCommand implements Command {
 				if(!(c.isOnTarget()))
 					cnt++;
 			}
-			System.out.println("CNT_CW " + cnt);
+			result.add("CNT_CW " + cnt);
 			return;
 		}
 		if (param.equals("cs")) {
@@ -82,7 +82,7 @@ public class CNTCommand implements Command {
 				if(c.isStuck())
 					cnt++;
 			}
-			System.out.println("CNT_CS " + cnt);
+			result.add("CNT_CS " + cnt);
 			return;
 		}
 	}

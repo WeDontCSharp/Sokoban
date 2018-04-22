@@ -29,11 +29,9 @@ public class StepCommand implements Command {
 		w.move(this.direction);
 		Process proc = w.getCurrentProcess();
 		if (proc == null) {
-			//System.out.println("STEP_FAIL " + (playerID + 1) + " " + Direction.toChar(this.direction));
 			result.add("STEP_FAIL " + (playerID + 1) + " " + Direction.toChar(this.direction));
 			return;
 		}
-		//System.out.println("STEP_OK " + (playerID + 1) + " " + Direction.toChar(this.direction));
 		result.add("STEP_OK " + (playerID + 1) + " " + Direction.toChar(this.direction));
 		if (sync) {
 			while (!proc.isOver()) {

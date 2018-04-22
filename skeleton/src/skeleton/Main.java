@@ -35,7 +35,6 @@ public class Main {
 		ArrayList<String> src = new ArrayList<String>();
 		
 		// XXX: Add tests here with their name only!
-		//MENNEK:
 		src.add("Move worker on empty field");
 		src.add("Worker pushes crate to empty field");
 		src.add("Worker pushes other worker directly");
@@ -44,24 +43,16 @@ public class Main {
 		src.add("Worker smashed by spawn");
 		src.add("Worker falls into hole");
 		src.add("Worker pushes lifecrate into hole");
-		
-		//NEM MENNEK:  (CNT PROBLEMS)
 		src.add("Target activation test");
 		src.add("Target deactivation test");
-		
-		//MENNEK:
 		src.add("Switch activation test");
 		src.add("Switch deactivation test");
 		src.add("Field modificator test - oil");
 		src.add("Field modificator test - honey");
 		src.add("Locking mechanism of simultaneously pushed conflicting chains");
-		
-		//NEM MENNEK: (ENDING PROBLEMS)
 		src.add("Game ends because there is a crate on all targets");
 		src.add("Game ends because there are no moveable crates");
 		src.add("Game ends because all the workers died except one");
-		
-		//MENNEK:
 		src.add("Player gains an item");
 		src.add("Worker puts down item");
 		
@@ -117,12 +108,16 @@ public class Main {
 					if (num < 0 || num > tests.size()) {
 						System.out.println("It's not that hard to give a number from 0 to " + tests.size() + "... Let's try it again.");
 					} else if (num == 0) {	
-						
+						int success = 0;
 						for (int i = 0; i < tests.size(); ++i) {
 							System.out.println("\nRunning test: [" + tests.get(i).getId() + "] " + tests.get(i).getName() + "...");
-							tests.get(i).run();
+							if (tests.get(i).run()) {
+								success++;
+							}
 						}
-						
+						System.out.println("\n=== SUCCEEDED / ALL ===");
+						System.out.println("=== "+ success +" / "+ tests.size() +" ===");
+						 
 					} else {
 						System.out.println("\nRunning test: [" + tests.get(num - 1).getId() + "] " + tests.get(num - 1).getName() + "...");
 						tests.get(num - 1).run();

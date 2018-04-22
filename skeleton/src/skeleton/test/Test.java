@@ -43,7 +43,7 @@ public class Test {
 		this.commands = cmds;
 	}
 	
-	public void run() {
+	public boolean run() {
 		try {
 			for (Command cmd : commands) {
 				cmd.exec(this.environment, this.result);
@@ -62,8 +62,15 @@ public class Test {
 			// XXX: Comparing the result and the expected result and writing some shit to the user here.
 			if (result.size() != expected.size()) {
 				// XXX: Such a big error that we should handle differently...
-				System.out.println("TEST FAILED: The amount of output lines differs from the expected result...");
-				return;
+				System.out.println("TEST FAILED: The amount of output lines differ from the expected result...");
+				for (String s : result) {
+					System.out.println(s);
+				}
+				System.out.println("--");
+				for (String s : expected) {
+					System.out.println(s);
+				}
+				return false;
 			}
 			
 			boolean failed = false;
@@ -76,6 +83,7 @@ public class Test {
 			
 			if (!failed) {
 				System.out.println("TEST SUCCESSFULLY FINISHED!");
+				return true;
 			} else {
 				for (int i = 0; i < result.size(); ++i) {
 					if (!result.get(i).equals(expected.get(i))){
@@ -90,5 +98,7 @@ public class Test {
 		catch (TestExecutionException ex) {
 			ex.printStackTrace();
 		}
+		
+		return false;
 	}
 }

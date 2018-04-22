@@ -29,17 +29,13 @@ public class LoadCommand implements Command {
 			env.setLevel((Warehouse) ois.readObject());
 			
         } catch (FileNotFoundException e) {
-			//System.out.println("LOAD_FAIL \"" + path + "\"");
 			result.add("LOAD_FAIL \"" + path + "\"");
 		} catch (ClassNotFoundException e) {
-			//System.out.println("LOAD_FAIL \"" + path + "\"");
 			result.add("LOAD_FAIL \"" + path + "\"");
 		} catch (IOException e) {
-			//System.out.println("LOAD_FAIL \"" + path + "\"");
 			result.add("LOAD_FAIL \"" + path + "\"");
 		}
         
-        //System.out.println("LOAD_SUCCESS \"" + path + "\"");
         result.add("LOAD_SUCCESS \"" + path + "\"");
 		
 	}

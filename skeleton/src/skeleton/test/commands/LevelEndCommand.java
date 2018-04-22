@@ -19,7 +19,7 @@ public class LevelEndCommand implements Command {
 		}
 		
 		if(wh.getEnd() != Warehouse.EndType.Nothing) {
-			System.out.println("LEVEL_END "+Warehouse.EndType.toString(wh.getEnd()));
+			result.add("LEVEL_END "+Warehouse.EndType.toString(wh.getEnd()));
 		}
 	}
 

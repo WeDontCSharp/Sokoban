@@ -25,11 +25,9 @@ public class HoleInfoCommand implements Command {
 			throw new TestExecutionException();
 		}
 		if (h.isOpen()){
-			//System.out.println("OPEN " + posX + "," + posY);
 			result.add("OPEN " + posX + "," + posY);
 			return;
 		} else {
-			//System.out.println("CLOSED " + posX + "," + posY);
 			result.add("CLOSED " + posX + "," + posY);
 			return;
 		}

@@ -21,10 +21,8 @@ public class LevelCommand implements Command {
 		try {
 			Warehouse wh = Warehouse.fromFile(path);
 			env.setLevel(wh);
-			//System.out.println("LEVEL_SUCCESS \"" + path + "\"");
 			result.add("LEVEL_SUCCESS \"" + path + "\"");
 		} catch (FileNotFoundException e) {
-			//System.out.println("LEVEL_FAIL \"" + path + "\"");
 			result.add("LEVEL_FAIL \"" + path + "\"");
 		} catch (LevelFormatException e) {
 			throw new TestExecutionException();
