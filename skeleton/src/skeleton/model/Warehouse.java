@@ -202,7 +202,9 @@ public class Warehouse implements Serializable {
 	public void removeOntarget() {
 		this.ontarget--;
 	}
-	
+	public void removeAliveWorker() {
+		this.aliveWorker--;
+	}
 	public boolean getBlocking(Field f) {
 		int pos = -1;
 		for(int i=0;i<width*height; ++i) {
@@ -216,6 +218,7 @@ public class Warehouse implements Serializable {
 	}
 	
 	public void updateBlocking(Field f, boolean initial) {
+		if(f == null) return;
 		int pos = -1;
 		for(int i=0;i<width*height; ++i) {
 			if(f == this.fields[i]) {
@@ -363,6 +366,7 @@ public class Warehouse implements Serializable {
 						break;
 					case 10:
 						ent = new Crate(wh, wh.getField(index % width, index / width));
+						if(wh.getField(index % width, index / width) instanceof Target) wh.addOntarget();
 						break;
 					case 11:
 						ent = new Worker(wh, wh.getField(index % width, index / width), Direction.Down);
@@ -446,6 +450,14 @@ public class Warehouse implements Serializable {
 			if (spawns[i] != null) {		
 				spawns[i].setOwner(owners[i]);
 			}
+		}
+		
+		for(int i = 0; i < 4; ++i) {
+			if(owners[i] == null) wh.removeAliveWorker();
+		}
+		
+		for(int i = 0; i< wh.width*wh.height; ++i) {
+			wh.updateBlocking(wh.fields[i], true);
 		}
 		
 		wh.setUpNeighbors();

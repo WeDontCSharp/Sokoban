@@ -198,15 +198,16 @@ public class Worker extends Entity {
 	 * The Worker respawns at their spawnField.
 	 */
 	public void reSpawn() {
-		//this.pushProcess(new StepProcess(this, this.getCurField(), spawnField));
+		this.pushProcess(new StepProcess(this, this.getCurField(), spawnField));
 	}
 	
 	/**
 	 * The Worker dies
 	 */
 	public void die() {
-		throw new RuntimeException("Unimplemented!");
+		//throw new RuntimeException("Unimplemented!");
 		// TODO Remove worker from game.
+		super.level.removeAliveWorker();
 	}
 	
 	/* (non-Javadoc)
