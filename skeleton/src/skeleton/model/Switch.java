@@ -22,6 +22,9 @@ public class Switch extends Floor {
     public Switch(Warehouse level) {
 		super(level);
 		holes = new ArrayList<Hole>();
+		for (Hole h : holes) {
+			h.setOpen(false);
+		}
 	}
     
     /**

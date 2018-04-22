@@ -10,7 +10,7 @@ public class Hole extends Floor {
 	/**
 	 * The state of the hole.
 	 */
-	private boolean open;
+	private boolean open = true;
 	/**
 	 * The worker who pushed a crate on the hole.
 	 */

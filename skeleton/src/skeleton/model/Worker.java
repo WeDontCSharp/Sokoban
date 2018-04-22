@@ -39,6 +39,10 @@ public class Worker extends Entity {
 	 */
 	private Field spawnField;
 	
+	public void setSpawnField(Field spawnField) {
+		this.spawnField = spawnField;
+	}
+
 	public Field getSpawnField() {
 		return spawnField;
 	}
@@ -48,12 +52,11 @@ public class Worker extends Entity {
 	 * which is specified in the constuctor.
 	 * 
 	 * @param g 	Warehouse, where the entities are listed and specifies the level.
-	 * @param f 	The new worker's spawnField, spawns here immediately.
+	 * @param f 	The new worker's Field where he spawns the first time.
 	 * @param dir 	The direction, where the worker is heading.
 	 */
 	public Worker(Warehouse g, Field f, Direction dir) {
 		super(g, f);
-		this.spawnField = f;
 		this.orgPower = 5.0;
 		this.health = 3;
 	}

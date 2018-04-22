@@ -155,12 +155,16 @@ public class Warehouse {
 
 		JsonArray layers = mapObj.getJsonArray("layers");
 
+		// Matching spawns with their owners
+		Spawn[] spawns = new Spawn[4];
+		Worker[] owners = new Worker[4];
+					
 		for (JsonValue layer : layers) {
 			JsonReader layerReader = Json.createReader(new StringReader(layer.toString()));
 			JsonObject layerObj = layerReader.readObject();
 
 			String layerName = layerObj.getString("name").toLowerCase();
-
+			
 			if (layerName.equals("fields")) {
 				JsonArray fields = layerObj.getJsonArray("data");
 				int index = 0;
@@ -187,17 +191,25 @@ public class Warehouse {
 						field = new Hole(wh);
 						break;
 					case 6:
-						field = new Spawn(wh, null);
-						break; // XXX
+						// Spawn for P1
+						field = new Spawn(wh);
+						spawns[0] = (Spawn) field;
+						break;
 					case 7:
-						field = new Spawn(wh, null);
-						break; // XXX
+						// Spawn for P2
+						field = new Spawn(wh);
+						spawns[1] = (Spawn) field;
+						break;
 					case 8:
-						field = new Spawn(wh, null);
-						break; // XXX
+						// Spawn for P3
+						field = new Spawn(wh);
+						spawns[2] = (Spawn) field;
+						break;
 					case 9:
-						field = new Spawn(wh, null);
-						break; // XXX
+						// Spawn for P4
+						field = new Spawn(wh);
+						spawns[3] = (Spawn) field;
+						break;
 					// XXX
 					default:
 						throw new LevelFormatException();
@@ -211,10 +223,10 @@ public class Warehouse {
 			} else if (layerName.equals("entities")) {
 				JsonArray entities = layerObj.getJsonArray("data");
 				int index = 0;
+
 				for (JsonValue entityIdStr : entities) {
 					int entityId = Integer.parseInt(entityIdStr.toString());
 					Entity ent = null;
-
 					switch (entityId) {
 					case 0:
 						break;
@@ -223,18 +235,22 @@ public class Warehouse {
 						break;
 					case 11:
 						ent = new Worker(wh, wh.getField(index % width, index / width), Direction.Down);
+						owners[0] = (Worker) ent;
 						wh.setWorker(0, ent);
 						break;
 					case 12:
 						ent = new Worker(wh, wh.getField(index % width, index / width), Direction.Down);
+						owners[1] = (Worker) ent;
 						wh.setWorker(1, ent);
 						break;
 					case 13:
 						ent = new Worker(wh, wh.getField(index % width, index / width), Direction.Down);
+						owners[2] = (Worker) ent;
 						wh.setWorker(2, ent);
 						break;
 					case 14:
 						ent = new Worker(wh, wh.getField(index % width, index / width), Direction.Down);
+						owners[3] = (Worker) ent;
 						wh.setWorker(3, ent);
 						break;
 					case 15:
@@ -292,7 +308,13 @@ public class Warehouse {
 				// XXX
 				throw new LevelFormatException();
 			}
+			
 		}
+		
+		for (int i = 0; i < 3; ++i) {
+			spawns[i].setOwner(owners[i]);
+		}
+		
 		wh.setUpNeighbors();
 		return wh;
 	}

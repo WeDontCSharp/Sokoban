@@ -63,8 +63,10 @@ public abstract class TestReader {
 				clist.add(new PlayerInfoCommand(pid, typeStr));
 			}
 			else if (cmd.equals("holeinfo")) {
-				int x = Integer.parseInt(parts[1].trim());
-				int y = Integer.parseInt(parts[2].trim());
+				String xy = parts[1].trim();
+				String[] coords = xy.split(",");
+				int x = Integer.parseInt(coords[0].trim());
+				int y = Integer.parseInt(coords[1].trim());
 
 				clist.add(new HoleInfoCommand(x, y));
 			}
