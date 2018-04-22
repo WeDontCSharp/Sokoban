@@ -59,8 +59,10 @@ public class Crate extends Entity {
 	 * @return
 	 */
 	public boolean isOnTarget() {
+		if (super.getCurField() instanceof Target){
+			return true;
+		}
 		return false;
-		// XXX: Stub
 	}
 
 	@Override

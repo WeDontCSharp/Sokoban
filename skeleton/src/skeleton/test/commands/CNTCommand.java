@@ -14,25 +14,16 @@ import skeleton.test.TestExecutionException;
 
 public class CNTCommand implements Command {
 	private String param;
-	private ArrayList<Entity> crates;
+	private ArrayList<Crate> crates;
 
 	public CNTCommand(String args) {
 		this.param = args;
-		this.crates = new ArrayList<Entity>();
+		this.crates = new ArrayList<Crate>();
 	}
 
 	public void CrateFinder(Warehouse wh){
 		crates.clear();
-		for (int i = 0; i <= wh.getHeight(); ++i){
-			for (int j = 0; j <= wh.getWidth(); ++i){
-				if (!wh.getField(i, j).isEmpty()) {
-					crates.add((wh.getField(i, j).getEntity()));
-				}
-			}
-		}
-		for (int i = 0; i < 4; i++){
-			crates.remove(wh.getWorker(i));
-		}
+		crates = wh.getCrates();
 	}
 
 	@Override
@@ -67,8 +58,8 @@ public class CNTCommand implements Command {
 		if (param.equals("cr")) {
 			int cnt = 0;
 			CrateFinder(w);
-			for (Entity c : crates){
-				if(((Crate)c).isOnTarget())
+			for (Crate c : crates){
+				if(c.isOnTarget())
 					cnt++;
 			}
 			System.out.println("CNT_CR " + cnt);
@@ -77,8 +68,8 @@ public class CNTCommand implements Command {
 		if (param.equals("cw")) {
 			int cnt = 0;
 			CrateFinder(w);
-			for (Entity c : crates){
-				if(!((Crate)c).isOnTarget())
+			for (Crate c : crates){
+				if(!(c.isOnTarget()))
 					cnt++;
 			}
 			System.out.println("CNT_CW " + cnt);
@@ -87,8 +78,8 @@ public class CNTCommand implements Command {
 		if (param.equals("cs")) {
 			int cnt = 0;
 			CrateFinder(w);
-			for (Entity c : crates){
-				if(((Crate)c).isStuck())
+			for (Crate c : crates){
+				if(c.isStuck())
 					cnt++;
 			}
 			System.out.println("CNT_CS " + cnt);
