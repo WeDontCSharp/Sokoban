@@ -53,6 +53,7 @@ public class Target extends Floor {
 		firstPusher.gainPoint();
 		c.setOntarget(true);
 		super.getLevel().addOntarget();
+		super.getLevel().updateBlocking(this, true);
 		return true;
 	}
 

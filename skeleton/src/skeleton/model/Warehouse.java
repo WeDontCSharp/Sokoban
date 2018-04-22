@@ -204,7 +204,7 @@ public class Warehouse implements Serializable {
 		return this.blockedMap[pos];
 	}
 	
-	public void upDateBlocking(Field f, boolean initial) {
+	public void updateBlocking(Field f, boolean initial) {
 		int pos = -1;
 		for(int i=0;i<width*height; ++i) {
 			if(f == this.fields[i]) {
@@ -232,10 +232,10 @@ public class Warehouse implements Serializable {
 				&&(this.getblockedChecked(x, y-1)||this.getblockedChecked(x, y+1)));
 		
 		 if(this.blockedMap[pos] != old) {
-			 upDateBlocking(this.getFieldChecked(x-1, y), false);
-			 upDateBlocking(this.getFieldChecked(x, y-1), false);
-			 upDateBlocking(this.getFieldChecked(x+1, y), false);
-			 upDateBlocking(this.getFieldChecked(x, y+1), false);
+			 updateBlocking(this.getFieldChecked(x-1, y), false);
+			 updateBlocking(this.getFieldChecked(x, y-1), false);
+			 updateBlocking(this.getFieldChecked(x+1, y), false);
+			 updateBlocking(this.getFieldChecked(x, y+1), false);
 		 }
 		 
 		 if(initial) {

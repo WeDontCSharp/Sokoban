@@ -39,6 +39,7 @@ public class Floor extends Field {
     @Override
 	public boolean visitByCrate(Worker firstPusher, Crate c) {
 		super.setEntity(c);
+		super.getLevel().updateBlocking(this, true);
 		return true;
 	}
 

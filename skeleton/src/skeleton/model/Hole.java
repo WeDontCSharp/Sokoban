@@ -59,6 +59,7 @@ public class Hole extends Floor {
 		else {
 			super.setEntity(c);
 		}
+		super.getLevel().updateBlocking(this, true);
 		return true;
 	}
 	
@@ -74,6 +75,7 @@ public class Hole extends Floor {
 		else {
 			super.setEntity(lc);
 		}
+		super.getLevel().updateBlocking(this, true);
 		return true;
 	}
 	

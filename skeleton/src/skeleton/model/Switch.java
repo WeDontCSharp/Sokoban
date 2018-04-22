@@ -46,6 +46,7 @@ public class Switch extends Floor {
 				e.visit(firstPusher, h);
 			}
 		}
+		super.getLevel().updateBlocking(this, true);
 		return true;
 	}
 	
