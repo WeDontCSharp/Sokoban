@@ -100,5 +100,4 @@ public class Hole extends Floor {
 	public Worker getWhoPushed() {
 		return whoPushed;
 	}
-
 }

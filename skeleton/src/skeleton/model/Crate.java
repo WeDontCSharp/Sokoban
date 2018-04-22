@@ -4,6 +4,7 @@ package skeleton.model;
  * A class representing a crate.
  */
 public class Crate extends Entity {
+	private boolean onTarget;
 	
 	/**
 	 * Crate's construstor.
@@ -12,7 +13,8 @@ public class Crate extends Entity {
 	 * @param f	The field, where the create appears.
 	 */
 	public Crate(Warehouse g, Field f) {
-		super(g, f);			
+		super(g, f);
+		this.isStuck = false;
 	}
 
 	@Override
@@ -50,7 +52,7 @@ public class Crate extends Entity {
 	 * @return
 	 */
 	public boolean isStuck() {
-		return false;
+		return this.getLevel().getBlocking(getCurField());
 		// XXX: Stub
 	}
 
@@ -59,8 +61,12 @@ public class Crate extends Entity {
 	 * @return
 	 */
 	public boolean isOnTarget() {
-		return false;
+		return this.onTarget;
 		// XXX: Stub
+	}
+	
+	public void setOntarget(boolean ot) {
+		this.onTarget = ot;
 	}
 
 	@Override

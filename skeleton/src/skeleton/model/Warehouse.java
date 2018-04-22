@@ -19,6 +19,23 @@ import javax.json.JsonValue;
  * part as a level in the game.
  */
 public class Warehouse implements Serializable {
+	public enum EndType{
+		Nothing,Target,Crate,Player;
+		public static String toString(EndType et) {
+			if (et == null) {
+				return "?";
+			}
+			switch (et) {
+			case Nothing: return "N";
+			case Target: return "TR";
+			case Crate: return "CR";
+			case Player: return "P";
+			}
+			return "?";
+		}
+	}
+	
+	
 	/**
 	 * The dimensions of the warehouse in field units.
 	 */
@@ -31,9 +48,18 @@ public class Warehouse implements Serializable {
 	 * The fields that are currently inside the warehouse.
 	 */
 	private Field[] fields;
+	private int targets;
+	private int ontarget;
+	
+
+	/**
+	 * Blocking status of fields currently
+	 */
+	private boolean[] blockedMap;
+	private EndType end;
 
 	private Worker[] workers;
-
+	private int aliveWorker;
 	/**
 	 * Creates a warehouse (as a level).
 	 * 
@@ -46,8 +72,13 @@ public class Warehouse implements Serializable {
 
 		this.entities = new ArrayList<Entity>();
 		this.fields = new Field[w * h];
+		this.targets = 0;
+		this.ontarget = 0;
+		
+		this.blockedMap = new boolean[w * h];
 		
 		this.workers = new Worker[4];
+		this.aliveWorker = 4;
 	}
 
 	/**
@@ -88,6 +119,7 @@ public class Warehouse implements Serializable {
 	 */
 	public void setField(Field f, int x, int y) {
 		this.fields[x + y * width] = f;
+		this.blockedMap[x + y * width] = f.isBlocking();
 	}
 
 	/**
@@ -114,6 +146,13 @@ public class Warehouse implements Serializable {
 		}
 		return this.getField(x, y);
 	}
+	
+	public boolean getblockedChecked(int x, int y) {
+		if (x < 0 || x >= this.width || y < 0 || y >= this.height) {
+			return true;
+		}
+		return this.blockedMap[x + y * this.width];
+	}
 
 	/**
 	 * Sets up neighborhood relationships between fields.
@@ -131,9 +170,88 @@ public class Warehouse implements Serializable {
 	}
 	
 	public void update() {
+		if(this.aliveWorker<=1) this.end = EndType.Player;
+		if(this.ontarget >=  this.targets) this.end = EndType.Target;
+		
+		
 		for (Entity e : this.entities) {
 			e.update();
 		}
+		
+		
+	}
+	
+	private void addTarget() {
+		this.targets++;
+	}
+
+	public void addOntarget() {
+		this.ontarget++;
+	}
+	public void removeOntarget() {
+		this.ontarget--;
+	}
+	
+	public boolean getBlocking(Field f) {
+		int pos = -1;
+		for(int i=0;i<width*height; ++i) {
+			if(f == this.fields[i]) {
+				pos = i;
+				break;
+			}
+		}
+		
+		return this.blockedMap[pos];
+	}
+	
+	public void upDateBlocking(Field f, boolean initial) {
+		int pos = -1;
+		for(int i=0;i<width*height; ++i) {
+			if(f == this.fields[i]) {
+				pos = i;
+				break;
+			}
+		}
+		
+		int x = pos%this.width;
+		int y = pos/this.width;
+		
+		boolean old = this.blockedMap[pos];
+		
+		Entity e = (f.getEntity());
+		boolean containCrate = false;
+		if(e != null) {
+			containCrate = this.entities.contains(e);
+			for(int i = 0; i <4; ++i) {
+				if(e == this.workers[i]) containCrate = false;
+			}
+		}
+		
+		this.blockedMap[pos] = f.isBlocking() || containCrate 
+				&&((this.getblockedChecked(x-1, y)||this.getblockedChecked(x+1, y))
+				&&(this.getblockedChecked(x, y-1)||this.getblockedChecked(x, y+1)));
+		
+		 if(this.blockedMap[pos] != old) {
+			 upDateBlocking(this.getFieldChecked(x-1, y), false);
+			 upDateBlocking(this.getFieldChecked(x, y-1), false);
+			 upDateBlocking(this.getFieldChecked(x+1, y), false);
+			 upDateBlocking(this.getFieldChecked(x, y+1), false);
+		 }
+		 
+		 if(initial) {
+			 ArrayList<Entity> crates = new ArrayList<Entity>();
+			 crates.addAll(this.entities);
+			 for(int i = 0; i <4; ++i) {
+					crates.remove(this.workers[i]);
+			 }
+			 boolean allBlocked = true;
+			 for(Entity crate : crates) if(!((Crate)crate).isStuck()) allBlocked = false;
+			 if(allBlocked) this.end = EndType.Crate;
+		 }
+	}
+	
+	public EndType getEnd() {
+		return end;
 	}
 	
 	private void setWorker(int i, Entity e) {
@@ -184,6 +302,7 @@ public class Warehouse implements Serializable {
 						break;
 					case 3:
 						field = new Target(wh);
+						wh.addTarget();
 						break;
 					case 4:
 						field = new Switch(wh);
