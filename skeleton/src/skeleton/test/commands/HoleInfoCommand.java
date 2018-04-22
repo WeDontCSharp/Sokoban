@@ -1,6 +1,6 @@
 package skeleton.test.commands;
 
-import skeleton.model.Warehouse;
+//import skeleton.model.Warehouse;
 
 import java.util.ArrayList;
 
@@ -25,10 +25,12 @@ public class HoleInfoCommand implements Command {
 			throw new TestExecutionException();
 		}
 		if (h.isOpen()){
-			System.out.println("OPEN " + posX + "," + posY);
+			//System.out.println("OPEN " + posX + "," + posY);
+			result.add("OPEN " + posX + "," + posY);
 			return;
 		} else {
-			System.out.println("CLOSED " + posX + "," + posY);
+			//System.out.println("CLOSED " + posX + "," + posY);
+			result.add("CLOSED " + posX + "," + posY);
 			return;
 		}
 	}

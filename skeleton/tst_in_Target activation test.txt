@@ -1,0 +1,7 @@
+LEVEL "testlevel4.json"
+PLAYERINFO 1 PTS
+CNT CR
+!STEP 1 R
+PLAYERINFO 1 PTS
+CNT CR
+SAVE "test9_p1_scored.ser"

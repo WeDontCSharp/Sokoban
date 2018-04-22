@@ -1,0 +1,5 @@
+LEVEL "testlevel5.json"
+HOLEINFO 3,3
+!STEP 1 R
+HOLEINFO 3,3
+SAVE "test11_hole_act.ser"

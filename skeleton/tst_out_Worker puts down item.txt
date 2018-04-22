@@ -1,0 +1,4 @@
+LEVEL_SUCCESS "testlevel11.json"
+PLACE_OK 1
+PLACE_OK 1
+PLACE_FAIL 1
