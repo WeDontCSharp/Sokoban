@@ -3,6 +3,7 @@ package skeleton.model;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ import javax.json.JsonValue;
  * A class representing a container for the fields and entities, also taking
  * part as a level in the game.
  */
-public class Warehouse {
+public class Warehouse implements Serializable {
 	/**
 	 * The dimensions of the warehouse in field units.
 	 */
@@ -32,7 +33,7 @@ public class Warehouse {
 	private Field[] fields;
 
 	private Worker[] workers;
-	
+
 	/**
 	 * Creates a warehouse (as a level).
 	 * 
@@ -312,7 +313,9 @@ public class Warehouse {
 		}
 		
 		for (int i = 0; i < 3; ++i) {
-			spawns[i].setOwner(owners[i]);
+			if (spawns[i] != null) {			
+				spawns[i].setOwner(owners[i]);
+			}
 		}
 		
 		wh.setUpNeighbors();

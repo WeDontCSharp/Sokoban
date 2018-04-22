@@ -8,7 +8,9 @@ import java.util.ArrayList;
 
 import skeleton.model.Direction;
 import skeleton.test.commands.LevelCommand;
+import skeleton.test.commands.LoadCommand;
 import skeleton.test.commands.PlayerInfoCommand;
+import skeleton.test.commands.SaveCommand;
 import skeleton.test.commands.StepCommand;
 import skeleton.test.commands.CNTCommand;
 import skeleton.test.commands.HoleInfoCommand;
@@ -55,6 +57,22 @@ public abstract class TestReader {
 				}
 				
 				clist.add(new LevelCommand(pth.substring(1, pth.length() - 1)));
+			}
+			else if (cmd.equals("save")) {
+				String pth = parts[1].trim();
+				if (pth.length() < 2 || pth.charAt(0) != '"' || pth.charAt(pth.length() - 1) != '"') {
+					throw new InputLanguageException();
+				}
+				
+				clist.add(new SaveCommand(pth.substring(1, pth.length() - 1)));
+			}
+			else if (cmd.equals("load")) {
+				String pth = parts[1].trim();
+				if (pth.length() < 2 || pth.charAt(0) != '"' || pth.charAt(pth.length() - 1) != '"') {
+					throw new InputLanguageException();
+				}
+				
+				clist.add(new LoadCommand(pth.substring(1, pth.length() - 1)));
 			}
 			else if (cmd.equals("playerinfo")) {
 				int pid = Integer.parseInt(parts[1].trim()) - 1;

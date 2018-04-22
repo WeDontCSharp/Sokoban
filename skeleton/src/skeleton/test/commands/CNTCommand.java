@@ -25,8 +25,9 @@ public class CNTCommand implements Command {
 		crates.clear();
 		for (int i = 0; i <= wh.getHeight(); ++i){
 			for (int j = 0; j <= wh.getWidth(); ++i){
-				if (!wh.getField(i, j).isEmpty());
-					crates.add((wh.getField(i, j).getEntity().get()));
+				if (!wh.getField(i, j).isEmpty()) {
+					crates.add((wh.getField(i, j).getEntity()));
+				}
 			}
 		}
 		for (int i = 0; i < 4; i++){
@@ -40,30 +41,30 @@ public class CNTCommand implements Command {
 		if (w == null) {
 			throw new TestExecutionException();
 		}
-		if (param.equals("WA")) {
+		if (param.equals("wa")) {
 			int cnt = 0;
 			for (int i = 0; i < 4; i++){
-				if (w.getWorker(i).getHealth() > 0)
+				if (w.getWorker(i) != null)
 					cnt++;
 			}
 			System.out.println("CNT_WA " + cnt);
 			return;
 		}
-		if (param.equals("WD")) {
+		if (param.equals("wd")) {
 			int cnt = 0;
 			for (int i = 0; i < 4; i++){
-				if (w.getWorker(i).getHealth() == 0)
+				if (w.getWorker(i) == null)
 					cnt++;
 			}
 			System.out.println("CNT_WD " + cnt);
 			return;
 		}
-		if (param.equals("C")) {
+		if (param.equals("c")) {
 			CrateFinder(w);
 			System.out.println("CNT_C " + crates.size());
 			return;
 		}
-		if (param.equals("CR")) {
+		if (param.equals("cr")) {
 			int cnt = 0;
 			CrateFinder(w);
 			for (Entity c : crates){
@@ -73,7 +74,7 @@ public class CNTCommand implements Command {
 			System.out.println("CNT_CR " + cnt);
 			return;
 		}
-		if (param.equals("CW")) {
+		if (param.equals("cw")) {
 			int cnt = 0;
 			CrateFinder(w);
 			for (Entity c : crates){
@@ -83,7 +84,7 @@ public class CNTCommand implements Command {
 			System.out.println("CNT_CW " + cnt);
 			return;
 		}
-		if (param.equals("CS")) {
+		if (param.equals("cs")) {
 			int cnt = 0;
 			CrateFinder(w);
 			for (Entity c : crates){
