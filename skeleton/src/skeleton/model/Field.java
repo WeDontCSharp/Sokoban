@@ -1,11 +1,11 @@
 package skeleton.model;
 
-import java.util.Optional;
+import java.io.Serializable;
 
 /**
  * An abstract class representing a field.
  */
-public abstract class Field implements IVisitable {
+public abstract class Field implements IVisitable, Serializable {
 	/**
 	 * The warehouse the field is in.
 	 */
@@ -17,7 +17,7 @@ public abstract class Field implements IVisitable {
 	/**
 	 * The entity that is currently on the field.
 	 */
-	private Optional<Entity> curEntity;
+	private Entity curEntity;
 	
 	private boolean locked;
 	
@@ -41,7 +41,7 @@ public abstract class Field implements IVisitable {
 		this.neighbours = new Field[Direction.values().length];
 		this.slipFactor = 1.0;
 		this.locked = false;
-		this.curEntity = Optional.empty();
+		this.curEntity = null;
 	}
 
 	/**
@@ -76,7 +76,7 @@ public abstract class Field implements IVisitable {
 	 * Gets an entity from the field.
 	 * @return The entity on the field.
 	 */
-	public Optional<Entity> getEntity() {
+	public Entity getEntity() {
 		return curEntity;
 	}
 	
@@ -85,14 +85,14 @@ public abstract class Field implements IVisitable {
 	 * @param e The entity to be set.
 	 */
 	public void setEntity(Entity e) {
-		curEntity = Optional.of(e);
+		curEntity = e;
 	}
 	
 	/**
 	 * Removes the entity from the field.
 	 */
 	public void unsetEntity() {
-		curEntity = Optional.empty();
+		curEntity = null;
 	}
 	
 	/**
@@ -100,7 +100,7 @@ public abstract class Field implements IVisitable {
 	 * @return True if the field is empty, false otherwise.
 	 */
 	public boolean isEmpty() {
-		return !this.curEntity.isPresent();
+		return this.curEntity == null;
 		
 	}
 	

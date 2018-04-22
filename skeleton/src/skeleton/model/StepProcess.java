@@ -19,6 +19,7 @@ public class StepProcess implements Process {
 	public void start() {
 		this.from.lock();
 		this.to.lock();
+		from.unsetEntity();
 	}
 
 	@Override
@@ -38,10 +39,7 @@ public class StepProcess implements Process {
 	public void end() {
 		this.from.unlock();
 		this.to.unlock();
-		
-		if (from.getEntity().get() == this.moving) {
-			from.unsetEntity();
-		}
+
 		to.setEntity(this.moving);
 		this.moving.setCurField(this.to);
 	}

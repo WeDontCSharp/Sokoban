@@ -26,7 +26,16 @@ public class Worker extends Entity {
 	 * The item the worker can change a field's
 	 * slipperines with.
 	 */
-	private PlaceableItem item;
+	private PlaceableItem item = PlaceableItem.Nothing;
+	
+	public void setItem(PlaceableItem item) {
+		this.item = item;
+	}
+
+	public PlaceableItem getItem() {
+		return item;
+	}
+
 	/**
 	 * The field where the worker starts the game
 	 * and respawns when losing a life.
@@ -34,19 +43,26 @@ public class Worker extends Entity {
 	 */
 	private Field spawnField;
 	
+	public void setSpawnField(Field spawnField) {
+		this.spawnField = spawnField;
+	}
+
+	public Field getSpawnField() {
+		return spawnField;
+	}
+
 	/**
 	 * Worker's constructor. The generated worker appears ion it's spawner field,
 	 * which is specified in the constuctor.
 	 * 
 	 * @param g 	Warehouse, where the entities are listed and specifies the level.
-	 * @param f 	The new worker's spawnField, spawns here immediately.
+	 * @param f 	The new worker's Field where he spawns the first time.
 	 * @param dir 	The direction, where the worker is heading.
 	 */
 	public Worker(Warehouse g, Field f, Direction dir) {
 		super(g, f);
-		this.spawnField = f;
-		this.orgPower = 2.0;
-		this.power = 2.0;
+		this.orgPower = 3.0;
+		this.health = 3;
 	}
 	
 	/**
@@ -59,21 +75,25 @@ public class Worker extends Entity {
 	 * enough power to push the entity.
 	 */
 	public double consumePower(double power) {
-		return this.power - power;
+		this.power -= power;
+		return this.power;
 	}
 	
 	/**
 	 * Places the item the worker currently holds onto
 	 * the field the worker is currently staying on.
 	 */
-	public void placeItem() {
+	public boolean placeItem() {
 		// TODO: What to do on successfull/failed place? 
 		if (item == PlaceableItem.Honey) {
 			getCurField().placeSlipFactor(2.0);
+			return true;
 		}
 		else if (item == PlaceableItem.Oil) {
 			getCurField().placeSlipFactor(0.0);
+			return true;
 		}
+		return false;
 	}
 	
 	/**
@@ -85,6 +105,7 @@ public class Worker extends Entity {
 		if (this.getCurrentProcess() != null) {
 			return;
 		}
+		this.power = this.orgPower;
 		step(this, dir);
 	}
 	
@@ -157,6 +178,11 @@ public class Worker extends Entity {
 	 */
 	public void loseHealth() {
 		health--;
+		if (health == 0) {
+			die();
+		} else {
+			reSpawn();
+		}
 	}
 	
 	/**
@@ -172,8 +198,7 @@ public class Worker extends Entity {
 	 * The Worker respawns at their spawnField.
 	 */
 	public void reSpawn() {
-		this.setCurField(spawnField);
-		spawnField.setEntity(this);
+		//this.pushProcess(new StepProcess(this, this.getCurField(), spawnField));
 	}
 	
 	/**

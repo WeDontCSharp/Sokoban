@@ -42,7 +42,7 @@ public class Switch extends Floor {
 		for (Hole h : holes) {
 			h.setOpen(true);
 			if (!h.isEmpty()) {
-				Entity e = h.getEntity().get();
+				Entity e = h.getEntity();
 				e.visit(firstPusher, h);
 			}
 		}
@@ -63,6 +63,13 @@ public class Switch extends Floor {
     
     public void addHole(Hole h) {
     	this.holes.add(h);
+    	h.setOpen(false);
+    }
+    
+    public void closeHoles() {
+    	for (Hole h : holes) {
+			h.setOpen(false);
+		}
     }
 
 }

@@ -1,5 +1,6 @@
 package skeleton.model;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
@@ -7,7 +8,7 @@ import java.util.Stack;
 /**
  * An abstract class representing an entity.
  */
-public abstract class Entity implements IVisitor {
+public abstract class Entity implements IVisitor, Serializable{
 	/**
 	 * The warehouse the entity is in.
 	 */
@@ -89,7 +90,7 @@ public abstract class Entity implements IVisitor {
 				return true;
 			}
 		} else {												//If the next field is occupied, tries to push
-			Entity nextEntity = neighbour.getEntity().get();
+			Entity nextEntity = neighbour.getEntity();
 			if (push(firstPusher, nextEntity, dir)) {
 				if (visit(firstPusher, neighbour)) {
 					this.pushProcess(new StepProcess(this, curField, neighbour));
@@ -158,12 +159,12 @@ public abstract class Entity implements IVisitor {
 		if (processes.isEmpty()) {
 			return null;
 		}
-		while (processes.getFirst().isOver()) {
+		while (processes.peekFirst().isOver()) {
 			processes.removeFirst().end();
 			if (processes.isEmpty()) {
 				return null;
 			}
 		}
-		return processes.getFirst();
+		return processes.peekFirst();
 	}
 }

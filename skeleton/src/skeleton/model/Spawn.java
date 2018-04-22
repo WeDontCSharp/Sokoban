@@ -12,14 +12,17 @@ public class Spawn extends Floor {
 	 */
     private Worker owner;
 	
+	public void setOwner(Worker owner) {
+		this.owner = owner;
+		owner.setSpawnField(this);
+	}
+
 	/**
 	 * Creates a spawn.
 	 * @param level The warehouse to the create the spawn in.
-     * @param owner The owner associated with this spawn.
 	 */
-    public Spawn(Warehouse level, Worker owner) {
+    public Spawn(Warehouse level) {
 		super(level);
-		this.owner = owner;
 	}
     
     /**

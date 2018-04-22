@@ -45,6 +45,24 @@ public class Crate extends Entity {
 		// XXX: Stub
 	}
 
+	/**
+	 * Tells whether a crate is stuck or not.
+	 * @return
+	 */
+	public boolean isStuck() {
+		return false;
+		// XXX: Stub
+	}
+
+	/**
+	 * Tells whether a crate is on a target field.
+	 * @return
+	 */
+	public boolean isOnTarget() {
+		return false;
+		// XXX: Stub
+	}
+
 	@Override
 	public boolean visit(Worker firstPusher, IVisitable iv) {
 		return iv.visitByCrate(firstPusher, this);

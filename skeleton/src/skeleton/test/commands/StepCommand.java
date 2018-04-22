@@ -35,6 +35,7 @@ public class StepCommand implements Command {
 			while (!proc.isOver()) {
 				env.getLevel().update();
 			}
+			env.getLevel().update();
 		}
 	}
 }

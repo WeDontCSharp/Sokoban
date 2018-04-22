@@ -1,5 +1,16 @@
-LEVEL "sokoban_testlvl.json"
+LEVEL "testlevel7.json"
+!STEP 1 R
+!STEP 1 R
+LEVEL "testlevel7.json"
 !STEP 1 U
+!STEP 1 R
+!STEP 1 R
+!STEP 1 D
+GIVE 1 H
+!PLACE 1
 !STEP 1 U
-!STEP 1 U
-!STEP 1 U
+!STEP 1 L
+!STEP 1 L
+!STEP 1 D
+!STEP 1 R
+!STEP 1 R
