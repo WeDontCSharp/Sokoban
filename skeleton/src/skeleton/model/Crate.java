@@ -14,7 +14,6 @@ public class Crate extends Entity {
 	 */
 	public Crate(Warehouse g, Field f) {
 		super(g, f);
-		this.isStuck = false;
 	}
 
 	@Override
