@@ -142,4 +142,8 @@ public abstract class Field implements IVisitable, Serializable {
 	public boolean isLocked() {
 		return this.locked;
 	}
+	
+	public boolean isBlocking() {
+		return false;
+	}
 }

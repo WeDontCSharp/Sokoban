@@ -34,11 +34,13 @@ public class Target extends Floor {
      */
     @Override
 	public void unsetEntity() {
-		super.unsetEntity();
-		if (whoPushed != null) {
+    	if (whoPushed != null) {
+    		((Crate)super.getEntity()).setOntarget(false);
+    		super.getLevel().removeOntarget();
 			whoPushed.losePoint();
 			whoPushed = null;
 		}
+    	super.unsetEntity();
 	}
 	
     /* (non-Javadoc)
@@ -49,6 +51,9 @@ public class Target extends Floor {
 		super.setEntity(c);
 		whoPushed = firstPusher;
 		firstPusher.gainPoint();
+		c.setOntarget(true);
+		super.getLevel().addOntarget();
+		super.getLevel().updateBlocking(this, true);
 		return true;
 	}
 

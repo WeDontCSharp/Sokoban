@@ -46,6 +46,10 @@ public class Wall extends Field  {
 	public boolean visitByCrate(Worker firstPusher, Crate c) {
 		return false;
 	}
-
+    
+    @Override
+    public boolean isBlocking() {
+    	return true;
+    }
 }
 

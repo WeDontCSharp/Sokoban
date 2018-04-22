@@ -74,5 +74,10 @@ public class Spawn extends Floor {
 	public boolean isEmpty() {
 		return true;
 	}
+    
+    @Override
+    public boolean isBlocking() {
+    	return true;
+    }
 
 }

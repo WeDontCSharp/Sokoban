@@ -1,6 +1,6 @@
 package skeleton.test.commands;
 
-//import skeleton.model.Warehouse;
+import skeleton.model.Warehouse;
 
 import java.util.ArrayList;
 

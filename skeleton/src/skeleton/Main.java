@@ -64,7 +64,6 @@ public class Main {
 		//MENNEK:
 		src.add("Player gains an item");
 		src.add("Worker puts down item");
-
 		
 		try {
 			Test t = null;
