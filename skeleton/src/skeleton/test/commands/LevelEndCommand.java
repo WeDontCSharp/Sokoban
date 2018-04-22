@@ -17,7 +17,6 @@ public class LevelEndCommand implements Command {
 		if (wh == null) {
 			throw new TestExecutionException();
 		}
-		
 		if(wh.getEnd() != Warehouse.EndType.Nothing) {
 			result.add("LEVEL_END "+Warehouse.EndType.toString(wh.getEnd()));
 		}

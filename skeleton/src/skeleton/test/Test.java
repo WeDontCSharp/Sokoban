@@ -9,6 +9,9 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
+import skeleton.test.commands.LevelCommand;
+import skeleton.test.commands.LevelEndCommand;
+
 public class Test {
 	
 	int id;
@@ -48,6 +51,10 @@ public class Test {
 			for (Command cmd : commands) {
 				cmd.exec(this.environment, this.result);
 			}
+			
+			// Always check if the game has finished
+			LevelEndCommand end = new LevelEndCommand();
+			end.exec(this.environment, this.result);
 			
 			// XXX: Reading the excepted results here.			
 			try {

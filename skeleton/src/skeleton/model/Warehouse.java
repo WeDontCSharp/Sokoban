@@ -56,7 +56,7 @@ public class Warehouse implements Serializable {
 	 * Blocking status of fields currently
 	 */
 	private boolean[] blockedMap;
-	private EndType end;
+	private EndType end = EndType.Nothing;
 
 	private Worker[] workers;
 	private int aliveWorker;
@@ -179,14 +179,16 @@ public class Warehouse implements Serializable {
 	}
 	
 	public void update() {
-		if(this.aliveWorker<=1) this.end = EndType.Player;
-		if(this.ontarget >=  this.targets) this.end = EndType.Target;
-		
+		if (this.aliveWorker <= 1) {
+			this.end = EndType.Player;
+		}
+		if (this.ontarget >=  this.targets && this.targets > 0) {
+			this.end = EndType.Target;
+		}
 		
 		for (Entity e : this.entities) {
 			e.update();
 		}
-		
 		
 	}
 	
