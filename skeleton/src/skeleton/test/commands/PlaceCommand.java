@@ -21,9 +21,11 @@ public class PlaceCommand implements Command {
 			throw new TestExecutionException();
 		}
 		if (w.placeItem()) {
-			System.out.println("PLACE_OK " + (playerID + 1));
+			//System.out.println("PLACE_OK " + (playerID + 1));
+			result.add("PLACE_OK " + (playerID + 1));
 		} else {
-			System.out.println("PLACE_FAIL " + (playerID + 1));
+			//System.out.println("PLACE_FAIL " + (playerID + 1));
+			result.add("PLACE_FAIL " + (playerID + 1));
 		}
 	}
 }

@@ -32,7 +32,8 @@ public class SaveCommand implements Command {
 		try {
 			fout = new FileOutputStream(path);
 		} catch (FileNotFoundException e) {
-			System.out.println("SAVE_FAIL \"" + path + "\"");
+			//System.out.println("SAVE_FAIL \"" + path + "\"");
+			result.add("SAVE_FAIL \"" + path + "\"");
 		}
 		
 		try {
@@ -41,9 +42,11 @@ public class SaveCommand implements Command {
 			fout.close();
 			oos.close();
 		} catch (IOException e) {
-			System.out.println("SAVE_FAIL \"" + path + "\"");
+			//System.out.println("SAVE_FAIL \"" + path + "\"");
+			result.add("SAVE_FAIL \"" + path + "\"");
 		}
 		
-		System.out.println("SAVE_SUCCESS \"" + path + "\"");
+		//System.out.println("SAVE_SUCCESS \"" + path + "\"");
+		result.add("SAVE_SUCCESS \"" + path + "\"");
 	}
 }

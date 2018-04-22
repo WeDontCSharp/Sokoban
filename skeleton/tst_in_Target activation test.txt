@@ -1,2 +1,7 @@
-LEVEL "testlevel2.json"
-STEP 1 R
+LEVEL "testlevel4.json"
+PLAYERINFO 1 PTS
+CNT CR
+!STEP 1 R
+PLAYERINFO 1 PTS
+CNT CR
+SAVE "TEST9_P1_SCORED.ser"

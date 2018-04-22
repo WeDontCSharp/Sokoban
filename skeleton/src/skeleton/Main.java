@@ -42,10 +42,22 @@ public class Main {
 		
 		src.add("Worker smashed by wall");
 		src.add("Worker smashed by spawn");
-		//src.add("Worker falls into hole");
-		//src.add("Worker pushes lifecrate into hole");
+		src.add("Worker falls into hole");
+		src.add("Worker pushes lifecrate into hole");
 		//src.add("Target activation test");
-		//src.add("Switch activation test");
+		//src.add(Target deactivation test");
+		src.add("Switch activation test");
+		
+		src.add("Switch deactivation test");
+		src.add("Field modificator test - oil");
+		src.add("Field modificator test - honey");
+		src.add("Locking mechanism of simultaneously pushed conflicting chains");
+		src.add("Game ends because there is a crate on all targets");
+		src.add("Game ends because there are no moveable crates");
+		src.add("Game ends because all the workers died except one");
+		src.add("Player gains an item");
+		src.add("Worker puts down item");
+
 		
 		try {
 			Test t = null;

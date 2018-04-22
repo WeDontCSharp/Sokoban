@@ -1,2 +1,5 @@
-LEVEL "testlevel2.json"
-STEP 1 R
+LEVEL "testlevel3.json"
+PLAYERINFO 1 HP
+HOLEINFO 1,1
+!STEP 1 U
+PLAYERINFO 1 HP

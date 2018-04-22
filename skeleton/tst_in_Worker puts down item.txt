@@ -1,0 +1,7 @@
+LEVEL "testlevel11.json"
+GIVE 1 O
+!PLACE 1
+GIVE 1 H
+!PLACE 1
+GIVE 1 N
+!PLACE 1
