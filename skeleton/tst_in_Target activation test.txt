@@ -4,4 +4,4 @@ CNT CR
 !STEP 1 R
 PLAYERINFO 1 PTS
 CNT CR
-SAVE "TEST9_P1_SCORED.ser"
+SAVE "test9_p1_scored.ser"

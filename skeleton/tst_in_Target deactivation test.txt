@@ -1,4 +1,4 @@
-LOAD "TEST9_P1_SCORED.ser"
+LOAD "test9_p1_scored.ser"
 PLAYERINFO 1 PTS
 CNT CR
 !STEP 2 D
