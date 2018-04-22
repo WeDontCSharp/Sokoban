@@ -9,10 +9,12 @@ import java.util.ArrayList;
 import skeleton.model.Direction;
 import skeleton.test.commands.LevelCommand;
 import skeleton.test.commands.LoadCommand;
+import skeleton.test.commands.PlaceCommand;
 import skeleton.test.commands.PlayerInfoCommand;
 import skeleton.test.commands.SaveCommand;
 import skeleton.test.commands.StepCommand;
 import skeleton.test.commands.CNTCommand;
+import skeleton.test.commands.GiveCommand;
 import skeleton.test.commands.HoleInfoCommand;
 
 public abstract class TestReader {
@@ -87,6 +89,17 @@ public abstract class TestReader {
 				int y = Integer.parseInt(coords[1].trim());
 
 				clist.add(new HoleInfoCommand(x, y));
+			}
+			else if (cmd.equals("give")) {
+				int pid = Integer.parseInt(parts[1].trim()) - 1;
+				String itemStr = parts[2].trim();
+
+				clist.add(new GiveCommand(pid, itemStr));
+			}
+			else if (cmd.equals("place") || cmd.equals("!place")) {
+				int pid = Integer.parseInt(parts[1].trim()) - 1;
+
+				clist.add(new PlaceCommand(pid));
 			}
 			else if (cmd.equals("cnt")) {
 				String arg = parts[1].trim();

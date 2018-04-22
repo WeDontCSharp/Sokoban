@@ -312,8 +312,8 @@ public class Warehouse implements Serializable {
 			
 		}
 		
-		for (int i = 0; i < 3; ++i) {
-			if (spawns[i] != null) {			
+		for (int i = 0; i < 4; ++i) {
+			if (spawns[i] != null) {		
 				spawns[i].setOwner(owners[i]);
 			}
 		}

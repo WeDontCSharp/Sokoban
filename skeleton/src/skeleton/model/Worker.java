@@ -26,8 +26,12 @@ public class Worker extends Entity {
 	 * The item the worker can change a field's
 	 * slipperines with.
 	 */
-	private PlaceableItem item;
+	private PlaceableItem item = PlaceableItem.Nothing;
 	
+	public void setItem(PlaceableItem item) {
+		this.item = item;
+	}
+
 	public PlaceableItem getItem() {
 		return item;
 	}
@@ -57,7 +61,7 @@ public class Worker extends Entity {
 	 */
 	public Worker(Warehouse g, Field f, Direction dir) {
 		super(g, f);
-		this.orgPower = 5.0;
+		this.orgPower = 3.0;
 		this.health = 3;
 	}
 	
@@ -79,14 +83,17 @@ public class Worker extends Entity {
 	 * Places the item the worker currently holds onto
 	 * the field the worker is currently staying on.
 	 */
-	public void placeItem() {
+	public boolean placeItem() {
 		// TODO: What to do on successfull/failed place? 
 		if (item == PlaceableItem.Honey) {
 			getCurField().placeSlipFactor(2.0);
+			return true;
 		}
 		else if (item == PlaceableItem.Oil) {
 			getCurField().placeSlipFactor(0.0);
+			return true;
 		}
+		return false;
 	}
 	
 	/**
@@ -191,7 +198,7 @@ public class Worker extends Entity {
 	 * The Worker respawns at their spawnField.
 	 */
 	public void reSpawn() {
-		this.pushProcess(new StepProcess(this, this.getCurField(), spawnField));
+		//this.pushProcess(new StepProcess(this, this.getCurField(), spawnField));
 	}
 	
 	/**
