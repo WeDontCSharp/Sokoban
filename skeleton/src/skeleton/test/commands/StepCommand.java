@@ -1,5 +1,7 @@
 package skeleton.test.commands;
 
+import java.util.ArrayList;
+
 import skeleton.model.Direction;
 import skeleton.model.Worker;
 import skeleton.model.Process;
@@ -19,7 +21,7 @@ public class StepCommand implements Command {
 	}
 
 	@Override
-	public void exec(TestEnvironment env) throws TestExecutionException {
+	public void exec(TestEnvironment env, ArrayList<String> result) throws TestExecutionException {
 		Worker w = env.getLevel().getWorker(this.playerID);
 		if (w == null) {
 			throw new TestExecutionException();
@@ -27,10 +29,12 @@ public class StepCommand implements Command {
 		w.move(this.direction);
 		Process proc = w.getCurrentProcess();
 		if (proc == null) {
-			System.out.println("STEP_FAIL " + (playerID + 1) + " " + Direction.toChar(this.direction));
+			//System.out.println("STEP_FAIL " + (playerID + 1) + " " + Direction.toChar(this.direction));
+			result.add("STEP_FAIL " + (playerID + 1) + " " + Direction.toChar(this.direction));
 			return;
 		}
-		System.out.println("STEP_OK " + (playerID + 1) + " " + Direction.toChar(this.direction));
+		//System.out.println("STEP_OK " + (playerID + 1) + " " + Direction.toChar(this.direction));
+		result.add("STEP_OK " + (playerID + 1) + " " + Direction.toChar(this.direction));
 		if (sync) {
 			while (!proc.isOver()) {
 				env.getLevel().update();

@@ -1,5 +1,7 @@
 package skeleton.test.commands;
 
+import java.util.ArrayList;
+
 import skeleton.model.PlaceableItem;
 import skeleton.model.Worker;
 import skeleton.test.Command;
@@ -16,7 +18,7 @@ public class PlayerInfoCommand implements Command {
 	}
 
 	@Override
-	public void exec(TestEnvironment env) throws TestExecutionException {
+	public void exec(TestEnvironment env, ArrayList<String> result) throws TestExecutionException {
 		Worker w = env.getLevel().getWorker(this.playerID);
 		if (w == null) {
 			throw new TestExecutionException();

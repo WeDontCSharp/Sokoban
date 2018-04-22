@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 
 import skeleton.model.Hole;
 import skeleton.model.LevelFormatException;
@@ -20,7 +21,7 @@ public class SaveCommand implements Command {
 	}
 	
 	@Override
-	public void exec(TestEnvironment env) throws TestExecutionException {
+	public void exec(TestEnvironment env, ArrayList<String> result) throws TestExecutionException {
 		Warehouse w = env.getLevel();
 		if (w == null) {
 			throw new TestExecutionException();

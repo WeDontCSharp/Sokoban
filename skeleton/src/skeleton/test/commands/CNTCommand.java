@@ -36,7 +36,7 @@ public class CNTCommand implements Command {
 	}
 
 	@Override
-	public void exec(TestEnvironment env) throws TestExecutionException {
+	public void exec(TestEnvironment env, ArrayList<String> result) throws TestExecutionException {
 		Warehouse w = env.getLevel();
 		if (w == null) {
 			throw new TestExecutionException();

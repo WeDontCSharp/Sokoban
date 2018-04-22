@@ -1,6 +1,9 @@
 package skeleton.test.commands;
 
 import skeleton.model.Warehouse;
+
+import java.util.ArrayList;
+
 import skeleton.model.Hole;
 import skeleton.test.Command;
 import skeleton.test.TestEnvironment;
@@ -16,7 +19,7 @@ public class HoleInfoCommand implements Command {
 	}
 
 	@Override
-	public void exec(TestEnvironment env) throws TestExecutionException {
+	public void exec(TestEnvironment env, ArrayList<String> result) throws TestExecutionException {
 		Hole h = (Hole) env.getLevel().getField(this.posX, this.posY);
 		if (h == null) {
 			throw new TestExecutionException();

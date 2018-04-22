@@ -1,2 +1,2 @@
 LEVEL "testlevel1.json"
-STEP 1 R
+STEP 1 D
