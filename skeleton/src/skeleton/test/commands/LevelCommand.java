@@ -1,6 +1,7 @@
 package skeleton.test.commands;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 import skeleton.model.LevelFormatException;
 import skeleton.model.Warehouse;
@@ -16,13 +17,15 @@ public class LevelCommand implements Command {
 	}
 	
 	@Override
-	public void exec(TestEnvironment env) throws TestExecutionException {
+	public void exec(TestEnvironment env, ArrayList<String> result) throws TestExecutionException {
 		try {
 			Warehouse wh = Warehouse.fromFile(path);
 			env.setLevel(wh);
-			System.out.println("LEVEL_SUCCESS \"" + path + "\"");
+			//System.out.println("LEVEL_SUCCESS \"" + path + "\"");
+			result.add("LEVEL_SUCCESS \"" + path + "\"");
 		} catch (FileNotFoundException e) {
-			System.out.println("LEVEL_FAIL \"" + path + "\"");
+			//System.out.println("LEVEL_FAIL \"" + path + "\"");
+			result.add("LEVEL_FAIL \"" + path + "\"");
 		} catch (LevelFormatException e) {
 			throw new TestExecutionException();
 		}

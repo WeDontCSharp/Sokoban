@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.util.ArrayList;
 
 import skeleton.model.Warehouse;
 import skeleton.test.Command;
@@ -18,7 +19,7 @@ public class LoadCommand implements Command {
 	}
 	
 	@Override
-	public void exec(TestEnvironment env) throws TestExecutionException {		
+	public void exec(TestEnvironment env, ArrayList<String> result) throws TestExecutionException {		
 		FileInputStream fis = null;
 		ObjectInputStream ois = null;
 		
