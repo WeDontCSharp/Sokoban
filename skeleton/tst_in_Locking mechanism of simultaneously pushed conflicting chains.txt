@@ -1,0 +1,5 @@
+LEVEL "testlevel9.json"
+STEP 1 U
+STEP 2 R
+STEP 3 U
+!STEP 4 R

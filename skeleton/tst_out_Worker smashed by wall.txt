@@ -1,0 +1,4 @@
+LEVEL_SUCCESS "testlevel2.json"
+PLAYER_HP 3 3
+STEP_OK 1 D
+PLAYER_HP 3 2

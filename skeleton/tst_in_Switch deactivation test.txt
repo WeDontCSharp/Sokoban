@@ -1,0 +1,4 @@
+LOAD "test11_hole_act.ser"
+HOLEINFO 3,3
+!STEP 1 R
+HOLEINFO 3,3

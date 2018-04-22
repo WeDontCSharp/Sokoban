@@ -98,6 +98,15 @@ public class Warehouse implements Serializable {
 	public int getHeight(){
 		return this.height;
 	}
+	
+	public ArrayList<Crate> getCrates(){
+		ArrayList<Crate> crates = new ArrayList<Crate>();
+		for (Entity e : entities){
+			if (!(e instanceof Worker))
+				crates.add((Crate)e);
+			}
+		return crates;
+	}
 
 	/**
 	 * Adds an entity to the warehouse.

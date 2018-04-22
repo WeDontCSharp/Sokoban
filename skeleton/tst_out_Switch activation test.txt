@@ -1,0 +1,5 @@
+LEVEL_SUCCESS "testlevel5.json"
+CLOSED 3,3
+STEP_OK 1 R
+OPEN 3,3
+SAVE_SUCCESS "test11_hole_act.ser"
