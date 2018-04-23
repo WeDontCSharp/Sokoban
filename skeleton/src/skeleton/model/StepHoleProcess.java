@@ -1,16 +1,14 @@
 package skeleton.model;
 
-public class LoseLifeProcess implements Process {
+public class StepHoleProcess implements Process {
 	public static final float SPEED = 0.08f;
 	
 	private float percent;
-	private Entity moving;
 	private Field from;
 	private Field to;
 	
-	public LoseLifeProcess(Entity e, Field from, Field to) {
+	public StepHoleProcess(Field from, Field to) {
 		this.percent = 0.0f;
-		this.moving = e;
 		this.from = from;
 		this.to = to;
 	}

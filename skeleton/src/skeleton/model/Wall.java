@@ -51,5 +51,10 @@ public class Wall extends Field  {
     public boolean isBlocking() {
     	return true;
     }
+    
+    // XXX: StepProcess Visitor...
+ 	public void callProcess(Entity e, Field from) {
+		e.pushProcess(new StepWallProcess(from, this));
+ 	}
 }
 

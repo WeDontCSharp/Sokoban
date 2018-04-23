@@ -19,15 +19,7 @@ public class Main {
 	public static void main(String[] args) {
 		addTests();
 		displayMenu();
-		
-		/*try {
-			Test t = TestReader.fromFile("test.txt");
-			t.run();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (InputLanguageException e) {
-			e.printStackTrace();
-		}*/
+		readInput();
 	}
 	
 	public static void addTests() {
@@ -85,7 +77,6 @@ public class Main {
 		
 		System.out.println("\n[Q] Quit");
 		
-		readInput();
 	}
 	
 	public static void readInput() {
@@ -99,6 +90,7 @@ public class Main {
 				
 				if (line.trim().equals("Q") || line.trim().equals("q")) {
 					System.out.println("So early to quIIT...");
+					br.close();
 					break loop;
 				}
 				
@@ -127,10 +119,10 @@ public class Main {
 					System.out.println("It's not that hard to give a number from 0 to " + tests.size() + "... Let's try it again.");
 					
 				}
-				
+								
 				displayMenu();
 			}
-			
+		
 			br.close();
 			
 		} catch (IOException e) {

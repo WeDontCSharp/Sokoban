@@ -46,7 +46,8 @@ public class Hole extends Floor {
 		}
 		return true;
 	}
-
+	
+	
 	/* (non-Javadoc)
 	 * @see skeleton.model.Floor#visitByCrate(skeleton.model.Worker, skeleton.model.Crate)
 	 */
@@ -106,7 +107,7 @@ public class Hole extends Floor {
 	// XXX: StepProcess Visitor...
 	public void callProcess(Entity e, Field from) {
 		if (isOpen()) {
-			e.pushProcess(new LoseLifeProcess(e, from, this));
+			e.pushProcess(new StepHoleProcess(from, this));
 		} else {
 			e.pushProcess(new StepProcess(e, from, this));
 		}
