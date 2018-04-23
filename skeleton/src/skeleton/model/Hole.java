@@ -102,4 +102,13 @@ public class Hole extends Floor {
 	public Worker getWhoPushed() {
 		return whoPushed;
 	}
+	
+	// XXX: StepProcess Visitor...
+	public void callProcess(Entity e, Field from) {
+		if (isOpen()) {
+			e.pushProcess(new LoseLifeProcess(e, from, this));
+		} else {
+			e.pushProcess(new StepProcess(e, from, this));
+		}
+	}
 }

@@ -198,7 +198,9 @@ public class Worker extends Entity {
 	 * The Worker respawns at their spawnField.
 	 */
 	public void reSpawn() {
-		this.pushProcess(new StepProcess(this, this.getCurField(), spawnField));
+		this.getCurField().unsetEntity();
+		this.spawnField.setEntity(this);
+		this.setCurField(this.spawnField);	
 	}
 	
 	/**
@@ -208,6 +210,7 @@ public class Worker extends Entity {
 		//throw new RuntimeException("Unimplemented!");
 		// TODO Remove worker from game.
 		super.level.removeAliveWorker();
+		super.level.update();
 	}
 	
 	/* (non-Javadoc)

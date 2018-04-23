@@ -24,7 +24,8 @@ public abstract class Entity implements IVisitor, Serializable{
 	 */
 	private double weight;
 	
-	private LinkedList<Process> processes;
+	// XXX: HACK
+	protected LinkedList<Process> processes;
 	
 	/**
 	 * The entity's constructor.
@@ -86,14 +87,18 @@ public abstract class Entity implements IVisitor, Serializable{
 		}
 		if (neighbour.isEmpty()) {											//If the next field is empty
 			if (visit(firstPusher, neighbour)) {
-				this.pushProcess(new StepProcess(this, curField, neighbour));
+				// XXX: Magic begins here
+				//this.pushProcess(new StepProcess(this, curField, neighbour));
+				neighbour.callProcess(this, curField);
 				return true;
 			}
 		} else {												//If the next field is occupied, tries to push
 			Entity nextEntity = neighbour.getEntity();
 			if (push(firstPusher, nextEntity, dir)) {
 				if (visit(firstPusher, neighbour)) {
-					this.pushProcess(new StepProcess(this, curField, neighbour));
+					// XXX: Magic begins here
+					//this.pushProcess(new StepProcess(this, curField, neighbour));
+					neighbour.callProcess(this, curField);
 					return true;
 				}
 			}

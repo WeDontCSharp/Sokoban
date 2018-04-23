@@ -101,7 +101,6 @@ public abstract class Field implements IVisitable, Serializable {
 	 */
 	public boolean isEmpty() {
 		return this.curEntity == null;
-		
 	}
 	
 	/**
@@ -145,5 +144,10 @@ public abstract class Field implements IVisitable, Serializable {
 	
 	public boolean isBlocking() {
 		return false;
+	}
+	
+	// XXX: StepProcess Visitor...
+	public void callProcess(Entity e, Field from) {
+		e.pushProcess(new StepProcess(e, from, this));
 	}
 }

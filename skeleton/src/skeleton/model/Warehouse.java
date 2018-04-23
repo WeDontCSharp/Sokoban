@@ -255,12 +255,18 @@ public class Warehouse implements Serializable {
 		 if(initial) {
 			 ArrayList<Entity> crates = new ArrayList<Entity>();
 			 crates.addAll(this.entities);
-			 for(int i = 0; i <4; ++i) {
-					crates.remove(this.workers[i]);
+			 for(int i = 0; i < 4; ++i) {
+			 		crates.remove(this.workers[i]);
 			 }
 			 boolean allBlocked = true;
-			 for(Entity crate : crates) if(!((Crate)crate).isStuck()) allBlocked = false;
-			 if(allBlocked) this.end = EndType.Crate;
+			 for (Entity crate : crates) {
+				 if(!((Crate)crate).isStuck()) {
+					 allBlocked = false;
+				 }
+			 }
+			 if(allBlocked) {
+				 this.end = EndType.Crate;
+			 }
 		 }
 	}
 	
