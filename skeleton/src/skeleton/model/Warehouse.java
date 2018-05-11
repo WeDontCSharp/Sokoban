@@ -14,6 +14,10 @@ import javax.json.JsonObject;
 import javax.json.JsonReader;
 import javax.json.JsonValue;
 
+import skeleton.view.ControlMessage;
+import skeleton.view.IView;
+import skeleton.view.StateChangeMessage;
+
 /**
  * A class representing a container for the fields and entities, also taking
  * part as a level in the game.
@@ -35,6 +39,27 @@ public class Warehouse implements Serializable {
 		}
 	}
 	
+	private IView view;
+	
+	public void sendMessage(StateChangeMessage msg) {
+		// TODO
+		
+	}
+	
+	public void receiveMessage(StateChangeMessage msg) {
+		// TODO
+		
+	}
+	
+	public void sendMessage(ControlMessage msg) {
+		// TODO
+		
+	}
+	
+	public void receiveMessage(ControlMessage msg) {
+		// TODO
+		
+	}
 	
 	/**
 	 * The dimensions of the warehouse in field units.
