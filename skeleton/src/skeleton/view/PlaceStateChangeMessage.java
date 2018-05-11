@@ -13,5 +13,4 @@ public class PlaceStateChangeMessage extends StateChangeMessage {
 		this.item = item;
 	}
 	
-	
 }
