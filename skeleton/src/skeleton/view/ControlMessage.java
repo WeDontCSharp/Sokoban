@@ -1,5 +1,9 @@
 package skeleton.view;
 
-public class ControlMessage {
+public abstract class ControlMessage {
+	public final ControlMessageType type;
 
+	public ControlMessage(ControlMessageType type) {
+		this.type = type;
+	}
 }
