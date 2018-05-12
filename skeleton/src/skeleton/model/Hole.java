@@ -109,7 +109,8 @@ public abstract class Hole extends Floor {
 		if (isOpen()) {
 			e.pushProcess(new StepHoleProcess(from, this));
 		} else {
-			e.pushProcess(new StepProcess(e, from, this));
+			e.startStepProcess(this);
+			//e.pushProcess(new StepProcess(e, from, this));
 		}
 	}
 }

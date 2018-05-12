@@ -7,16 +7,9 @@ public class WorkerWrapper extends Worker {
 	
 	public WorkerWrapper(Warehouse g, Field f, Direction dir) {
 		super(g, f, dir);
-		// TODO Auto-generated constructor stub
+		this.getLevel().receiveMessage(new WorkerStepStateChangeMessage(this.getPlayerIndex(), this.getCurField(), f, 0.0f));
 	}
 
-	@Override
-	public void setCurField(Field f) {
-		super.setCurField(f);
-		// XXX: Not sure if works like this.
-		this.getLevel().receiveMessage(new WorkerStepStateChangeMessage(this.getPlayerIndex(), this.getCurField(), f));
-	}
-	
 	@Override
 	public void gainPoint() {
 		super.gainPoint();
@@ -49,7 +42,7 @@ public class WorkerWrapper extends Worker {
 	public void reSpawn() {
 		super.reSpawn();
 		// XXX: Not sure if works like this.
-		this.getLevel().receiveMessage(new WorkerStepStateChangeMessage(this.getPlayerIndex(), this.getCurField(), this.getSpawnField()));
+		this.getLevel().receiveMessage(new WorkerStepStateChangeMessage(this.getPlayerIndex(), this.getCurField(), this.getSpawnField(), 1.0f));
 	}
 	
 	@Override

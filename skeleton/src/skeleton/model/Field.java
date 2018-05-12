@@ -151,7 +151,7 @@ public abstract class Field implements IVisitable, Serializable {
 	
 	// XXX: StepProcess Visitor...
 	public void callProcess(Entity e, Field from) {
-		e.pushProcess(new StepProcess(e, from, this));
+		e.startStepProcess(this);
 	}
 	
 	public int getX() {

@@ -25,7 +25,7 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 	private int xOffset;
 	private int yOffset;
 	
-	private ArrayList<Circle> workers = new ArrayList<Circle>();
+	private ArrayList<PlayerShape> workers = new ArrayList<PlayerShape>();
 	
 	public GraphicsView() {
 		super();
@@ -51,7 +51,7 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 		this.xOffset = 16;
 		this.yOffset = 8;
 		
-		this.workers.add(new Circle(0, 0, UNIT_WIDTH, Color.RED));
+		this.workers.add(new PlayerShape(0, 0, Color.RED));
 	}
 	
 	@Override
@@ -66,12 +66,15 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 		case WorkerStep: {
 			WorkerStepStateChangeMessage ws = (WorkerStepStateChangeMessage)msg;
 			
-			// XXX: Missing stuff Dani??????????????????
-			
+			Field from = ws.fieldFrom;
 			Field to = ws.fieldTo;
-			Circle w = this.workers.get(ws.playerIndex);
-			w.x = to.getX() * UNIT_WIDTH;
-			w.y = to.getY() * UNIT_WIDTH;
+			PlayerShape w = this.workers.get(ws.playerIndex);
+			
+			int x_diff = (to.getX() - from.getX()) * UNIT_WIDTH;
+			int y_diff = (to.getY() - from.getY()) * UNIT_WIDTH;
+			
+			w.x = from.getX() * UNIT_WIDTH + (int)(x_diff * ws.percent);
+			w.y = from.getY() * UNIT_WIDTH + (int)(y_diff * ws.percent);
 		} break;
 		
 		default: {
@@ -85,7 +88,7 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
-		for (Circle c : this.workers) {
+		for (PlayerShape c : this.workers) {
 			c.draw(g, this.xOffset, this.yOffset);
 		}
 	}

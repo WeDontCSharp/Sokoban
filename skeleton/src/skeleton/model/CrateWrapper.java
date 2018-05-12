@@ -10,13 +10,6 @@ public class CrateWrapper extends Crate {
 	}
 
 	@Override
-	public void setCurField(Field f) {
-		super.setCurField(f);
-		// XXX: Not sure if works like this.
-		this.getLevel().receiveMessage(new CrateStepStateChangeMessage(this, this.getCurField(), f));
-	}
-	
-	@Override
 	public void remove() {
 		super.remove();
 		// XXX: Not sure if works like this.

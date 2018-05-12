@@ -33,4 +33,9 @@ public abstract class LifeCrate extends Crate {
 		return iv.visitByLifeCrate(firstPusher, this);
 	}
 	
+	@Override
+	public void startStepProcess(Field to) {
+		this.pushProcess(new StepProcessWrapper(this, this.getCurField(), to));
+	}
+	
 }

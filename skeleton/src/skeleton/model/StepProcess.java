@@ -1,6 +1,6 @@
 package skeleton.model;
 
-public class StepProcess implements Process {
+public abstract class StepProcess implements Process {
 	public static final float SPEED = 0.08f;
 	
 	private float percent;
@@ -37,15 +37,22 @@ public class StepProcess implements Process {
 	}
 
 	@Override
-	
 	public void end() {
 		this.from.unlock();
 		this.to.unlock();
 		
-		to.setEntity(this.moving);
+		this.to.setEntity(this.moving);
 		this.moving.setCurField(this.to);
 		
 		this.moving.level.updateBlocking(to, true);
+	}
+	
+	public float getPercentage() {
+		return this.percent;
+	}
+	
+	public Entity getEntity() {
+		return this.moving;
 	}
 	
 }

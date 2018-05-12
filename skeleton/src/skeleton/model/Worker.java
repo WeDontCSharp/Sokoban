@@ -232,4 +232,9 @@ public abstract class Worker extends Entity {
 		return iv.visitByWorker(firstPusher, this);
 	}
 	
+	@Override
+	public void startStepProcess(Field to) {
+		this.pushProcess(new StepProcessWrapper(this, this.getCurField(), to));
+	}
+	
 }

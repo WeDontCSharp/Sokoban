@@ -73,4 +73,9 @@ public abstract class Crate extends Entity {
 		return iv.visitByCrate(firstPusher, this);
 	}
 	
+	@Override
+	public void startStepProcess(Field to) {
+		this.pushProcess(new StepProcessWrapper(this, this.getCurField(), to));
+	}
+	
 }

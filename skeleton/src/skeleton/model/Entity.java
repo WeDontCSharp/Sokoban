@@ -155,7 +155,7 @@ public abstract class Entity implements IVisitor, Serializable{
 		p.update();
 	}
 	
-	public void pushProcess(Process proc) {
+	protected void pushProcess(Process proc) {
 		this.processes.addLast(proc);
 		proc.start();
 	}
@@ -172,4 +172,6 @@ public abstract class Entity implements IVisitor, Serializable{
 		}
 		return processes.peekFirst();
 	}
+	
+	public abstract void startStepProcess(Field to);
 }

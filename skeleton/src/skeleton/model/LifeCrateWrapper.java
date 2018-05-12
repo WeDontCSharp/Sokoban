@@ -8,13 +8,6 @@ public class LifeCrateWrapper extends LifeCrate {
 		super(g, f);
 		// TODO Auto-generated constructor stub
 	}
-
-	@Override
-	public void setCurField(Field f) {
-		super.setCurField(f);
-		// XXX: Not sure if works like this.
-		this.getLevel().receiveMessage(new LifeCrateStepStateChangeMessage(this, this.getCurField(), f));
-	}
 	
 	@Override
 	public void remove(Worker firstPusher) {
