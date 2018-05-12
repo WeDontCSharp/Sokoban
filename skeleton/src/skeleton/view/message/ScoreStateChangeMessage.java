@@ -1,4 +1,4 @@
-package skeleton.view;
+package skeleton.view.message;
 
 public class ScoreStateChangeMessage extends StateChangeMessage {
 	public final int playerIndex;

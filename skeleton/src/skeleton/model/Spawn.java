@@ -21,8 +21,8 @@ public class Spawn extends Floor {
 	 * Creates a spawn.
 	 * @param level The warehouse to the create the spawn in.
 	 */
-    public Spawn(Warehouse level) {
-		super(level);
+    public Spawn(Warehouse level, int x, int y) {
+		super(level, x, y);
 	}
     
     /**

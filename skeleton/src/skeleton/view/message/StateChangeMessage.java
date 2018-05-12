@@ -1,4 +1,4 @@
-package skeleton.view;
+package skeleton.view.message;
 
 public abstract class StateChangeMessage {
 	public final StateChangeMessageType type;

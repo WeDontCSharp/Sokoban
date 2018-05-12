@@ -4,7 +4,7 @@ package skeleton.model;
  * A class representing a crate with a heart symbol on it.
  * This crate gives a health to the worker who pushes it in an open hole.
  */
-public class LifeCrate extends Crate {
+public abstract class LifeCrate extends Crate {
 	
 	/**
 	 * LifeCrate's construstor.

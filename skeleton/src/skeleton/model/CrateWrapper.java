@@ -1,6 +1,6 @@
 package skeleton.model;
-import skeleton.view.CrateFallStateChangeMessage;
-import skeleton.view.CrateStepStateChangeMessage;
+import skeleton.view.message.CrateFallStateChangeMessage;
+import skeleton.view.message.CrateStepStateChangeMessage;
 
 public class CrateWrapper extends Crate {
 	

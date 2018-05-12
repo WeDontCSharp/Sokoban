@@ -3,7 +3,7 @@ package skeleton.model;
 /**
  * A class representing a crate.
  */
-public class Crate extends Entity {
+public abstract class Crate extends Entity {
 	private boolean onTarget;
 	
 	/**

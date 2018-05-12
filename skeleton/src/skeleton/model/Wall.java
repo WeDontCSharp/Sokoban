@@ -11,8 +11,8 @@ public class Wall extends Field  {
 	 * Creates a wall.
 	 * @param level The warehouse to the create the floor in.
 	 */
-    public Wall(Warehouse level) {
-		super(level);
+    public Wall(Warehouse level, int x, int y) {
+		super(level, x, y);
 	}
     
     /**

@@ -4,14 +4,14 @@ package skeleton.model;
  * A class representing a floor. A floor is always
  * reachable by the entities.
  */
-public class Floor extends Field {
+public abstract class Floor extends Field {
 
 	/**
 	 * Creates a floor.
 	 * @param level The warehouse to the create the floor in.
 	 */
-	public Floor(Warehouse level) {
-		super(level);
+	public Floor(Warehouse level, int x, int y) {
+		super(level, x, y);
 	}
 	
 	/**

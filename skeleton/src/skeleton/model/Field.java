@@ -20,6 +20,7 @@ public abstract class Field implements IVisitable, Serializable {
 	private Entity curEntity;
 	
 	private boolean locked;
+	private int x, y;
 	
 	
 	/**
@@ -36,7 +37,9 @@ public abstract class Field implements IVisitable, Serializable {
 	 * Creates a field.
 	 * @param level The warehouse to the create the field in.
 	 */
-	public Field(Warehouse level) {
+	public Field(Warehouse level, int x, int y) {
+		this.x = x;
+		this.y = y;
 		this.level = level;
 		this.neighbours = new Field[Direction.values().length];
 		this.slipFactor = 1.0;
@@ -149,5 +152,13 @@ public abstract class Field implements IVisitable, Serializable {
 	// XXX: StepProcess Visitor...
 	public void callProcess(Entity e, Field from) {
 		e.pushProcess(new StepProcess(e, from, this));
+	}
+	
+	public int getX() {
+		return this.x;
+	}
+	
+	public int getY() {
+		return this.y;
 	}
 }

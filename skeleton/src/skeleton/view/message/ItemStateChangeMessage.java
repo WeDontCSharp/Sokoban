@@ -1,4 +1,4 @@
-package skeleton.view;
+package skeleton.view.message;
 
 import skeleton.model.PlaceableItem;
 

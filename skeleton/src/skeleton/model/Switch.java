@@ -19,8 +19,8 @@ public class Switch extends Floor {
 	 * Creates a switch.
 	 * @param level The warehouse to the create the switch in.
 	 */
-    public Switch(Warehouse level) {
-		super(level);
+    public Switch(Warehouse level, int x, int y) {
+		super(level, x, y);
 		holes = new ArrayList<Hole>();
 	}
     

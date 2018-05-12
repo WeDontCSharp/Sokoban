@@ -16,8 +16,8 @@ public class Target extends Floor {
 	 * Creates a target.
 	 * @param level The warehouse to the create the target in.
 	 */
-    public Target(Warehouse level) {
-		super(level);
+    public Target(Warehouse level, int x, int y) {
+		super(level, x, y);
 	}
     
     /**

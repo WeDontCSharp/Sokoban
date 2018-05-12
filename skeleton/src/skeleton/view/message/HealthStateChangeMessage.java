@@ -1,4 +1,4 @@
-package skeleton.view;
+package skeleton.view.message;
 
 public class HealthStateChangeMessage extends StateChangeMessage {
 	public final int playerIndex;

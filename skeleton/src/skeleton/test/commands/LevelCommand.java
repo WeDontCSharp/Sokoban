@@ -8,6 +8,7 @@ import skeleton.model.Warehouse;
 import skeleton.test.Command;
 import skeleton.test.TestEnvironment;
 import skeleton.test.TestExecutionException;
+import skeleton.view.IView;
 
 public class LevelCommand implements Command {
 	private String path;
@@ -19,7 +20,15 @@ public class LevelCommand implements Command {
 	@Override
 	public void exec(TestEnvironment env, ArrayList<String> result) throws TestExecutionException {
 		try {
-			Warehouse wh = Warehouse.fromFile(path);
+			Warehouse wh = Warehouse.fromFile(path, new IView() {
+				@Override
+				public void sendMessage(Object msg) {
+				}
+
+				@Override
+				public void receiveMessage(Object msg) {
+				}
+			});
 			env.setLevel(wh);
 			result.add("LEVEL_SUCCESS \"" + path + "\"");
 		} catch (FileNotFoundException e) {

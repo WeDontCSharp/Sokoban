@@ -1,10 +1,10 @@
 package skeleton.model;
-import skeleton.view.HoleStateChangeMessage;
+import skeleton.view.message.HoleStateChangeMessage;
 
 public class HoleWrapper extends Hole {
 
-	public HoleWrapper(Warehouse level) {
-		super(level);
+	public HoleWrapper(Warehouse level, int x, int y) {
+		super(level, x, y);
 		// TODO Auto-generated constructor stub
 	}
 	

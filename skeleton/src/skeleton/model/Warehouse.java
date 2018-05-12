@@ -14,41 +14,41 @@ import javax.json.JsonObject;
 import javax.json.JsonReader;
 import javax.json.JsonValue;
 
-import skeleton.view.ControlMessage;
 import skeleton.view.IView;
-import skeleton.view.StateChangeMessage;
+import skeleton.view.message.ControlMessage;
+import skeleton.view.message.StateChangeMessage;
+import skeleton.view.message.StepControlMessage;
 
 /**
  * A class representing a container for the fields and entities, also taking
  * part as a level in the game.
  */
 public class Warehouse implements Serializable {
-	public enum EndType{
-		Nothing,Target,Crate,Player;
+	public enum EndType {
+		Nothing, Target, Crate, Player;
+		
 		public static String toString(EndType et) {
 			if (et == null) {
 				return "?";
 			}
 			switch (et) {
-			case Nothing: return "N";
-			case Target: return "TR";
-			case Crate: return "CR";
-			case Player: return "P";
+			case Nothing: 	return "N";
+			case Target: 	return "TR";
+			case Crate: 	return "CR";
+			case Player: 	return "P";
+			default: 		return "?";
 			}
-			return "?";
 		}
 	}
 	
-	private IView view;
+	private IView<StateChangeMessage> graphicsView;
 	
 	public void sendMessage(StateChangeMessage msg) {
 		// TODO
-		
 	}
 	
 	public void receiveMessage(StateChangeMessage msg) {
-		// TODO
-		
+		this.graphicsView.receiveMessage(msg);
 	}
 	
 	public void sendMessage(ControlMessage msg) {
@@ -57,8 +57,12 @@ public class Warehouse implements Serializable {
 	}
 	
 	public void receiveMessage(ControlMessage msg) {
-		// TODO
-		
+		switch (msg.type) {
+		case Step: {
+			StepControlMessage scm = (StepControlMessage)msg;
+			this.workers[scm.playerIndex].move(scm.direction);
+		} break;
+		}
 	}
 	
 	/**
@@ -91,7 +95,9 @@ public class Warehouse implements Serializable {
 	 * @param w The width of the warehouse.
 	 * @param h The height of the warehouse.
 	 */
-	public Warehouse(int w, int h) {
+	public Warehouse(int w, int h, IView<StateChangeMessage> graphicsView) {
+		this.graphicsView = graphicsView;
+		
 		this.width = w;
 		this.height = h;
 
@@ -307,7 +313,7 @@ public class Warehouse implements Serializable {
 		return this.workers[i];
 	}
 
-	public static Warehouse fromFile(String path) throws LevelFormatException, FileNotFoundException {
+	public static Warehouse fromFile(String path, IView<StateChangeMessage> gw) throws LevelFormatException, FileNotFoundException {
 		JsonReader reader = Json.createReader(new BufferedInputStream(new FileInputStream(path)));
 		JsonObject mapObj = reader.readObject();
 
@@ -315,7 +321,7 @@ public class Warehouse implements Serializable {
 		int height = mapObj.getInt("height");
 		int tileSize = mapObj.getInt("tilewidth");
 
-		Warehouse wh = new Warehouse(width, height);
+		Warehouse wh = new Warehouse(width, height, gw);
 
 		JsonArray layers = mapObj.getJsonArray("layers");
 
@@ -335,44 +341,46 @@ public class Warehouse implements Serializable {
 				for (JsonValue fieldIdStr : fields) {
 					int fieldId = Integer.parseInt(fieldIdStr.toString());
 					Field field = null;
+					int field_x = index % width;
+					int field_y = index / width;
 
 					switch (fieldId) {
 					case 0:
 						break;
 					case 1:
-						field = new Wall(wh);
+						field = new Wall(wh, field_x, field_y);
 						break;
 					case 2:
-						field = new Floor(wh);
+						field = new FloorWrapper(wh, field_x, field_y);
 						break;
 					case 3:
-						field = new Target(wh);
+						field = new Target(wh, field_x, field_y);
 						wh.addTarget();
 						break;
 					case 4:
-						field = new Switch(wh);
+						field = new Switch(wh, field_x, field_y);
 						break;
 					case 5:
-						field = new Hole(wh);
+						field = new HoleWrapper(wh, field_x, field_y);
 						break;
 					case 6:
 						// Spawn for P1
-						field = new Spawn(wh);
+						field = new Spawn(wh, field_x, field_y);
 						spawns[0] = (Spawn) field;
 						break;
 					case 7:
 						// Spawn for P2
-						field = new Spawn(wh);
+						field = new Spawn(wh, field_x, field_y);
 						spawns[1] = (Spawn) field;
 						break;
 					case 8:
 						// Spawn for P3
-						field = new Spawn(wh);
+						field = new Spawn(wh, field_x, field_y);
 						spawns[2] = (Spawn) field;
 						break;
 					case 9:
 						// Spawn for P4
-						field = new Spawn(wh);
+						field = new Spawn(wh, field_x, field_y);
 						spawns[3] = (Spawn) field;
 						break;
 					// XXX
@@ -381,7 +389,7 @@ public class Warehouse implements Serializable {
 					}
 
 					if (field != null) {
-						wh.setField(field, index % width, index / width);
+						wh.setField(field, field_x, field_y);
 					}
 					index++;
 				}
@@ -396,31 +404,31 @@ public class Warehouse implements Serializable {
 					case 0:
 						break;
 					case 10:
-						ent = new Crate(wh, wh.getField(index % width, index / width));
+						ent = new CrateWrapper(wh, wh.getField(index % width, index / width));
 						if(wh.getField(index % width, index / width) instanceof Target) wh.addOntarget();
 						break;
 					case 11:
-						ent = new Worker(wh, wh.getField(index % width, index / width), Direction.Down);
+						ent = new WorkerWrapper(wh, wh.getField(index % width, index / width), Direction.Down);
 						owners[0] = (Worker) ent;
 						wh.setWorker(0, ent);
 						break;
 					case 12:
-						ent = new Worker(wh, wh.getField(index % width, index / width), Direction.Down);
+						ent = new WorkerWrapper(wh, wh.getField(index % width, index / width), Direction.Down);
 						owners[1] = (Worker) ent;
 						wh.setWorker(1, ent);
 						break;
 					case 13:
-						ent = new Worker(wh, wh.getField(index % width, index / width), Direction.Down);
+						ent = new WorkerWrapper(wh, wh.getField(index % width, index / width), Direction.Down);
 						owners[2] = (Worker) ent;
 						wh.setWorker(2, ent);
 						break;
 					case 14:
-						ent = new Worker(wh, wh.getField(index % width, index / width), Direction.Down);
+						ent = new WorkerWrapper(wh, wh.getField(index % width, index / width), Direction.Down);
 						owners[3] = (Worker) ent;
 						wh.setWorker(3, ent);
 						break;
 					case 15:
-						ent = new LifeCrate(wh, wh.getField(index % width, index / width));
+						ent = new LifeCrateWrapper(wh, wh.getField(index % width, index / width));
 						break;
 					// XXX
 					default:

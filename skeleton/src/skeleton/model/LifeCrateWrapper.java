@@ -1,6 +1,6 @@
 package skeleton.model;
-import skeleton.view.LifeCrateFallStateChangeMessage;
-import skeleton.view.LifeCrateStepStateChangeMessage;
+import skeleton.view.message.LifeCrateFallStateChangeMessage;
+import skeleton.view.message.LifeCrateStepStateChangeMessage;
 
 public class LifeCrateWrapper extends LifeCrate {
 	

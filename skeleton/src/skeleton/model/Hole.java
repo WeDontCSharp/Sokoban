@@ -5,7 +5,7 @@ package skeleton.model;
  * reachable by the entities. If the hole is open 
  * and an entity steps on it, it falls down.
  */
-public class Hole extends Floor {
+public abstract class Hole extends Floor {
 	
 	/**
 	 * The state of the hole.
@@ -20,8 +20,8 @@ public class Hole extends Floor {
 	 * Creates a hole.
 	 * @param level The warehouse to the create the hole in.
 	 */
-	public Hole(Warehouse level) {
-		super(level);
+	public Hole(Warehouse level, int x, int y) {
+		super(level, x, y);
 	}
 	
 	/**

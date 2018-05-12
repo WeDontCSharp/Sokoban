@@ -1,9 +1,7 @@
 package skeleton.model;
-import skeleton.view.CrateFallStateChangeMessage;
-import skeleton.view.CrateStepStateChangeMessage;
-import skeleton.view.HealthStateChangeMessage;
-import skeleton.view.ScoreStateChangeMessage;
-import skeleton.view.WorkerStepStateChangeMessage;
+import skeleton.view.message.HealthStateChangeMessage;
+import skeleton.view.message.ScoreStateChangeMessage;
+import skeleton.view.message.WorkerStepStateChangeMessage;
 
 public class WorkerWrapper extends Worker {
 	

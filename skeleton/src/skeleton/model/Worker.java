@@ -3,7 +3,7 @@ package skeleton.model;
 /**
  * A class representing a worker.
  */
-public class Worker extends Entity {
+public abstract class Worker extends Entity {
 	
 	private int playerIndex;
 	
