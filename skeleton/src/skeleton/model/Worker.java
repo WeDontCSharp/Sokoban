@@ -4,6 +4,17 @@ package skeleton.model;
  * A class representing a worker.
  */
 public class Worker extends Entity {
+	
+	private int playerIndex;
+	
+	public int getPlayerIndex() {
+		return playerIndex;
+	}
+
+	public void setPlayerIndex(int playerIndex) {
+		this.playerIndex = playerIndex;
+	}
+
 	/**
 	 * The points of the worker.
 	 */
