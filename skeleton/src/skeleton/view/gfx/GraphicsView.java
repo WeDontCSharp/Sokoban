@@ -118,6 +118,14 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
+		g.setColor(Color.BLACK);
+		for (int i = UNIT_WIDTH; i < HEIGHT; i += UNIT_WIDTH) {
+			g.drawLine(0, i + this.yOffset, WIDTH, i + this.yOffset);
+		}
+		for (int i = UNIT_WIDTH; i < WIDTH; i += UNIT_WIDTH) {
+			g.drawLine(i + this.xOffset, 0, i + this.xOffset, HEIGHT);
+		}
+		
 		for (PlayerShape c : this.workers) {
 			if (c == null) {
 				continue;
