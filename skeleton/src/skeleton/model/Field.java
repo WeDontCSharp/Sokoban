@@ -161,4 +161,17 @@ public abstract class Field implements IVisitable, Serializable {
 	public int getY() {
 		return this.y;
 	}
+	
+	public static Direction getDirection(Field from, Field to) {
+		if (from.x < to.x) {
+			return Direction.Right;
+		}
+		if (from.x > to.x) {
+			return Direction.Left;
+		}
+		if (from.y < to.y) {
+			return Direction.Down;
+		}
+		return Direction.Up;
+	}
 }

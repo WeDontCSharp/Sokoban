@@ -53,6 +53,15 @@ public class KeyboardView extends KeyAdapter implements IView<ControlMessage>{
 		if (kc == this.rightKey) {
 			this.sendMessage(new StepControlMessage(this.playerIndex, Direction.Right));
 		}
+		else if (kc == this.leftKey) {
+			this.sendMessage(new StepControlMessage(this.playerIndex, Direction.Left));
+		}
+		else if (kc == this.upKey) {
+			this.sendMessage(new StepControlMessage(this.playerIndex, Direction.Up));
+		}
+		else if (kc == this.downKey) {
+			this.sendMessage(new StepControlMessage(this.playerIndex, Direction.Down));
+		}
 	}
 	
 }

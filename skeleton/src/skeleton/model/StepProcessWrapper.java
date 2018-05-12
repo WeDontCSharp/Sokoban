@@ -11,7 +11,7 @@ public class StepProcessWrapper extends StepProcess {
 	
 	public StepProcessWrapper(Worker e, Field from, Field to) {
 		super(e, from, to);
-		this.msg = new WorkerStepStateChangeMessage(e.getPlayerIndex(), from, to, 0.0f);
+		this.msg = new WorkerStepStateChangeMessage(e.getPlayerIndex(), Field.getDirection(from, to), from, to, 0.0f);
 	}
 	
 	public StepProcessWrapper(Crate e, Field from, Field to) {

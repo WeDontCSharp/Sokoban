@@ -70,6 +70,8 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 			Field to = ws.fieldTo;
 			PlayerShape w = this.workers.get(ws.playerIndex);
 			
+			w.direction = ws.direction;
+			
 			int x_diff = (to.getX() - from.getX()) * UNIT_WIDTH;
 			int y_diff = (to.getY() - from.getY()) * UNIT_WIDTH;
 			
