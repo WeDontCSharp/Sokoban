@@ -7,8 +7,8 @@ public class StepStateChangeMessage extends StateChangeMessage {
     public final Field fieldTo;
     public final int process;
 	
-	public StepStateChangeMessage(Field fieldFrom, Field fieldTo, int process) {
-		super(StateChangeMessageType.Step);
+	public StepStateChangeMessage(StateChangeMessageType type, Field fieldFrom, Field fieldTo, int process) {
+		super(type);
         this.fieldFrom = fieldFrom;
         this.fieldTo = fieldTo;
         this.process = process;

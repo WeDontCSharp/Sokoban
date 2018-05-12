@@ -1,5 +1,5 @@
 package skeleton.model;
-import skeleton.view.PlaceStateChangeMessage;;
+import skeleton.view.PlaceStateChangeMessage;
 
 public class FloorWrapper extends Floor {
 
@@ -18,8 +18,7 @@ public class FloorWrapper extends Floor {
 			item = PlaceableItem.Oil;
 		}
 		// XXX: Not sure if works like this.
-		PlaceStateChangeMessage msg = new PlaceStateChangeMessage(this, item);
-		this.getLevel().receiveMessage(msg);
+		this.getLevel().receiveMessage(new PlaceStateChangeMessage(this, item));
 		return true;
 	}
 
