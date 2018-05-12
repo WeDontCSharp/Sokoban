@@ -5,8 +5,8 @@ import skeleton.view.message.WorkerStepStateChangeMessage;
 
 public class WorkerWrapper extends Worker {
 	
-	public WorkerWrapper(Warehouse g, Field f, Direction dir) {
-		super(g, f, dir);
+	public WorkerWrapper(Warehouse g, Field f, Direction dir, int idx) {
+		super(g, f, dir, idx);
 		this.getLevel().receiveMessage(new WorkerStepStateChangeMessage(this.getPlayerIndex(), Direction.Right, this.getCurField(), f, 0.0f));
 	}
 

@@ -408,22 +408,22 @@ public class Warehouse implements Serializable {
 						if(wh.getField(index % width, index / width) instanceof Target) wh.addOntarget();
 						break;
 					case 11:
-						ent = new WorkerWrapper(wh, wh.getField(index % width, index / width), Direction.Down);
+						ent = new WorkerWrapper(wh, wh.getField(index % width, index / width), Direction.Down, 0);
 						owners[0] = (Worker) ent;
 						wh.setWorker(0, ent);
 						break;
 					case 12:
-						ent = new WorkerWrapper(wh, wh.getField(index % width, index / width), Direction.Down);
+						ent = new WorkerWrapper(wh, wh.getField(index % width, index / width), Direction.Down, 1);
 						owners[1] = (Worker) ent;
 						wh.setWorker(1, ent);
 						break;
 					case 13:
-						ent = new WorkerWrapper(wh, wh.getField(index % width, index / width), Direction.Down);
+						ent = new WorkerWrapper(wh, wh.getField(index % width, index / width), Direction.Down, 2);
 						owners[2] = (Worker) ent;
 						wh.setWorker(2, ent);
 						break;
 					case 14:
-						ent = new WorkerWrapper(wh, wh.getField(index % width, index / width), Direction.Down);
+						ent = new WorkerWrapper(wh, wh.getField(index % width, index / width), Direction.Down, 3);
 						owners[3] = (Worker) ent;
 						wh.setWorker(3, ent);
 						break;

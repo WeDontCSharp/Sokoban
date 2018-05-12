@@ -4,12 +4,15 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import skeleton.model.Crate;
 import skeleton.model.Field;
 import skeleton.view.IView;
+import skeleton.view.message.CrateStepStateChangeMessage;
 import skeleton.view.message.StateChangeMessage;
 import skeleton.view.message.WorkerStepStateChangeMessage;
 
@@ -25,7 +28,8 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 	private int xOffset;
 	private int yOffset;
 	
-	private ArrayList<PlayerShape> workers = new ArrayList<PlayerShape>();
+	private PlayerShape[] workers = new PlayerShape[4];
+	private HashMap<Crate, CrateShape> crates = new HashMap<Crate, CrateShape>();
 	
 	public GraphicsView() {
 		super();
@@ -50,8 +54,6 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 		
 		this.xOffset = 16;
 		this.yOffset = 8;
-		
-		this.workers.add(new PlayerShape(0, 0, Color.RED));
 	}
 	
 	@Override
@@ -68,7 +70,14 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 			
 			Field from = ws.fieldFrom;
 			Field to = ws.fieldTo;
-			PlayerShape w = this.workers.get(ws.playerIndex);
+			PlayerShape w = this.workers[ws.playerIndex];
+			
+			if (w == null) {
+				int idx = ws.playerIndex;
+				Color col = idx == 0 ? Color.RED : idx == 1 ? Color.BLUE : idx == 2 ? Color.YELLOW : Color.GREEN;
+				w = new PlayerShape(0, 0, col);
+				this.workers[idx] = w;
+			}
 			
 			w.direction = ws.direction;
 			
@@ -77,6 +86,25 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 			
 			w.x = from.getX() * UNIT_WIDTH + (int)(x_diff * ws.percent);
 			w.y = from.getY() * UNIT_WIDTH + (int)(y_diff * ws.percent);
+		} break;
+		
+		case CrateStep: {
+			CrateStepStateChangeMessage cs = (CrateStepStateChangeMessage)msg;
+			
+			Field from = cs.fieldFrom;
+			Field to = cs.fieldTo;
+			
+			CrateShape sh = this.crates.get(cs.crate);
+			if (sh == null) {
+				sh = new CrateShape(0, 0);
+				this.crates.put(cs.crate, sh);
+			}
+			
+			int x_diff = (to.getX() - from.getX()) * UNIT_WIDTH;
+			int y_diff = (to.getY() - from.getY()) * UNIT_WIDTH;
+			
+			sh.x = from.getX() * UNIT_WIDTH + (int)(x_diff * cs.percent);
+			sh.y = from.getY() * UNIT_WIDTH + (int)(y_diff * cs.percent);
 		} break;
 		
 		default: {
@@ -91,6 +119,13 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 		super.paintComponent(g);
 		
 		for (PlayerShape c : this.workers) {
+			if (c == null) {
+				continue;
+			}
+			c.draw(g, this.xOffset, this.yOffset);
+		}
+		
+		for (CrateShape c : this.crates.values()) {
 			c.draw(g, this.xOffset, this.yOffset);
 		}
 	}

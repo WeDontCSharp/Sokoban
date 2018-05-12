@@ -4,15 +4,10 @@ package skeleton.model;
  * A class representing a worker.
  */
 public abstract class Worker extends Entity {
-	
 	private int playerIndex;
 	
 	public int getPlayerIndex() {
 		return playerIndex;
-	}
-
-	public void setPlayerIndex(int playerIndex) {
-		this.playerIndex = playerIndex;
 	}
 
 	/**
@@ -70,10 +65,11 @@ public abstract class Worker extends Entity {
 	 * @param f 	The new worker's Field where he spawns the first time.
 	 * @param dir 	The direction, where the worker is heading.
 	 */
-	public Worker(Warehouse g, Field f, Direction dir) {
+	public Worker(Warehouse g, Field f, Direction dir, int idx) {
 		super(g, f);
 		this.orgPower = 3.0;
 		this.health = 3;
+		this.playerIndex = idx;
 	}
 	
 	/**
