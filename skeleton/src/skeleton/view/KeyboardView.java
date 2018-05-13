@@ -8,6 +8,7 @@ import javax.swing.JComponent;
 import skeleton.model.Direction;
 import skeleton.model.Warehouse;
 import skeleton.view.message.ControlMessage;
+import skeleton.view.message.PlaceControlMessage;
 import skeleton.view.message.StepControlMessage;
 
 public class KeyboardView extends KeyAdapter implements IView<ControlMessage>{
@@ -61,6 +62,9 @@ public class KeyboardView extends KeyAdapter implements IView<ControlMessage>{
 		}
 		else if (kc == this.downKey) {
 			this.sendMessage(new StepControlMessage(this.playerIndex, Direction.Down));
+		}
+		else if (kc == this.placeKey) {
+			this.sendMessage(new PlaceControlMessage(this.playerIndex));
 		}
 	}
 	

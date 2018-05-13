@@ -19,6 +19,7 @@ import skeleton.view.message.CrateStepStateChangeMessage;
 import skeleton.view.message.HoleStateChangeMessage;
 import skeleton.view.message.LifeCrateFallStateChangeMessage;
 import skeleton.view.message.LifeCrateStepStateChangeMessage;
+import skeleton.view.message.PlaceStateChangeMessage;
 import skeleton.view.message.StateChangeMessage;
 import skeleton.view.message.TileRegisterStateChangeMessage;
 import skeleton.view.message.WorkerFallStateChangeMessage;
@@ -39,7 +40,7 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 	
 	private PlayerShape[] workers = new PlayerShape[4];
 	private HashMap<Crate, CrateShape> crates = new HashMap<Crate, CrateShape>();
-	private ArrayList<FloorShape> floors = new ArrayList<FloorShape>();
+	private HashMap<Field, FloorShape> floors = new HashMap<Field, FloorShape>();
 	private ArrayList<WallShape> walls = new ArrayList<WallShape>();
 	private HashMap<Hole, HoleShape> holes = new HashMap<Hole, HoleShape>();
 	
@@ -161,7 +162,7 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 			switch (tr.tile) {
 			
 			case Floor: {
-				this.floors.add(new FloorShape(tr.x * UNIT_WIDTH, tr.y * UNIT_WIDTH));
+				this.floors.put(tr.obj, new FloorShape(tr.x * UNIT_WIDTH, tr.y * UNIT_WIDTH));
 			} break;
 			
 			case Wall: {
@@ -169,23 +170,23 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 			} break;
 			
 			case Goal: {
-				this.floors.add(new GoalShape(tr.x * UNIT_WIDTH, tr.y * UNIT_WIDTH));
+				this.floors.put(tr.obj, new GoalShape(tr.x * UNIT_WIDTH, tr.y * UNIT_WIDTH));
 			} break;
 			
 			case Player1Spawn: {
-				this.floors.add(new PlayerSpawnShape(tr.x * UNIT_WIDTH, tr.y * UNIT_WIDTH, Color.RED));
+				this.floors.put(tr.obj, new PlayerSpawnShape(tr.x * UNIT_WIDTH, tr.y * UNIT_WIDTH, Color.RED));
 			} break;
 			
 			case Player2Spawn: {
-				this.floors.add(new PlayerSpawnShape(tr.x * UNIT_WIDTH, tr.y * UNIT_WIDTH, Color.BLUE));
+				this.floors.put(tr.obj, new PlayerSpawnShape(tr.x * UNIT_WIDTH, tr.y * UNIT_WIDTH, Color.BLUE));
 			} break;
 			
 			case Player3Spawn: {
-				this.floors.add(new PlayerSpawnShape(tr.x * UNIT_WIDTH, tr.y * UNIT_WIDTH, Color.YELLOW));
+				this.floors.put(tr.obj, new PlayerSpawnShape(tr.x * UNIT_WIDTH, tr.y * UNIT_WIDTH, Color.YELLOW));
 			} break;
 			
 			case Player4Spawn: {
-				this.floors.add(new PlayerSpawnShape(tr.x * UNIT_WIDTH, tr.y * UNIT_WIDTH, Color.GREEN));
+				this.floors.put(tr.obj, new PlayerSpawnShape(tr.x * UNIT_WIDTH, tr.y * UNIT_WIDTH, Color.GREEN));
 			} break;
 			
 			case Hole: {
@@ -193,7 +194,7 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 			} break;
 			
 			case Switch: {
-				this.floors.add(new SwitchShape(tr.x * UNIT_WIDTH, tr.y * UNIT_WIDTH));
+				this.floors.put(tr.obj, new SwitchShape(tr.x * UNIT_WIDTH, tr.y * UNIT_WIDTH));
 			} break;
 			
 			default: {
@@ -208,6 +209,13 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 			
 			HoleShape h = this.holes.get(hs.hole);
 			h.open = hs.open;
+		} break;
+		
+		case Place: {
+			PlaceStateChangeMessage ps = (PlaceStateChangeMessage)msg;
+			
+			FloorShape sh = this.floors.get(ps.floor);
+			sh.item = ps.item;
 		} break;
 		
 		default: {
@@ -229,7 +237,7 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
-		for (FloorShape f : this.floors) {
+		for (FloorShape f : this.floors.values()) {
 			f.draw(g, this.xOffset, this.yOffset);
 		}
 		for (WallShape w : this.walls) {

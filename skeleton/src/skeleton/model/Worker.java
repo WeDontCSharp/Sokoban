@@ -1,5 +1,7 @@
 package skeleton.model;
 
+import java.util.Random;
+
 /**
  * A class representing a worker.
  */
@@ -70,6 +72,9 @@ public abstract class Worker extends Entity {
 		this.orgPower = 3.0;
 		this.health = 3;
 		this.playerIndex = idx;
+		
+		int randi = new Random().nextInt(3);
+		this.item = randi == 0 ? PlaceableItem.Nothing : randi == 1 ? PlaceableItem.Oil : PlaceableItem.Honey;  
 	}
 	
 	/**

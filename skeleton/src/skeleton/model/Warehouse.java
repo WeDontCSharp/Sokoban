@@ -16,6 +16,7 @@ import javax.json.JsonValue;
 
 import skeleton.view.IView;
 import skeleton.view.message.ControlMessage;
+import skeleton.view.message.PlaceControlMessage;
 import skeleton.view.message.StateChangeMessage;
 import skeleton.view.message.StepControlMessage;
 
@@ -61,6 +62,11 @@ public class Warehouse implements Serializable {
 		case Step: {
 			StepControlMessage scm = (StepControlMessage)msg;
 			this.workers[scm.playerIndex].move(scm.direction);
+		} break;
+		
+		case Place: {
+			PlaceControlMessage pc = (PlaceControlMessage)msg;
+			this.workers[pc.playerIndex].placeItem();
 		} break;
 		}
 	}
