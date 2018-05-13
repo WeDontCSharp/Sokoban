@@ -9,9 +9,21 @@ import skeleton.view.message.WorkerStepStateChangeMessage;
  */
 public class StepWallProcessWrapper extends StepWallProcess {
 
+	/**
+	 * A message telling a worker is being smashed.
+	 */
 	private WorkerSquashStateChangeMessage msg;
+	/**
+	 * A message telling an entity is stepping.
+	 */
 	private WorkerStepStateChangeMessage stepMsg;
 	
+	/**
+	 * Sends a message because a step process has been started.
+	 * @param squashed The worker who is being smashed.
+	 * @param from The field the worker is stepping from.
+	 * @param to The field the worker is stepping to.
+	 */
 	public StepWallProcessWrapper(Worker squashed, Field from, Field to) {
 		super(squashed, from, to, squashed.getSpawnField());
 		

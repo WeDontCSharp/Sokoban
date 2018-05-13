@@ -34,9 +34,6 @@ public abstract class Spawn extends Floor {
 		return false;
 	}
 
-    /* (non-Javadoc)
-     * @see skeleton.model.Floor#visitByWorker(skeleton.model.Worker, skeleton.model.Worker)
-     */
     @Override
 	public boolean visitByWorker(Worker firstPusher, Worker w) {
 		if (w != firstPusher && w != owner) {
@@ -51,9 +48,6 @@ public abstract class Spawn extends Floor {
 		}
 	}
 
-    /* (non-Javadoc)
-     * @see skeleton.model.Floor#visitByCrate(skeleton.model.Worker, skeleton.model.Crate)
-     */
     @Override
 	public boolean visitByCrate(Worker firstPusher, Crate c) {
 		return false;
@@ -67,9 +61,6 @@ public abstract class Spawn extends Floor {
 		return owner;
 	}
 	
-    /* (non-Javadoc)
-     * @see skeleton.model.Field#isEmpty()
-     */
     @Override
 	public boolean isEmpty() {
 		return true;

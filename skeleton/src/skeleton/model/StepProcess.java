@@ -1,13 +1,33 @@
 package skeleton.model;
 
 public abstract class StepProcess implements Process {
+	/**
+	 * The speed of the movement.
+	 */
 	public static final float SPEED = 0.08f;
-	
-	private float percent;
+	/**
+	 * The entity that is stepping.
+	 */
 	private Entity moving;
+	/**
+	 * The percent the process is currently at.
+	 */
+	private float percent;
+	/**
+	 * The field the entity is stepping from.
+	 */
 	private Field from;
+	/**
+	 * The field the entity is stepping to.
+	 */
 	private Field to;
 	
+	/**
+	 * Creates a process.
+	 * @param e The entity that is stepping.
+	 * @param from The field the entity is stepping from.
+	 * @param to The field the entity is stepping to.
+	 */
 	public StepProcess(Entity e, Field from, Field to) {
 		this.percent = 0.0f;
 		this.moving = e;
@@ -47,10 +67,16 @@ public abstract class StepProcess implements Process {
 		this.moving.level.updateBlocking(to, true);
 	}
 	
+	/**
+	 * @return The percent the process is currently at.
+	 */
 	public float getPercentage() {
 		return this.percent;
 	}
 	
+	/**
+	 * @return The entity that is currently stepping.
+	 */
 	public Entity getEntity() {
 		return this.moving;
 	}

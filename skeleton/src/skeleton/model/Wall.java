@@ -24,9 +24,6 @@ public abstract class Wall extends Field  {
 		return false;
 	}
 	
-	/* (non-Javadoc)
-	 * @see skeleton.model.IVisitable#visitByWorker(skeleton.model.Worker, skeleton.model.Worker)
-	 */
 	@Override
 	public boolean visitByWorker(Worker firstPusher, Worker w) {
 		if (firstPusher != w) {
@@ -38,9 +35,6 @@ public abstract class Wall extends Field  {
 		}
 	}
 
-    /* (non-Javadoc)
-     * @see skeleton.model.IVisitable#visitByCrate(skeleton.model.Worker, skeleton.model.Crate)
-     */
     @Override
 	public boolean visitByCrate(Worker firstPusher, Crate c) {
 		return false;
@@ -51,7 +45,11 @@ public abstract class Wall extends Field  {
     	return true;
     }
     
-    // XXX: StepProcess Visitor...
+    /**
+	 * Visitor for a stepping process.
+	 * @param e The entity that is stepping.
+	 * @param from The field the entity is stepping from.
+	 */
  	public void callProcess(Entity e, Field from) {
 		e.pushProcess(new StepWallProcessWrapper((Worker)e, from, this));
  	}

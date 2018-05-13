@@ -25,9 +25,6 @@ public abstract class LifeCrate extends Crate {
 		firstPusher.gainHealth();
 	}
 	
-	/* (non-Javadoc)
-	 * @see skeleton.model.Crate#visit(skeleton.model.Worker, skeleton.model.IVisitable)
-	 */
 	@Override
 	public boolean visit(Worker firstPusher, IVisitable iv) {
 		return iv.visitByLifeCrate(firstPusher, this);

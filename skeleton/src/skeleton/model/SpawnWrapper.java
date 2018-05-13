@@ -9,6 +9,12 @@ import skeleton.view.message.TileType;
  */
 public class SpawnWrapper extends Spawn {
 
+	/**
+	 * Sends a message because a spawn has been created.
+	 * @param level The warehouse to create the spawn in.
+	 * @param x The X coordinate of the field.
+	 * @param y The Y coordinate of the field.
+	 */
 	public SpawnWrapper(Warehouse level, int x, int y) {
 		super(level, x, y);
 	}

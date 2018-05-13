@@ -29,9 +29,6 @@ public abstract class Target extends Floor {
 		return false;
 	}
 	
-    /* (non-Javadoc)
-     * @see skeleton.model.Field#unsetEntity()
-     */
     @Override
 	public void unsetEntity() {
     	if (whoPushed != null) {
@@ -43,9 +40,6 @@ public abstract class Target extends Floor {
     	super.unsetEntity();
 	}
 	
-    /* (non-Javadoc)
-     * @see skeleton.model.Floor#visitByCrate(skeleton.model.Worker, skeleton.model.Crate)
-     */
     @Override
 	public boolean visitByCrate(Worker firstPusher, Crate c) {
 		super.setEntity(c);

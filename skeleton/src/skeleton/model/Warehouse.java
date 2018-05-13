@@ -28,9 +28,18 @@ import skeleton.view.message.StepControlMessage;
  * part as a level in the game.
  */
 public class Warehouse implements Serializable {
+	
+	/**
+	 * Represents a game-ending type.
+	 */
 	public enum EndType {
 		Nothing, Target, Crate, Player;
 		
+		/**
+		 * Converts an end type to a string.
+		 * @param et The end type.
+		 * @return The string value of the end type, '?' if not recognised.
+		 */
 		public static String toString(EndType et) {
 			if (et == null) {
 				return "?";
@@ -45,12 +54,19 @@ public class Warehouse implements Serializable {
 		}
 	}
 	
+	/**
+	 * The view of the warehouse.
+	 */
 	private transient IView<StateChangeMessage> graphicsView;
 	
 	public void sendMessage(StateChangeMessage msg) {
-		// TODO
+		// XXX: Not required
 	}
 	
+	/**
+	 * The warehouse receives a message and forwards it to the view.
+	 * @param msg The message.
+	 */
 	public void receiveMessage(StateChangeMessage msg) {
 		if (this.graphicsView == null) {
 			return;
@@ -59,9 +75,13 @@ public class Warehouse implements Serializable {
 	}
 	
 	public void sendMessage(ControlMessage msg) {
-		// TODO
+		// XXX: Not required
 	}
 	
+	/**
+	 * The warehouse receives a message and acts according to it.
+	 * @param msg The message.
+	 */
 	public void receiveMessage(ControlMessage msg) {
 		if (this.end != EndType.Nothing) {
 			return;
@@ -227,6 +247,9 @@ public class Warehouse implements Serializable {
 		}
 	}
 	
+	/**
+	 * @return The worker with the highest score.
+	 */
 	private Worker getHighestScoreWorker() {
 		Worker best = null;
 		int bestScore = 0;
@@ -245,6 +268,9 @@ public class Warehouse implements Serializable {
 		return best;
 	}
 	
+	/**
+	 * Updates everything in the warehouse.
+	 */
 	public void update() {
 		if (this.end != EndType.Nothing) {			
 			Worker best = getHighestScoreWorker();
@@ -289,6 +315,9 @@ public class Warehouse implements Serializable {
 		return this.blockedMap[pos];
 	}
 	
+	/**
+	 * Updates the blocking map, so that it is noted down if a crate got blocked.
+	 */
 	public void updateBlocking(Field f, boolean initial) {
 		if(f == null) return;
 		int pos = -1;
@@ -354,6 +383,14 @@ public class Warehouse implements Serializable {
 		return this.workers[i];
 	}
 
+	/**
+	 * Loads a warehouse (a map) from a file.
+	 * @param path
+	 * @param gw
+	 * @return The ready warehouse.
+	 * @throws LevelFormatException
+	 * @throws FileNotFoundException
+	 */
 	public static Warehouse fromFile(String path, IView<StateChangeMessage> gw) throws LevelFormatException, FileNotFoundException {
 		JsonReader reader = Json.createReader(new BufferedInputStream(new FileInputStream(path)));
 		JsonObject mapObj = reader.readObject();

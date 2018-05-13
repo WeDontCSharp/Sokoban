@@ -9,6 +9,11 @@ package skeleton.model;
 public enum PlaceableItem {
 	Nothing, Honey, Oil;
 	
+	/**
+	 * Converts a PlaceableItem to a string.
+	 * @param dir The direction.
+	 * @return The string the PlaceableItem is converted to, '?' if unknown.
+	 */
 	public static char toChar(PlaceableItem item) {
 		if (item == null) {
 			return '?';

@@ -33,9 +33,6 @@ public abstract class Switch extends Floor {
 		return false;
 	}
 	
-    /* (non-Javadoc)
-     * @see skeleton.model.Floor#visitByCrate(skeleton.model.Worker, skeleton.model.Crate)
-     */
     @Override
 	public boolean visitByCrate(Worker firstPusher, Crate c) {
 		super.setEntity(c);
@@ -50,10 +47,7 @@ public abstract class Switch extends Floor {
 		return true;
 	}
 	
-	
-    /* (non-Javadoc)
-     * @see skeleton.model.Field#unsetEntity()
-     */
+
     @Override
 	public void unsetEntity() {
 		super.unsetEntity();
@@ -62,11 +56,18 @@ public abstract class Switch extends Floor {
 		}
 	}
     
+    /**
+     * Adds a hole to the switch
+     * @param h The hole.
+     */
     public void addHole(Hole h) {
     	this.holes.add(h);
     	h.setOpen(false);
     }
     
+    /**
+     * The switch closes all its holes.
+     */
     public void closeHoles() {
     	for (Hole h : holes) {
 			h.setOpen(false);

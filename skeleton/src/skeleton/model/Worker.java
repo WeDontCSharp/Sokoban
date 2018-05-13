@@ -98,7 +98,6 @@ public abstract class Worker extends Entity {
 	 * the field the worker is currently staying on.
 	 */
 	public boolean placeItem() {
-		// TODO: What to do on successfull/failed place? 
 		if (item == PlaceableItem.Honey) {
 			if (getCurField().placeSlipFactor(2.0)) {
 				this.setItem(PlaceableItem.Nothing);
@@ -127,17 +126,11 @@ public abstract class Worker extends Entity {
 		step(this, dir);
 	}
 	
-	/* (non-Javadoc)
-	 * @see skeleton.model.Entity#push(skeleton.model.Worker, skeleton.model.Entity, skeleton.model.Direction)
-	 */
 	@Override
 	public boolean push(Worker firstPusher, Entity pushed, Direction dir) {
 		return pushed.pushByWorker(firstPusher, this, dir);
 	}
 
-	/* (non-Javadoc)
-	 * @see skeleton.model.Entity#pushByWorker(skeleton.model.Worker, skeleton.model.Worker, skeleton.model.Direction)
-	 */
 	@Override
 	public boolean pushByWorker(Worker firstPusher, Worker pusher, Direction dir) {
 		if (firstPusher == pusher) {
@@ -150,9 +143,6 @@ public abstract class Worker extends Entity {
 		return step(firstPusher, dir);
 	}
 
-	/* (non-Javadoc)
-	 * @see skeleton.model.Entity#pushByCrate(skeleton.model.Worker, skeleton.model.Crate, skeleton.model.Direction)
-	 */
 	@Override
 	public boolean pushByCrate(Worker firstPusher, Crate pusher, Direction dir) {
 		double remPower = firstPusher.consumePower(getCurField().getSlipFactor() * getWeight());
@@ -224,15 +214,9 @@ public abstract class Worker extends Entity {
 	 * The Worker dies
 	 */
 	public void die() {
-		//throw new RuntimeException("Unimplemented!");
-		// TODO Remove worker from game.
 		super.level.removeAliveWorker();
-		//super.level.update();
 	}
 	
-	/* (non-Javadoc)
-	 * @see skeleton.model.IVisitor#visit(skeleton.model.Worker, skeleton.model.IVisitable)
-	 */
 	@Override
 	public boolean visit(Worker firstPusher, IVisitable iv) {
 		return iv.visitByWorker(firstPusher, this);

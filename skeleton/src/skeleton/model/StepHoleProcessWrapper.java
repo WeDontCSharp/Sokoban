@@ -13,21 +13,45 @@ import skeleton.view.message.WorkerStepStateChangeMessage;
  */
 public class StepHoleProcessWrapper extends StepHoleProcess {
 
+	/**
+	 * A message telling an entity is falling.
+	 */
 	private FallStateChangeMessage msg;
+	/**
+	 * A message telling an entity is stepping.
+	 */
 	private StepStateChangeMessage stepMsg;
 	
+	/**
+	 * Sends a message because a step process has been started.
+	 * @param e The worker who is falling.
+	 * @param from The field the worker is stepping from.
+	 * @param to The field the worker is stepping to.
+	 */
 	public StepHoleProcessWrapper(Worker e, Field from, Field to) {
 		super(e, from, to, e.getSpawnField());
 		this.msg = new WorkerFallStateChangeMessage(e.getPlayerIndex(), Field.getDirection(from, to), from, to);
 		this.stepMsg = new WorkerStepStateChangeMessage(e.getPlayerIndex(), Field.getDirection(from, to), from, e.getSpawnField(), 1.0f);
 	}
 	
+	/**
+	 * Sends a message because a step process has been started.
+	 * @param e The crate who is falling.
+	 * @param from The field the crate is stepping from.
+	 * @param to The field the crate is stepping to.
+	 */
 	public StepHoleProcessWrapper(Crate e, Field from, Field to) {
 		super(e, from, to, null);
 		this.msg = new CrateFallStateChangeMessage(from, to, e);
 		this.stepMsg = null;
 	}
 	
+	/**
+	 * Sends a message because a step process has been started.
+	 * @param e The lifecrate who is falling.
+	 * @param from The field the lifecrate is stepping from.
+	 * @param to The field the lifecrate is stepping to.
+	 */
 	public StepHoleProcessWrapper(LifeCrate e, Field from, Field to) {
 		super(e, from, to, null);
 		this.msg = new LifeCrateFallStateChangeMessage(e, from, to);
