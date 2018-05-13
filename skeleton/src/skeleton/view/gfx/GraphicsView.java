@@ -9,18 +9,20 @@ import java.util.HashMap;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import javafx.util.Pair;
 import skeleton.model.Crate;
+import skeleton.model.Direction;
 import skeleton.model.Field;
 import skeleton.model.Hole;
 import skeleton.view.IView;
 import skeleton.view.message.CrateFallStateChangeMessage;
 import skeleton.view.message.CrateStepStateChangeMessage;
 import skeleton.view.message.HoleStateChangeMessage;
+import skeleton.view.message.LifeCrateFallStateChangeMessage;
 import skeleton.view.message.LifeCrateStepStateChangeMessage;
 import skeleton.view.message.StateChangeMessage;
 import skeleton.view.message.TileRegisterStateChangeMessage;
 import skeleton.view.message.WorkerFallStateChangeMessage;
+import skeleton.view.message.WorkerSquashStateChangeMessage;
 import skeleton.view.message.WorkerStepStateChangeMessage;
 
 
@@ -122,6 +124,14 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 			interpolatePos(sh, cf.from, cf.to, cf.percent);
 		} break;
 		
+		case LifeCrateFall: {
+			LifeCrateFallStateChangeMessage cf = (LifeCrateFallStateChangeMessage)msg;
+			
+			CrateShape sh = this.crates.get(cf.lifeCrate);
+			sh.scale = 1.0f - cf.percent * cf.percent;
+			interpolatePos(sh, cf.from, cf.to, cf.percent);
+		} break;
+		
 		case WorkerFall: {
 			WorkerFallStateChangeMessage wf = (WorkerFallStateChangeMessage)msg;
 			
@@ -129,6 +139,13 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 			sh.scalex = 1.0f - wf.percent * wf.percent;
 			sh.scaley = sh.scalex;
 			interpolatePos(sh, wf.from, wf.to, wf.percent);
+		} break;
+		
+		case WorkerSquash: {
+			WorkerSquashStateChangeMessage ws = (WorkerSquashStateChangeMessage)msg;
+			
+			PlayerShape sh = this.workers[ws.playerIndex];
+			sh.scalex = 1.0f - ws.percent;
 		} break;
 		
 		case TileRegister: {

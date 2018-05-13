@@ -26,7 +26,7 @@ public class StepHoleProcessWrapper extends StepHoleProcess {
 	
 	public StepHoleProcessWrapper(LifeCrate e, Field from, Field to) {
 		super(e, from, to, null);
-		this.msg = new LifeCrateFallStateChangeMessage(e, to, from);
+		this.msg = new LifeCrateFallStateChangeMessage(e, from, to);
 		this.stepMsg = null;
 	}
 	

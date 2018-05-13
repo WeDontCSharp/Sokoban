@@ -54,7 +54,7 @@ public abstract class Wall extends Field  {
     
     // XXX: StepProcess Visitor...
  	public void callProcess(Entity e, Field from) {
-		e.pushProcess(new StepWallProcess(from, this));
+		e.pushProcess(new StepWallProcessWrapper((Worker)e, from, this));
  	}
 }
 

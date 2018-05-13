@@ -30,39 +30,32 @@ public class PlayerShape extends Shape {
 		
 		g.setColor(Color.WHITE);
 		
-		int eps = eps2 * 3;
+		int eps = (int)(eps2 * 2.5f);
 		
-		int xpe = xx + eps;
-		int xme = xx + GraphicsView.UNIT_WIDTH - eps;
-		int xhf = xx + GraphicsView.UNIT_WIDTH / 2;
-		
-		int ype = yy + eps;
-		int yme = yy + GraphicsView.UNIT_WIDTH - eps;
-		int yhf = yy + GraphicsView.UNIT_WIDTH / 2;
-		
-		/*
-		switch (this.direction) {
-		
-		case Left: {
-			g.fillPolygon(new int[] { xme, xpe, xme }, new int[] { ype, yhf, yme }, 3);
-		} break;
-		
-		case Right: {
-			g.fillPolygon(new int[] { xpe, xme, xpe }, new int[] { ype, yhf, yme }, 3);
-		} break;
-		
-		case Up: {
-			g.fillPolygon(new int[] { xpe, xhf, xme }, new int[] { yme, ype, yme }, 3);
-		} break;
-		
-		case Down: {
-			g.fillPolygon(new int[] { xpe, xhf, xme }, new int[] { ype, yme, ype }, 3);
-		} break;
-		
-		}*/
+		drawTriCent(g, xx + GraphicsView.UNIT_WIDTH / 2, yy + GraphicsView.UNIT_WIDTH / 2, (int)(eps * scalex), (int)(eps * scaley));
 	}
 	
 	private void drawCircleCent(Graphics g, int cx, int cy, int rx, int ry) {
 		g.fillOval(cx - rx, cy - ry, 2 * rx, 2 * ry);
+	}
+	
+	private void drawTriCent(Graphics g, int cx, int cy, int szx, int szy) {		
+		switch (this.direction) {
+		case Up:
+			g.fillPolygon(new int[] { cx, cx + szx, cx - szx }, new int[] { cy - szy, cy + szy, cy + szy }, 3);
+			break;
+			
+		case Down:
+			g.fillPolygon(new int[] { cx, cx + szx, cx - szx }, new int[] { cy + szy, cy - szy, cy - szy }, 3);
+			break;
+			
+		case Left:
+			g.fillPolygon(new int[] { cx - szx, cx + szx, cx + szx }, new int[] { cy, cy - szy, cy + szy }, 3);
+			break;
+			
+		case Right:
+			g.fillPolygon(new int[] { cx + szx, cx - szx, cx - szx }, new int[] { cy, cy - szy, cy + szy }, 3);
+			break;
+		}
 	}
 }

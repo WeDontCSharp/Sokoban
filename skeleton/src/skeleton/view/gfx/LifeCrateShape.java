@@ -16,14 +16,18 @@ public class LifeCrateShape extends CrateShape {
 		
 		int eps = (int)(GraphicsView.UNIT_WIDTH * 0.1f);
 		int eps2 = (int)(GraphicsView.UNIT_WIDTH * 0.27f);
+		
+		int ww = 2 * eps;
+		int hh = GraphicsView.UNIT_WIDTH - 2 * eps2;
+		
 		int xx = x + xoff;
 		int yy = y + yoff;
-		int uw2 = GraphicsView.UNIT_WIDTH / 2;
-		int hx = xx + uw2;
-		int hy = yy + uw2;
 		
-		g.fillRect(hx - eps, yy + eps2, 2 * eps, GraphicsView.UNIT_WIDTH - 2 * eps2);
-		g.fillRect(xx + eps2, hy - eps, GraphicsView.UNIT_WIDTH - 2 * eps2, 2 * eps);
+		int wws = (int)(scale * ww);
+		int hhs = (int)(scale * hh);
+		
+		this.drawRectCent(g, xx + GraphicsView.UNIT_WIDTH / 2, yy + GraphicsView.UNIT_WIDTH / 2, wws, hhs);
+		this.drawRectCent(g, xx + GraphicsView.UNIT_WIDTH / 2, yy + GraphicsView.UNIT_WIDTH / 2, hhs, wws);
 	}
 
 }
