@@ -34,22 +34,38 @@ public class Main {
 	
 	private static void mainGameLoop(Warehouse wh, GraphicsView gw) {
 		double goalDelta = 1000000000D / 60D;
+		double goalSecDelta = 1000000000D;
 		double delta = 0D;
+		double secDelta = 0D;
 		
 		long lastTime = System.nanoTime();
-		long currentTime;
+		long currentTime;		
+		long diff;
+		
+		int ups = 0;
+		int renders = 0;
 		
 		while (true) {
 			currentTime = System.nanoTime();
-			delta += currentTime - lastTime;
+			diff = currentTime - lastTime;
+			delta += diff;
+			secDelta += diff;
 			lastTime = currentTime;
 			
 			while (delta >= goalDelta) {
 				delta -= goalDelta;
 				wh.update();
+				++ups;
 			}
-			
 			gw.repaint();
+			++renders;
+			
+			if (secDelta >= goalSecDelta) {
+				System.out.println("Updates: " + ups + " Renders: " + renders);
+				ups = 0;
+				renders = 0;
+				secDelta %= goalSecDelta;
+			}
 		}
 	}
 

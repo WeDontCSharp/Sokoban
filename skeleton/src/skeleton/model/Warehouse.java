@@ -348,13 +348,13 @@ public class Warehouse implements Serializable {
 					case 0:
 						break;
 					case 1:
-						field = new Wall(wh, field_x, field_y);
+						field = new WallWrapper(wh, field_x, field_y);
 						break;
 					case 2:
 						field = new FloorWrapper(wh, field_x, field_y);
 						break;
 					case 3:
-						field = new Target(wh, field_x, field_y);
+						field = new TargetWrapper(wh, field_x, field_y);
 						wh.addTarget();
 						break;
 					case 4:
@@ -365,22 +365,22 @@ public class Warehouse implements Serializable {
 						break;
 					case 6:
 						// Spawn for P1
-						field = new Spawn(wh, field_x, field_y);
+						field = new SpawnWrapper(wh, field_x, field_y);
 						spawns[0] = (Spawn) field;
 						break;
 					case 7:
 						// Spawn for P2
-						field = new Spawn(wh, field_x, field_y);
+						field = new SpawnWrapper(wh, field_x, field_y);
 						spawns[1] = (Spawn) field;
 						break;
 					case 8:
 						// Spawn for P3
-						field = new Spawn(wh, field_x, field_y);
+						field = new SpawnWrapper(wh, field_x, field_y);
 						spawns[2] = (Spawn) field;
 						break;
 					case 9:
 						// Spawn for P4
-						field = new Spawn(wh, field_x, field_y);
+						field = new SpawnWrapper(wh, field_x, field_y);
 						spawns[3] = (Spawn) field;
 						break;
 					// XXX

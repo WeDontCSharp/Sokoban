@@ -20,12 +20,14 @@ public class PlayerShape extends Shape {
 		int xx = x + xoff;
 		int yy = y + yoff;
 		
+		int eps2 = (int)(GraphicsView.UNIT_WIDTH * 0.1f);
+		
 		g.setColor(this.color);
-		g.fillOval(xx, yy, GraphicsView.UNIT_WIDTH, GraphicsView.UNIT_WIDTH);
+		g.fillOval(xx + eps2, yy + eps2, GraphicsView.UNIT_WIDTH - eps2 * 2, GraphicsView.UNIT_WIDTH - eps2 * 2);
 		
 		g.setColor(Color.WHITE);
 		
-		int eps = (int)(GraphicsView.UNIT_WIDTH * 0.2f);
+		int eps = eps2 * 3;
 		
 		int xpe = xx + eps;
 		int xme = xx + GraphicsView.UNIT_WIDTH - eps;

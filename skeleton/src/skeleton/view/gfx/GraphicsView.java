@@ -14,6 +14,7 @@ import skeleton.model.Field;
 import skeleton.view.IView;
 import skeleton.view.message.CrateStepStateChangeMessage;
 import skeleton.view.message.StateChangeMessage;
+import skeleton.view.message.TileRegisterStateChangeMessage;
 import skeleton.view.message.WorkerStepStateChangeMessage;
 
 
@@ -30,6 +31,8 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 	
 	private PlayerShape[] workers = new PlayerShape[4];
 	private HashMap<Crate, CrateShape> crates = new HashMap<Crate, CrateShape>();
+	private ArrayList<FloorShape> floors = new ArrayList<FloorShape>();
+	private ArrayList<WallShape> walls = new ArrayList<WallShape>();
 	
 	public GraphicsView() {
 		super();
@@ -107,6 +110,46 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 			sh.y = from.getY() * UNIT_WIDTH + (int)(y_diff * cs.percent);
 		} break;
 		
+		case TileRegister: {
+			TileRegisterStateChangeMessage tr = (TileRegisterStateChangeMessage)msg;
+			
+			switch (tr.tile) {
+			
+			case Floor: {
+				this.floors.add(new FloorShape(tr.x * UNIT_WIDTH, tr.y * UNIT_WIDTH));
+			} break;
+			
+			case Wall: {
+				this.walls.add(new WallShape(tr.x * UNIT_WIDTH, tr.y * UNIT_WIDTH));
+			} break;
+			
+			case Goal: {
+				this.floors.add(new GoalShape(tr.x * UNIT_WIDTH, tr.y * UNIT_WIDTH));
+			} break;
+			
+			case Player1Spawn: {
+				this.floors.add(new PlayerSpawnShape(tr.x * UNIT_WIDTH, tr.y * UNIT_WIDTH, Color.RED));
+			} break;
+			
+			case Player2Spawn: {
+				this.floors.add(new PlayerSpawnShape(tr.x * UNIT_WIDTH, tr.y * UNIT_WIDTH, Color.BLUE));
+			} break;
+			
+			case Player3Spawn: {
+				this.floors.add(new PlayerSpawnShape(tr.x * UNIT_WIDTH, tr.y * UNIT_WIDTH, Color.YELLOW));
+			} break;
+			
+			case Player4Spawn: {
+				this.floors.add(new PlayerSpawnShape(tr.x * UNIT_WIDTH, tr.y * UNIT_WIDTH, Color.GREEN));
+			} break;
+			
+			default: {
+				System.out.println("<unhandled tile>");
+			}
+			
+			}
+		} break;
+		
 		default: {
 			System.out.println("<unhandled>");
 		}
@@ -117,6 +160,13 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		
+		for (FloorShape f : this.floors) {
+			f.draw(g, this.xOffset, this.yOffset);
+		}
+		for (WallShape w : this.walls) {
+			w.draw(g, this.xOffset, this.yOffset);
+		}
 		
 		g.setColor(Color.BLACK);
 		for (int i = UNIT_WIDTH; i < HEIGHT; i += UNIT_WIDTH) {

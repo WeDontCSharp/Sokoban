@@ -5,7 +5,7 @@ package skeleton.model;
  * floors but if a crate is pushed onto them, the
  * pushing worker gets a point.
  */
-public class Target extends Floor {
+public abstract class Target extends Floor {
 	
     /**
 	 * The worker who pushed the crate on the target.

@@ -5,7 +5,7 @@ package skeleton.model;
  * reachable by their associated workers.
  * To other entities, they act like walls.
  */
-public class Spawn extends Floor {
+public abstract class Spawn extends Floor {
 
 	/**
 	 * The worker associated with this spawn, beeing the only one to step here.

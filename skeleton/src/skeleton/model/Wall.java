@@ -5,7 +5,7 @@ package skeleton.model;
  * Entities cannot step into walls
  * but a worker may be pushed into one.
  */
-public class Wall extends Field  {
+public abstract class Wall extends Field  {
     
     /**
 	 * Creates a wall.
