@@ -7,6 +7,10 @@ import skeleton.view.message.StepStateChangeMessage;
 import skeleton.view.message.WorkerFallStateChangeMessage;
 import skeleton.view.message.WorkerStepStateChangeMessage;
 
+/**
+ * Overrides the methods which affect the display
+ * and sends messages so that the View could handle the changes.
+ */
 public class StepHoleProcessWrapper extends StepHoleProcess {
 
 	private FallStateChangeMessage msg;

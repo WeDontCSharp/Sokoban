@@ -3,6 +3,10 @@ package skeleton.model;
 import skeleton.view.message.WorkerSquashStateChangeMessage;
 import skeleton.view.message.WorkerStepStateChangeMessage;
 
+/**
+ * Overrides the methods which affect the display
+ * and sends messages so that the View could handle the changes.
+ */
 public class StepWallProcessWrapper extends StepWallProcess {
 
 	private WorkerSquashStateChangeMessage msg;

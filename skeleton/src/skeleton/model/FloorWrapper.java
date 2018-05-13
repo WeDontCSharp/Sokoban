@@ -3,6 +3,10 @@ import skeleton.view.message.PlaceStateChangeMessage;
 import skeleton.view.message.TileRegisterStateChangeMessage;
 import skeleton.view.message.TileType;
 
+/**
+ * Overrides the methods which affect the display
+ * and sends messages so that the View could handle the changes.
+ */
 public class FloorWrapper extends Floor {
 
 	public FloorWrapper(Warehouse level, int x, int y) {
