@@ -7,7 +7,7 @@ public class FloorWrapper extends Floor {
 
 	public FloorWrapper(Warehouse level, int x, int y) {
 		super(level, x, y);
-		this.getLevel().receiveMessage(new TileRegisterStateChangeMessage(x, y, TileType.Floor));
+		this.getLevel().receiveMessage(new TileRegisterStateChangeMessage(x, y, TileType.Floor, this));
 	}
 	
 	@Override

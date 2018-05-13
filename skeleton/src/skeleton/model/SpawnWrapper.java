@@ -14,7 +14,7 @@ public class SpawnWrapper extends Spawn {
 		super.setOwner(w);
 		int idx = w.getPlayerIndex();
 		TileType tt = idx == 0 ? TileType.Player1Spawn : idx == 1 ? TileType.Player2Spawn : idx == 2 ? TileType.Player3Spawn : TileType.Player4Spawn;
-		this.getLevel().receiveMessage(new TileRegisterStateChangeMessage(this.getX(), this.getY(), tt));
+		this.getLevel().receiveMessage(new TileRegisterStateChangeMessage(this.getX(), this.getY(), tt, this));
 	}
 	
 }

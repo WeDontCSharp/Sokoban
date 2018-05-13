@@ -9,11 +9,14 @@ import java.util.HashMap;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import javafx.util.Pair;
 import skeleton.model.Crate;
 import skeleton.model.Field;
 import skeleton.model.Hole;
 import skeleton.view.IView;
 import skeleton.view.message.CrateStepStateChangeMessage;
+import skeleton.view.message.HoleStateChangeMessage;
+import skeleton.view.message.LifeCrateStepStateChangeMessage;
 import skeleton.view.message.StateChangeMessage;
 import skeleton.view.message.TileRegisterStateChangeMessage;
 import skeleton.view.message.WorkerStepStateChangeMessage;
@@ -34,7 +37,7 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 	private HashMap<Crate, CrateShape> crates = new HashMap<Crate, CrateShape>();
 	private ArrayList<FloorShape> floors = new ArrayList<FloorShape>();
 	private ArrayList<WallShape> walls = new ArrayList<WallShape>();
-	private ArrayList<HoleShape> holes = new ArrayList<HoleShape>();
+	private HashMap<Hole, HoleShape> holes = new HashMap<Hole, HoleShape>();
 	
 	public GraphicsView() {
 		super();
@@ -112,6 +115,25 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 			sh.y = from.getY() * UNIT_WIDTH + (int)(y_diff * cs.percent);
 		} break;
 		
+		case LifeCrateStep: {
+			LifeCrateStepStateChangeMessage lc = (LifeCrateStepStateChangeMessage)msg;
+			
+			Field from = lc.fieldFrom;
+			Field to = lc.fieldTo;
+			
+			CrateShape sh = this.crates.get(lc.lifeCrate);
+			if (sh == null) {
+				sh = new LifeCrateShape(0, 0);
+				this.crates.put(lc.lifeCrate, sh);
+			}
+			
+			int x_diff = (to.getX() - from.getX()) * UNIT_WIDTH;
+			int y_diff = (to.getY() - from.getY()) * UNIT_WIDTH;
+			
+			sh.x = from.getX() * UNIT_WIDTH + (int)(x_diff * lc.percent);
+			sh.y = from.getY() * UNIT_WIDTH + (int)(y_diff * lc.percent);
+		} break;
+		
 		case TileRegister: {
 			TileRegisterStateChangeMessage tr = (TileRegisterStateChangeMessage)msg;
 			
@@ -146,7 +168,7 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 			} break;
 			
 			case Hole: {
-				this.holes.add(new HoleShape(tr.x * UNIT_WIDTH, tr.y * UNIT_WIDTH));
+				this.holes.put((Hole)tr.obj, new HoleShape(tr.x * UNIT_WIDTH, tr.y * UNIT_WIDTH));
 			} break;
 			
 			case Switch: {
@@ -158,6 +180,13 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 			}
 			
 			}
+		} break;
+		
+		case Hole: {
+			HoleStateChangeMessage hs = (HoleStateChangeMessage)msg;
+			
+			HoleShape h = this.holes.get(hs.hole);
+			h.open = hs.open;
 		} break;
 		
 		default: {
@@ -177,7 +206,7 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 		for (WallShape w : this.walls) {
 			w.draw(g, this.xOffset, this.yOffset);
 		}
-		for (HoleShape h : this.holes) {
+		for (HoleShape h : this.holes.values()) {
 			h.draw(g, this.xOffset, this.yOffset);
 		}
 		

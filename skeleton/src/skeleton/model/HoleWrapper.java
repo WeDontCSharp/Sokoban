@@ -8,7 +8,7 @@ public class HoleWrapper extends Hole {
 	public HoleWrapper(Warehouse level, int x, int y) {
 		super(level, x, y);
 		
-		level.receiveMessage(new TileRegisterStateChangeMessage(x, y, TileType.Hole));
+		level.receiveMessage(new TileRegisterStateChangeMessage(x, y, TileType.Hole, this));
 	}
 	
 	@Override
