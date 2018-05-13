@@ -18,8 +18,11 @@ public class Main {
 		
 		try {
 			Warehouse wh = Warehouse.fromFile("graphics_testlevel.json", gw);
-			KeyboardView kw = new KeyboardView(0, 
+			KeyboardView kw0 = new KeyboardView(0, 
 					KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_SPACE, 
+					wh, gw);
+			KeyboardView kw1 = new KeyboardView(1, 
+					KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D, KeyEvent.VK_E, 
 					wh, gw);
 			
 			mainGameLoop(wh, gw);
