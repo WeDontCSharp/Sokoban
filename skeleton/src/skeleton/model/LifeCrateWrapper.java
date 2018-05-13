@@ -9,12 +9,5 @@ public class LifeCrateWrapper extends LifeCrate {
 		// TODO Auto-generated constructor stub
 		level.receiveMessage(new LifeCrateStepStateChangeMessage(this, f, f, 1.0f));
 	}
-	
-	@Override
-	public void remove(Worker firstPusher) {
-		super.remove(firstPusher);
-		// XXX: Not sure if works like this.
-		this.getLevel().receiveMessage(new LifeCrateFallStateChangeMessage(this));
-	}
 
 }

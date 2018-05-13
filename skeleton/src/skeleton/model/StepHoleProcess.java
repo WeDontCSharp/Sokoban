@@ -1,13 +1,15 @@
 package skeleton.model;
 
-public class StepHoleProcess implements Process {
+public abstract class StepHoleProcess implements Process {
 	public static final float SPEED = 0.08f;
 	
+	private Entity falling;
 	private float percent;
 	private Field from;
 	private Field to;
 	
-	public StepHoleProcess(Field from, Field to) {
+	public StepHoleProcess(Entity falling, Field from, Field to) {
+		this.falling = falling;
 		this.percent = 0.0f;
 		this.from = from;
 		this.to = to;
@@ -36,6 +38,14 @@ public class StepHoleProcess implements Process {
 	public void end() {
 		this.from.unlock();
 		this.to.unlock();
+	}
+	
+	public float getPercentage() {
+		return this.percent;
+	}
+	
+	public Entity getEntity() {
+		return this.falling;
 	}
 	
 }

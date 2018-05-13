@@ -14,6 +14,7 @@ import skeleton.model.Crate;
 import skeleton.model.Field;
 import skeleton.model.Hole;
 import skeleton.view.IView;
+import skeleton.view.message.CrateFallStateChangeMessage;
 import skeleton.view.message.CrateStepStateChangeMessage;
 import skeleton.view.message.HoleStateChangeMessage;
 import skeleton.view.message.LifeCrateStepStateChangeMessage;
@@ -75,11 +76,8 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 		
 		case WorkerStep: {
 			WorkerStepStateChangeMessage ws = (WorkerStepStateChangeMessage)msg;
-			
-			Field from = ws.fieldFrom;
-			Field to = ws.fieldTo;
+
 			PlayerShape w = this.workers[ws.playerIndex];
-			
 			if (w == null) {
 				int idx = ws.playerIndex;
 				Color col = idx == 0 ? Color.RED : idx == 1 ? Color.BLUE : idx == 2 ? Color.YELLOW : Color.GREEN;
@@ -88,19 +86,11 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 			}
 			
 			w.direction = ws.direction;
-			
-			int x_diff = (to.getX() - from.getX()) * UNIT_WIDTH;
-			int y_diff = (to.getY() - from.getY()) * UNIT_WIDTH;
-			
-			w.x = from.getX() * UNIT_WIDTH + (int)(x_diff * ws.percent);
-			w.y = from.getY() * UNIT_WIDTH + (int)(y_diff * ws.percent);
+			interpolatePos(w, ws.fieldFrom, ws.fieldTo, ws.percent);
 		} break;
 		
 		case CrateStep: {
 			CrateStepStateChangeMessage cs = (CrateStepStateChangeMessage)msg;
-			
-			Field from = cs.fieldFrom;
-			Field to = cs.fieldTo;
 			
 			CrateShape sh = this.crates.get(cs.crate);
 			if (sh == null) {
@@ -108,18 +98,11 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 				this.crates.put(cs.crate, sh);
 			}
 			
-			int x_diff = (to.getX() - from.getX()) * UNIT_WIDTH;
-			int y_diff = (to.getY() - from.getY()) * UNIT_WIDTH;
-			
-			sh.x = from.getX() * UNIT_WIDTH + (int)(x_diff * cs.percent);
-			sh.y = from.getY() * UNIT_WIDTH + (int)(y_diff * cs.percent);
+			interpolatePos(sh, cs.fieldFrom, cs.fieldTo, cs.percent);
 		} break;
 		
 		case LifeCrateStep: {
 			LifeCrateStepStateChangeMessage lc = (LifeCrateStepStateChangeMessage)msg;
-			
-			Field from = lc.fieldFrom;
-			Field to = lc.fieldTo;
 			
 			CrateShape sh = this.crates.get(lc.lifeCrate);
 			if (sh == null) {
@@ -127,11 +110,15 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 				this.crates.put(lc.lifeCrate, sh);
 			}
 			
-			int x_diff = (to.getX() - from.getX()) * UNIT_WIDTH;
-			int y_diff = (to.getY() - from.getY()) * UNIT_WIDTH;
+			interpolatePos(sh, lc.fieldFrom, lc.fieldTo, lc.percent);
+		} break;
+		
+		case CrateFall: {
+			CrateFallStateChangeMessage cf = (CrateFallStateChangeMessage)msg;
 			
-			sh.x = from.getX() * UNIT_WIDTH + (int)(x_diff * lc.percent);
-			sh.y = from.getY() * UNIT_WIDTH + (int)(y_diff * lc.percent);
+			CrateShape sh = this.crates.get(cf.crate);
+			sh.scale = 1.0f - cf.percent * cf.percent;
+			interpolatePos(sh, cf.from, cf.to, cf.percent);
 		} break;
 		
 		case TileRegister: {
@@ -194,6 +181,14 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 		}
 		
 		}
+	}
+	
+	private void interpolatePos(Shape sh, Field from, Field to, float percent) {
+		int x_diff = (to.getX() - from.getX()) * UNIT_WIDTH;
+		int y_diff = (to.getY() - from.getY()) * UNIT_WIDTH;
+		
+		sh.x = from.getX() * UNIT_WIDTH + (int)(x_diff * percent);
+		sh.y = from.getY() * UNIT_WIDTH + (int)(y_diff * percent);
 	}
 	
 	@Override

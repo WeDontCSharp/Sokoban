@@ -233,4 +233,9 @@ public abstract class Worker extends Entity {
 		this.pushProcess(new StepProcessWrapper(this, this.getCurField(), to));
 	}
 	
+	@Override
+	public void startStepHoleProcess(Field to) {
+		this.pushProcess(new StepHoleProcessWrapper(this, this.getCurField(), to));
+	}
+	
 }

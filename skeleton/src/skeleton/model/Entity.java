@@ -174,4 +174,5 @@ public abstract class Entity implements IVisitor, Serializable{
 	}
 	
 	public abstract void startStepProcess(Field to);
+	public abstract void startStepHoleProcess(Field to);
 }

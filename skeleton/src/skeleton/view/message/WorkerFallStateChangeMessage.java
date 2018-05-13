@@ -1,15 +1,18 @@
 package skeleton.view.message;
 
-import skeleton.model.Spawn;
+import skeleton.model.Direction;
+import skeleton.model.Field;
 
-public class WorkerFallStateChangeMessage extends StateChangeMessage {
+public class WorkerFallStateChangeMessage extends FallStateChangeMessage {
     public final int playerIndex;
-    public final Spawn playerSpawn;
+    public final Field playerSpawn;
+    public final Direction direction;
 	
-	public WorkerFallStateChangeMessage(int playerIndex, Spawn playerSpawn) {
-		super(StateChangeMessageType.WorkerFall);
+	public WorkerFallStateChangeMessage(int playerIndex, Field playerSpawn, Direction dir, Field from, Field to) {
+		super(StateChangeMessageType.WorkerFall, from, to);
         this.playerIndex = playerIndex;
         this.playerSpawn = playerSpawn;
+        this.direction = dir;
 	}
 	
 }

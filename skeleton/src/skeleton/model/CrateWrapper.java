@@ -10,11 +10,4 @@ public class CrateWrapper extends Crate {
 		this.getLevel().receiveMessage(new CrateStepStateChangeMessage(this, this.getCurField(), this.getCurField(), 1.0f));
 	}
 
-	@Override
-	public void remove() {
-		super.remove();
-		// XXX: Not sure if works like this.
-		this.getLevel().receiveMessage(new CrateFallStateChangeMessage(this));
-	}
-
 }

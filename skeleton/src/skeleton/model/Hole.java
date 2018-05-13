@@ -107,7 +107,7 @@ public abstract class Hole extends Floor {
 	// XXX: StepProcess Visitor...
 	public void callProcess(Entity e, Field from) {
 		if (isOpen()) {
-			e.pushProcess(new StepHoleProcess(from, this));
+			e.startStepHoleProcess(this);
 		} else {
 			e.startStepProcess(this);
 			//e.pushProcess(new StepProcess(e, from, this));

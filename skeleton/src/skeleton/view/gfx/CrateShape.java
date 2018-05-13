@@ -5,6 +5,8 @@ import java.awt.Graphics;
 
 public class CrateShape extends Shape {
 
+	public float scale = 1.0f;
+	
 	public CrateShape(int x, int y) {
 		super(x, y);
 	}
@@ -19,11 +21,20 @@ public class CrateShape extends Shape {
 		int outer = eps * 2;
 		int inner = eps * 8;
 		
+		int width = (GraphicsView.UNIT_WIDTH - 2 * outer);
+		int width_in = (GraphicsView.UNIT_WIDTH - 2 * inner);
+		
 		g.setColor(new Color(110, 70, 50));
-		g.fillRect(xx + outer, yy + outer, GraphicsView.UNIT_WIDTH - 2 * outer, GraphicsView.UNIT_WIDTH - 2 * outer);
+		drawRectCent(g, xx + outer + width / 2, yy + outer + width / 2, (int)(width * scale), (int)(width * scale));
 		
 		g.setColor(new Color(160, 100, 70));
-		g.fillRect(xx + inner, yy + inner, GraphicsView.UNIT_WIDTH - 2 * inner, GraphicsView.UNIT_WIDTH - 2 * inner);
+		drawRectCent(g, xx + inner + width_in / 2, yy + inner + width_in / 2, (int)(width_in * scale), (int)(width_in * scale));
+	}
+	
+	protected void drawRectCent(Graphics g, int cx, int cy, int w, int h) {
+		int w2 = w / 2;
+		int h2 = h / 2;
+		g.fillRect(cx - w2, cy - h2, w, h);
 	}
 
 }
