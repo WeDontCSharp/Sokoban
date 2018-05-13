@@ -29,16 +29,29 @@ import skeleton.view.message.WorkerStepStateChangeMessage;
 
 @SuppressWarnings("serial")
 public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
+	static class PlayerDescriptor {
+		public PlayerShape shape;
+		public String name;
+		
+		public PlayerDescriptor(PlayerShape sh, int idx) {
+			this.shape = sh;
+			this.name = "Player" + (idx + 1);
+		}
+	}
+	
 	public static final int WIDTH = 640;
 	public static final int HEIGHT = 480;
 	public static final int UNIT_WIDTH = 32;
 	
 	private JFrame frame;
 	
+	private int mapWidth;
+	private int mapHeight;
+	
 	private int xOffset;
 	private int yOffset;
 	
-	private PlayerShape[] workers = new PlayerShape[4];
+	private PlayerDescriptor[] workers = new PlayerDescriptor[4];
 	private HashMap<Crate, CrateShape> crates = new HashMap<Crate, CrateShape>();
 	private HashMap<Field, FloorShape> floors = new HashMap<Field, FloorShape>();
 	private ArrayList<WallShape> walls = new ArrayList<WallShape>();
@@ -81,16 +94,16 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 		case WorkerStep: {
 			WorkerStepStateChangeMessage ws = (WorkerStepStateChangeMessage)msg;
 
-			PlayerShape w = this.workers[ws.playerIndex];
+			PlayerDescriptor w = this.workers[ws.playerIndex];
 			if (w == null) {
 				int idx = ws.playerIndex;
 				Color col = idx == 0 ? Color.RED : idx == 1 ? Color.BLUE : idx == 2 ? Color.YELLOW : Color.GREEN;
-				w = new PlayerShape(0, 0, col);
+				w = new PlayerDescriptor(new PlayerShape(0, 0, col), ws.playerIndex);
 				this.workers[idx] = w;
 			}
 			
-			w.direction = ws.direction;
-			interpolatePos(w, ws.fieldFrom, ws.fieldTo, ws.percent);
+			w.shape.direction = ws.direction;
+			interpolatePos(w.shape, ws.fieldFrom, ws.fieldTo, ws.percent);
 		} break;
 		
 		case CrateStep: {
@@ -136,7 +149,7 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 		case WorkerFall: {
 			WorkerFallStateChangeMessage wf = (WorkerFallStateChangeMessage)msg;
 			
-			PlayerShape sh = this.workers[wf.playerIndex];
+			PlayerShape sh = this.workers[wf.playerIndex].shape;
 			sh.scalex = 1.0f - wf.percent * wf.percent;
 			sh.scaley = sh.scalex;
 			interpolatePos(sh, wf.from, wf.to, wf.percent);
@@ -145,7 +158,7 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 		case WorkerSquash: {
 			WorkerSquashStateChangeMessage ws = (WorkerSquashStateChangeMessage)msg;
 			
-			PlayerShape sh = this.workers[ws.playerIndex];
+			PlayerShape sh = this.workers[ws.playerIndex].shape;
 			if (ws.direction == Direction.Left || ws.direction == Direction.Right) {
 				sh.scalex = 1.0f - ws.percent;
 				sh.offToX = (ws.direction == Direction.Right ? 1 : -1);
@@ -158,6 +171,14 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 		
 		case TileRegister: {
 			TileRegisterStateChangeMessage tr = (TileRegisterStateChangeMessage)msg;
+			
+			if (tr.x > this.mapWidth) {
+				this.mapWidth = tr.x;
+				this.xOffset = (WIDTH - UNIT_WIDTH * this.mapWidth) / 2;
+			}
+			if (tr.y > this.mapHeight) {
+				this.mapHeight = tr.y;
+			}
 			
 			switch (tr.tile) {
 			
@@ -237,6 +258,9 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
+		g.setColor(Color.BLACK);
+		g.fillRect(0, 0, WIDTH, HEIGHT);
+		
 		for (FloorShape f : this.floors.values()) {
 			f.draw(g, this.xOffset, this.yOffset);
 		}
@@ -255,11 +279,11 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 			g.drawLine(i + this.xOffset, 0, i + this.xOffset, HEIGHT);
 		}
 		
-		for (PlayerShape c : this.workers) {
+		for (PlayerDescriptor c : this.workers) {
 			if (c == null) {
 				continue;
 			}
-			c.draw(g, this.xOffset, this.yOffset);
+			c.shape.draw(g, this.xOffset, this.yOffset);
 		}
 		
 		for (CrateShape c : this.crates.values()) {
