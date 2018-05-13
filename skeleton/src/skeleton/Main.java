@@ -17,7 +17,7 @@ public class Main {
 		GraphicsView gw = new GraphicsView();
 		
 		try {
-			Warehouse wh = Warehouse.fromFile("C:/TMP/SokobanTestlevels/graphics_testlevel.json", gw);
+			Warehouse wh = Warehouse.fromFile("graphics_testlevel.json", gw);
 			KeyboardView kw = new KeyboardView(0, 
 					KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_SPACE, 
 					wh, gw);
