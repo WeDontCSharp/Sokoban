@@ -2,7 +2,9 @@ package skeleton.view.gfx;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -13,13 +15,17 @@ import skeleton.model.Crate;
 import skeleton.model.Direction;
 import skeleton.model.Field;
 import skeleton.model.Hole;
+import skeleton.model.PlaceableItem;
 import skeleton.view.IView;
 import skeleton.view.message.CrateFallStateChangeMessage;
 import skeleton.view.message.CrateStepStateChangeMessage;
+import skeleton.view.message.HealthStateChangeMessage;
 import skeleton.view.message.HoleStateChangeMessage;
+import skeleton.view.message.ItemStateChangeMessage;
 import skeleton.view.message.LifeCrateFallStateChangeMessage;
 import skeleton.view.message.LifeCrateStepStateChangeMessage;
 import skeleton.view.message.PlaceStateChangeMessage;
+import skeleton.view.message.ScoreStateChangeMessage;
 import skeleton.view.message.StateChangeMessage;
 import skeleton.view.message.TileRegisterStateChangeMessage;
 import skeleton.view.message.WorkerFallStateChangeMessage;
@@ -32,6 +38,9 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 	static class PlayerDescriptor {
 		public PlayerShape shape;
 		public String name;
+		public int lives = 3;
+		public int score = 0;
+		public PlaceableItem item = PlaceableItem.Nothing;
 		
 		public PlayerDescriptor(PlayerShape sh, int idx) {
 			this.shape = sh;
@@ -56,6 +65,9 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 	private HashMap<Field, FloorShape> floors = new HashMap<Field, FloorShape>();
 	private ArrayList<WallShape> walls = new ArrayList<WallShape>();
 	private HashMap<Hole, HoleShape> holes = new HashMap<Hole, HoleShape>();
+	
+	private Font headFont = new Font("Arial", Font.BOLD, 24);
+	private Font normFont = new Font("Arial", Font.PLAIN, 20);
 	
 	public GraphicsView() {
 		super();
@@ -239,6 +251,21 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 			sh.item = ps.item;
 		} break;
 		
+		case Health: {
+			HealthStateChangeMessage hs = (HealthStateChangeMessage)msg;
+			this.workers[hs.playerIndex].lives = hs.newHP;
+		} break;
+		
+		case Item: {
+			ItemStateChangeMessage is = (ItemStateChangeMessage)msg;
+			this.workers[is.playerIndex].item = is.item;
+		} break;
+		
+		case Score: {
+			ScoreStateChangeMessage ss = (ScoreStateChangeMessage)msg;
+			this.workers[ss.playerIndex].score = ss.newScore;
+		} break;
+		
 		default: {
 			System.out.println("<unhandled>");
 		}
@@ -279,11 +306,30 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 			g.drawLine(i + this.xOffset, 0, i + this.xOffset, HEIGHT);
 		}
 		
+		int xoff = 16;
+		Graphics2D g2 = (Graphics2D)g;
 		for (PlayerDescriptor c : this.workers) {
 			if (c == null) {
 				continue;
 			}
 			c.shape.draw(g, this.xOffset, this.yOffset);
+			
+			g2.setColor(c.shape.color);
+			g2.setFont(this.headFont);
+			
+			int ypos = this.mapHeight * UNIT_WIDTH + this.yOffset + 64;
+			g2.drawString(c.name, xoff, ypos);
+			ypos += 22;
+			
+			g2.setFont(this.normFont);
+			g2.drawString("Lives: " + c.lives, xoff, ypos);
+			ypos += 22;
+			g2.drawString("Score: " + c.score, xoff, ypos);
+			ypos += 22;
+			g2.drawString("Item: " + (c.item == PlaceableItem.Nothing ? "-" : c.item == PlaceableItem.Oil ? "Oil" : "Honey"), 
+					xoff, ypos);
+			
+			xoff += (WIDTH - 16) / 4;
 		}
 		
 		for (CrateShape c : this.crates.values()) {

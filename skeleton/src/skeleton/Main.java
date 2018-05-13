@@ -1,24 +1,17 @@
 package skeleton;
 
 import java.awt.event.KeyEvent;
-import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
 
 import skeleton.model.LevelFormatException;
 import skeleton.model.Warehouse;
-import skeleton.test.InputLanguageException;
-import skeleton.test.Test;
-import skeleton.test.TestReader;
 import skeleton.view.KeyboardView;
 import skeleton.view.gfx.GraphicsView;
 
 /**
  * The starting-point for the application.
  */
-/*public class Main {
+public class Main {
 	
 	public static void main(String[] args) {
 		GraphicsView gw = new GraphicsView();
@@ -79,7 +72,7 @@ import skeleton.view.gfx.GraphicsView;
 		}
 	}
 
-}*/
+}
 
 /*
  * FOR TESTING ONLY!
