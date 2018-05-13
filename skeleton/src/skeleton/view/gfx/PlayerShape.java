@@ -10,6 +10,8 @@ public class PlayerShape extends Shape {
 	public Direction direction;
 	public float scalex = 1.0f;
 	public float scaley = 1.0f;
+	public int offToX = 0;
+	public int offToY = 0;
 	
 	public PlayerShape(int x, int y, Color color) {
 		super(x, y);
@@ -21,6 +23,9 @@ public class PlayerShape extends Shape {
 	public void draw(Graphics g, int xoff, int yoff) {
 		int xx = x + xoff;
 		int yy = y + yoff;
+		
+		xx += (int)((1.0f - scalex) * GraphicsView.UNIT_WIDTH * offToX * 0.5f);
+		yy += (int)((1.0f - scaley) * GraphicsView.UNIT_WIDTH * offToY * 0.5f);
 		
 		int eps2 = (int)(GraphicsView.UNIT_WIDTH * 0.1f);
 		

@@ -145,7 +145,14 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 			WorkerSquashStateChangeMessage ws = (WorkerSquashStateChangeMessage)msg;
 			
 			PlayerShape sh = this.workers[ws.playerIndex];
-			sh.scalex = 1.0f - ws.percent;
+			if (ws.direction == Direction.Left || ws.direction == Direction.Right) {
+				sh.scalex = 1.0f - ws.percent;
+				sh.offToX = (ws.direction == Direction.Right ? 1 : -1);
+			}
+			else {
+				sh.scaley = 1.0f - ws.percent;
+				sh.offToY = (ws.direction == Direction.Down ? 1 : -1);
+			}
 		} break;
 		
 		case TileRegister: {
