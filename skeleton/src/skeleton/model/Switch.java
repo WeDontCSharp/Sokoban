@@ -8,7 +8,7 @@ import java.util.List;
  * reachable by entities. Switches control holes
  * and they are only activated by crates.
  */
-public class Switch extends Floor {
+public abstract class Switch extends Floor {
 	
 	/**
      * The holes associated with the switch, which it can control.

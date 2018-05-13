@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 
 import skeleton.model.Crate;
 import skeleton.model.Field;
+import skeleton.model.Hole;
 import skeleton.view.IView;
 import skeleton.view.message.CrateStepStateChangeMessage;
 import skeleton.view.message.StateChangeMessage;
@@ -33,6 +34,7 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 	private HashMap<Crate, CrateShape> crates = new HashMap<Crate, CrateShape>();
 	private ArrayList<FloorShape> floors = new ArrayList<FloorShape>();
 	private ArrayList<WallShape> walls = new ArrayList<WallShape>();
+	private ArrayList<HoleShape> holes = new ArrayList<HoleShape>();
 	
 	public GraphicsView() {
 		super();
@@ -143,6 +145,14 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 				this.floors.add(new PlayerSpawnShape(tr.x * UNIT_WIDTH, tr.y * UNIT_WIDTH, Color.GREEN));
 			} break;
 			
+			case Hole: {
+				this.holes.add(new HoleShape(tr.x * UNIT_WIDTH, tr.y * UNIT_WIDTH));
+			} break;
+			
+			case Switch: {
+				this.floors.add(new SwitchShape(tr.x * UNIT_WIDTH, tr.y * UNIT_WIDTH));
+			} break;
+			
 			default: {
 				System.out.println("<unhandled tile>");
 			}
@@ -166,6 +176,9 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 		}
 		for (WallShape w : this.walls) {
 			w.draw(g, this.xOffset, this.yOffset);
+		}
+		for (HoleShape h : this.holes) {
+			h.draw(g, this.xOffset, this.yOffset);
 		}
 		
 		g.setColor(Color.BLACK);

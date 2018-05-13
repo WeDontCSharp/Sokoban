@@ -358,7 +358,7 @@ public class Warehouse implements Serializable {
 						wh.addTarget();
 						break;
 					case 4:
-						field = new Switch(wh, field_x, field_y);
+						field = new SwitchWrapper(wh, field_x, field_y);
 						break;
 					case 5:
 						field = new HoleWrapper(wh, field_x, field_y);
