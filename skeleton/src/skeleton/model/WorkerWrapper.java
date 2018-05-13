@@ -42,7 +42,7 @@ public class WorkerWrapper extends Worker {
 	public void reSpawn() {
 		super.reSpawn();
 		// XXX: Not sure if works like this.
-		this.getLevel().receiveMessage(new WorkerStepStateChangeMessage(this.getPlayerIndex(), Direction.Right, this.getCurField(), this.getSpawnField(), 1.0f));
+		//this.getLevel().receiveMessage(new WorkerStepStateChangeMessage(this.getPlayerIndex(), Direction.Right, this.getCurField(), this.getSpawnField(), 1.0f));
 	}
 	
 	@Override

@@ -8,6 +8,8 @@ import skeleton.model.Direction;
 public class PlayerShape extends Shape {
 	public Color color;	
 	public Direction direction;
+	public float scalex = 1.0f;
+	public float scaley = 1.0f;
 	
 	public PlayerShape(int x, int y, Color color) {
 		super(x, y);
@@ -23,7 +25,8 @@ public class PlayerShape extends Shape {
 		int eps2 = (int)(GraphicsView.UNIT_WIDTH * 0.1f);
 		
 		g.setColor(this.color);
-		g.fillOval(xx + eps2, yy + eps2, GraphicsView.UNIT_WIDTH - eps2 * 2, GraphicsView.UNIT_WIDTH - eps2 * 2);
+		int r = (GraphicsView.UNIT_WIDTH - 2 * eps2) / 2;
+		this.drawCircleCent(g, xx + GraphicsView.UNIT_WIDTH / 2, yy + GraphicsView.UNIT_WIDTH / 2, (int)(scalex * r), (int)(scaley * r));
 		
 		g.setColor(Color.WHITE);
 		
@@ -37,6 +40,7 @@ public class PlayerShape extends Shape {
 		int yme = yy + GraphicsView.UNIT_WIDTH - eps;
 		int yhf = yy + GraphicsView.UNIT_WIDTH / 2;
 		
+		/*
 		switch (this.direction) {
 		
 		case Left: {
@@ -55,6 +59,10 @@ public class PlayerShape extends Shape {
 			g.fillPolygon(new int[] { xpe, xhf, xme }, new int[] { ype, yme, ype }, 3);
 		} break;
 		
-		}
+		}*/
+	}
+	
+	private void drawCircleCent(Graphics g, int cx, int cy, int rx, int ry) {
+		g.fillOval(cx - rx, cy - ry, 2 * rx, 2 * ry);
 	}
 }

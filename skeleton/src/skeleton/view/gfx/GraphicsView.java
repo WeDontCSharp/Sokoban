@@ -20,6 +20,7 @@ import skeleton.view.message.HoleStateChangeMessage;
 import skeleton.view.message.LifeCrateStepStateChangeMessage;
 import skeleton.view.message.StateChangeMessage;
 import skeleton.view.message.TileRegisterStateChangeMessage;
+import skeleton.view.message.WorkerFallStateChangeMessage;
 import skeleton.view.message.WorkerStepStateChangeMessage;
 
 
@@ -119,6 +120,15 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 			CrateShape sh = this.crates.get(cf.crate);
 			sh.scale = 1.0f - cf.percent * cf.percent;
 			interpolatePos(sh, cf.from, cf.to, cf.percent);
+		} break;
+		
+		case WorkerFall: {
+			WorkerFallStateChangeMessage wf = (WorkerFallStateChangeMessage)msg;
+			
+			PlayerShape sh = this.workers[wf.playerIndex];
+			sh.scalex = 1.0f - wf.percent * wf.percent;
+			sh.scaley = sh.scalex;
+			interpolatePos(sh, wf.from, wf.to, wf.percent);
 		} break;
 		
 		case TileRegister: {
