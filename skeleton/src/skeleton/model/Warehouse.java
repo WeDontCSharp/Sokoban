@@ -16,8 +16,11 @@ import javax.json.JsonValue;
 
 import skeleton.view.IView;
 import skeleton.view.message.ControlMessage;
+import skeleton.view.message.GameOverStateChangeMessage;
+import skeleton.view.message.HealthStateChangeMessage;
 import skeleton.view.message.PlaceControlMessage;
 import skeleton.view.message.StateChangeMessage;
+import skeleton.view.message.StateChangeMessageType;
 import skeleton.view.message.StepControlMessage;
 
 /**
@@ -57,14 +60,20 @@ public class Warehouse implements Serializable {
 	
 	public void sendMessage(ControlMessage msg) {
 		// TODO
-		
 	}
 	
 	public void receiveMessage(ControlMessage msg) {
+		if (this.end != EndType.Nothing) {
+			return;
+		}
+		
 		switch (msg.type) {
 		case Step: {
 			StepControlMessage scm = (StepControlMessage)msg;
-			this.workers[scm.playerIndex].move(scm.direction);
+			Worker w = this.workers[scm.playerIndex];
+			if (w.getHealth() > 0) {
+				w.move(scm.direction);
+			}
 		} break;
 		
 		case Place: {
@@ -218,7 +227,31 @@ public class Warehouse implements Serializable {
 		}
 	}
 	
+	private Worker getHighestScoreWorker() {
+		Worker best = null;
+		int bestScore = 0;
+		for (Worker w : this.workers) {
+			if (w == null) {
+				continue;
+			}
+			if (w.getPoints() > bestScore) {
+				best = w;
+				bestScore = w.getPoints();
+			}
+			else if (w.getPoints() == bestScore) {
+				best = null;
+			}
+		}
+		return best;
+	}
+	
 	public void update() {
+		if (this.end != EndType.Nothing) {			
+			Worker best = getHighestScoreWorker();
+			int pidx = best == null ? -1 : best.getPlayerIndex();
+			this.receiveMessage(new GameOverStateChangeMessage(this.end, pidx));
+		}
+		
 		if (this.aliveWorker <= 1) {
 			this.end = EndType.Player;
 		}
@@ -229,7 +262,6 @@ public class Warehouse implements Serializable {
 		for (Entity e : this.entities) {
 			e.update();
 		}
-		
 	}
 	
 	private void addTarget() {

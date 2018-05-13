@@ -19,6 +19,7 @@ import skeleton.model.PlaceableItem;
 import skeleton.view.IView;
 import skeleton.view.message.CrateFallStateChangeMessage;
 import skeleton.view.message.CrateStepStateChangeMessage;
+import skeleton.view.message.GameOverStateChangeMessage;
 import skeleton.view.message.HealthStateChangeMessage;
 import skeleton.view.message.HoleStateChangeMessage;
 import skeleton.view.message.ItemStateChangeMessage;
@@ -41,6 +42,7 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 		public int lives = 3;
 		public int score = 0;
 		public PlaceableItem item = PlaceableItem.Nothing;
+		public boolean visible = true;
 		
 		public PlayerDescriptor(PlayerShape sh, int idx) {
 			this.shape = sh;
@@ -65,6 +67,8 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 	private HashMap<Field, FloorShape> floors = new HashMap<Field, FloorShape>();
 	private ArrayList<WallShape> walls = new ArrayList<WallShape>();
 	private HashMap<Hole, HoleShape> holes = new HashMap<Hole, HoleShape>();
+	
+	private String gameOverText = null;
 	
 	private Font headFont = new Font("Arial", Font.BOLD, 24);
 	private Font normFont = new Font("Arial", Font.PLAIN, 20);
@@ -112,6 +116,9 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 				Color col = idx == 0 ? Color.RED : idx == 1 ? Color.BLUE : idx == 2 ? Color.YELLOW : Color.GREEN;
 				w = new PlayerDescriptor(new PlayerShape(0, 0, col), ws.playerIndex);
 				this.workers[idx] = w;
+			}
+			else if (w.lives == 0) {
+				w.visible = false;
 			}
 			
 			w.shape.direction = ws.direction;
@@ -266,6 +273,36 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 			this.workers[ss.playerIndex].score = ss.newScore;
 		} break;
 		
+		case GameOver: {
+			GameOverStateChangeMessage go = (GameOverStateChangeMessage)msg;
+			String res = "Nobody won! ";
+			if (go.playerIndex >= 0) {
+				res = "Player " + (go.playerIndex + 1) + " won! "; 
+			}
+			
+			switch (go.endType) {
+			
+			case Crate: {
+				res += "(No more movable crates)";
+			} break;
+			
+			case Player: {
+				res += "(No more players alive)";
+			} break;
+			
+			case Target: {
+				res += "(All crates on target)";
+			} break;
+			
+			default: {
+				res += "<ERROR>";
+			}
+			
+			}
+			
+			this.gameOverText = res;
+		} break;
+		
 		default: {
 			System.out.println("<unhandled>");
 		}
@@ -312,7 +349,9 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 			if (c == null) {
 				continue;
 			}
-			c.shape.draw(g, this.xOffset, this.yOffset);
+			if (c.visible) {
+				c.shape.draw(g, this.xOffset, this.yOffset);
+			}
 			
 			g2.setColor(c.shape.color);
 			g2.setFont(this.headFont);
@@ -334,6 +373,12 @@ public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 		
 		for (CrateShape c : this.crates.values()) {
 			c.draw(g, this.xOffset, this.yOffset);
+		}
+		
+		if (this.gameOverText != null) {
+			g2.setColor(Color.WHITE);
+			g2.setFont(this.headFont);
+			g2.drawString(this.gameOverText, WIDTH / 2 - this.gameOverText.length() * 5, HEIGHT - 60);
 		}
 	}
 

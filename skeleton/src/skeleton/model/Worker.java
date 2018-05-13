@@ -102,7 +102,7 @@ public abstract class Worker extends Entity {
 		if (item == PlaceableItem.Honey) {
 			if (getCurField().placeSlipFactor(2.0)) {
 				this.setItem(PlaceableItem.Nothing);
-				return false;
+				return true;
 			}
 		}
 		else if (item == PlaceableItem.Oil) {
@@ -110,7 +110,6 @@ public abstract class Worker extends Entity {
 				this.setItem(PlaceableItem.Nothing);
 				return true;
 			}
-			return false;
 		}
 		return false;
 	}
