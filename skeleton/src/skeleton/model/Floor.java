@@ -24,18 +24,12 @@ public abstract class Floor extends Field {
 		return true;
 	}
 
-    /* (non-Javadoc)
-     * @see skeleton.model.IVisitable#visitByWorker(skeleton.model.Worker, skeleton.model.Worker)
-     */
     @Override
 	public boolean visitByWorker(Worker firstPusher, Worker w) {
 		super.setEntity(w);
 		return true;
 	}
 
-    /* (non-Javadoc)
-     * @see skeleton.model.IVisitable#visitByCrate(skeleton.model.Worker, skeleton.model.Crate)
-     */
     @Override
 	public boolean visitByCrate(Worker firstPusher, Crate c) {
 		super.setEntity(c);

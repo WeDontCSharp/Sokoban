@@ -33,9 +33,6 @@ public abstract class Hole extends Floor {
 		return false;
 	}
 	
-	/* (non-Javadoc)
-	 * @see skeleton.model.Floor#visitByWorker(skeleton.model.Worker, skeleton.model.Worker)
-	 */
 	@Override
 	public boolean visitByWorker(Worker firstPusher, Worker w) {
 		if (isOpen()) {
@@ -47,10 +44,6 @@ public abstract class Hole extends Floor {
 		return true;
 	}
 	
-	
-	/* (non-Javadoc)
-	 * @see skeleton.model.Floor#visitByCrate(skeleton.model.Worker, skeleton.model.Crate)
-	 */
 	@Override
 	public boolean visitByCrate(Worker firstPusher, Crate c) {
 		whoPushed = firstPusher;
@@ -64,9 +57,6 @@ public abstract class Hole extends Floor {
 		return true;
 	}
 	
-	/* (non-Javadoc)
-	 * @see skeleton.model.Field#visitByLifeCrate(skeleton.model.Worker, skeleton.model.LifeCrate)
-	 */
 	@Override
 	public boolean visitByLifeCrate(Worker firstPusher, LifeCrate lc) {
 		whoPushed = firstPusher;
@@ -104,13 +94,16 @@ public abstract class Hole extends Floor {
 		return whoPushed;
 	}
 	
-	// XXX: StepProcess Visitor...
+	/**
+	 * Visitor for a stepping process.
+	 * @param e The entity that is stepping.
+	 * @param from The field the entity is stepping from.
+	 */
 	public void callProcess(Entity e, Field from) {
 		if (isOpen()) {
 			e.startStepHoleProcess(this);
 		} else {
 			e.startStepProcess(this);
-			//e.pushProcess(new StepProcess(e, from, this));
 		}
 	}
 }

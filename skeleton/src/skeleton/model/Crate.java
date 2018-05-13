@@ -64,6 +64,10 @@ public abstract class Crate extends Entity {
 		// XXX: Stub
 	}
 	
+	/**
+	 * Sets whether the crate is on a target field or not.
+	 * @param ot True if the crate is on a target, false otherwise.
+	 */
 	public void setOntarget(boolean ot) {
 		this.onTarget = ot;
 	}

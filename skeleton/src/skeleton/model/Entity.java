@@ -24,7 +24,9 @@ public abstract class Entity implements IVisitor, Serializable{
 	 */
 	private double weight;
 	
-	// XXX: HACK
+	/**
+	 * Processes of the entity.
+	 */
 	protected LinkedList<Process> processes;
 	
 	/**
@@ -85,10 +87,8 @@ public abstract class Entity implements IVisitor, Serializable{
 		if (neighbour.isLocked()) {
 			return false;
 		}
-		if (neighbour.isEmpty()) {											//If the next field is empty
+		if (neighbour.isEmpty()) {								//If the next field is empty
 			if (visit(firstPusher, neighbour)) {
-				// XXX: Magic begins here
-				//this.pushProcess(new StepProcess(this, curField, neighbour));
 				neighbour.callProcess(this, curField);
 				return true;
 			}
@@ -96,8 +96,6 @@ public abstract class Entity implements IVisitor, Serializable{
 			Entity nextEntity = neighbour.getEntity();
 			if (push(firstPusher, nextEntity, dir)) {
 				if (visit(firstPusher, neighbour)) {
-					// XXX: Magic begins here
-					//this.pushProcess(new StepProcess(this, curField, neighbour));
 					neighbour.callProcess(this, curField);
 					return true;
 				}
@@ -147,6 +145,9 @@ public abstract class Entity implements IVisitor, Serializable{
 		return level;
 	}
 	
+	/**
+	 * Updates the entity's process, if it has any.
+	 */
 	public void update() {
 		Process p = this.getCurrentProcess();
 		if (p == null) {
@@ -155,11 +156,19 @@ public abstract class Entity implements IVisitor, Serializable{
 		p.update();
 	}
 	
+	/**
+	 * Adds a process to the enity and starts it.
+	 * @param proc The process.
+	 */
 	protected void pushProcess(Process proc) {
 		this.processes.addLast(proc);
 		proc.start();
 	}
 	
+	/**
+	 * Retrieves the entity's current process.
+	 * @return The first process of the list, null if the list is empty.
+	 */
 	public Process getCurrentProcess() {
 		if (processes.isEmpty()) {
 			return null;
@@ -173,6 +182,15 @@ public abstract class Entity implements IVisitor, Serializable{
 		return processes.peekFirst();
 	}
 	
+	/**
+	 * Starts a stepping movement.
+	 * @param to The field where the entity is stepping.
+	 */
 	public abstract void startStepProcess(Field to);
+	
+	/**
+	 * Starts a stepping movement onto a Hole.
+	 * @param to The field where the entity is stepping.
+	 */
 	public abstract void startStepHoleProcess(Field to);
 }

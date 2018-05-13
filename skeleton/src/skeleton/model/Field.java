@@ -18,8 +18,13 @@ public abstract class Field implements IVisitable, Serializable {
 	 * The entity that is currently on the field.
 	 */
 	private Entity curEntity;
-	
+	/**
+	 * The status of the field.
+	 */
 	private boolean locked;
+	/**
+	 * The coordinates of the field.
+	 */
 	private int x, y;
 	
 	
@@ -133,35 +138,64 @@ public abstract class Field implements IVisitable, Serializable {
 		return level;
 	}
 	
+	/**
+	 * Locks the field, so that nobody can step here.
+	 */
 	public void lock() {
 		this.locked = true;
 	}
 	
+	/**
+	 * Unlocks the field, so it's free to anybody to step here again.
+	 */
 	public void unlock() {
 		this.locked = false;
 	}
 	
+	/**
+	 * Retrieves the field's locking status.
+	 * @return True if locked, false otherwise.
+	 */
 	public boolean isLocked() {
 		return this.locked;
 	}
 	
+	/**
+	 * Tells whether the field is able to block crates.
+	 * @return False, because a field cannot block crates.
+	 */
 	public boolean isBlocking() {
 		return false;
 	}
 	
-	// XXX: StepProcess Visitor...
+	
+	/**
+	 * Visitor for a stepping process.
+	 * @param e The entity that is stepping.
+	 * @param from The field the entity is stepping from.
+	 */
 	public void callProcess(Entity e, Field from) {
 		e.startStepProcess(this);
 	}
 	
+	/**
+	 * @return The field's X coordinate.
+	 */
 	public int getX() {
 		return this.x;
 	}
 	
+	/**
+	 * @return The field's Y coordinate.
+	 */
 	public int getY() {
 		return this.y;
 	}
 	
+	/**
+	 * Calculates the direction between the 'from' and the 'to' fields.
+	 * @return The direction from the 'from' field to the 'to' field.
+	 */
 	public static Direction getDirection(Field from, Field to) {
 		if (from.x < to.x) {
 			return Direction.Right;
