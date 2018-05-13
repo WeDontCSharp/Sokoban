@@ -3,6 +3,9 @@ package skeleton.view.gfx;
 import java.awt.Color;
 import java.awt.Graphics;
 
+/**
+ * Draws a switch.
+ */
 public class SwitchShape extends FloorShape {
 
 	public SwitchShape(int x, int y) {

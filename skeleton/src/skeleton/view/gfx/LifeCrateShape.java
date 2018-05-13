@@ -3,6 +3,9 @@ package skeleton.view.gfx;
 import java.awt.Color;
 import java.awt.Graphics;
 
+/**
+ * Draws a lifecrate.
+ */
 public class LifeCrateShape extends CrateShape {
 
 	public LifeCrateShape(int x, int y) {

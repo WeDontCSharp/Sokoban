@@ -11,6 +11,9 @@ import skeleton.view.message.ControlMessage;
 import skeleton.view.message.PlaceControlMessage;
 import skeleton.view.message.StepControlMessage;
 
+/**
+ * A View that listens to the keypresses.
+ */
 public class KeyboardView extends KeyAdapter implements IView<ControlMessage>{
 
 	private int playerIndex;
@@ -43,7 +46,7 @@ public class KeyboardView extends KeyAdapter implements IView<ControlMessage>{
 
 	@Override
 	public void receiveMessage(ControlMessage msg) {
-		// TODO Auto-generated method stub
+		// XXX: Not requied
 		
 	}
 	

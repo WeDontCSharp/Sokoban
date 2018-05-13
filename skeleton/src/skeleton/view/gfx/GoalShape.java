@@ -3,6 +3,9 @@ package skeleton.view.gfx;
 import java.awt.Color;
 import java.awt.Graphics;
 
+/**
+ * Draws a target.
+ */
 public class GoalShape extends FloorShape {
 
 	public GoalShape(int x, int y) {

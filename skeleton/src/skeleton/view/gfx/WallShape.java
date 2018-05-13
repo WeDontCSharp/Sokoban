@@ -3,6 +3,9 @@ package skeleton.view.gfx;
 import java.awt.Color;
 import java.awt.Graphics;
 
+/**
+ * Draws a wall.
+ */
 public class WallShape extends Shape {
 
 	public WallShape(int x, int y) {

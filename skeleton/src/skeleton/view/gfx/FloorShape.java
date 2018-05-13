@@ -5,8 +5,14 @@ import java.awt.Graphics;
 
 import skeleton.model.PlaceableItem;
 
+/**
+ * Draws a floor.
+ */
 public class FloorShape extends Shape {
 
+	/**
+	 * The item that is currently on the field.
+	 */
 	public PlaceableItem item;
 	
 	public FloorShape(int x, int y) {

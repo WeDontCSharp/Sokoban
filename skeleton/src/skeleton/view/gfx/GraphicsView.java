@@ -34,6 +34,9 @@ import skeleton.view.message.WorkerSquashStateChangeMessage;
 import skeleton.view.message.WorkerStepStateChangeMessage;
 
 
+/**
+ * The GUI of the game.
+ */
 @SuppressWarnings("serial")
 public class GraphicsView extends JPanel implements IView<StateChangeMessage>{
 	static class PlayerDescriptor {

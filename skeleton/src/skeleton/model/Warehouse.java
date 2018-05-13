@@ -272,9 +272,19 @@ public class Warehouse implements Serializable {
 	 * Updates everything in the warehouse.
 	 */
 	public void update() {
-		if (this.end != EndType.Nothing) {			
+		if (this.end != EndType.Nothing) {
 			Worker best = getHighestScoreWorker();
 			int pidx = best == null ? -1 : best.getPlayerIndex();
+			if(this.end == EndType.Player) {
+				for (Worker w : this.workers) {
+					if (w == null) {
+						continue;
+					}
+					if (w.getHealth() > 0) {
+						pidx = w.getPlayerIndex();
+					}
+				}
+			}
 			this.receiveMessage(new GameOverStateChangeMessage(this.end, pidx));
 		}
 		

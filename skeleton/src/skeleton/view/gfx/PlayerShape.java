@@ -5,6 +5,9 @@ import java.awt.Graphics;
 
 import skeleton.model.Direction;
 
+/**
+ * Draws a worker.
+ */
 public class PlayerShape extends Shape {
 	public Color color;	
 	public Direction direction;
@@ -40,10 +43,16 @@ public class PlayerShape extends Shape {
 		drawTriCent(g, xx + GraphicsView.UNIT_WIDTH / 2, yy + GraphicsView.UNIT_WIDTH / 2, (int)(eps * scalex), (int)(eps * scaley));
 	}
 	
+	/**
+	 * Draws a circle.
+	 */
 	private void drawCircleCent(Graphics g, int cx, int cy, int rx, int ry) {
 		g.fillOval(cx - rx, cy - ry, 2 * rx, 2 * ry);
 	}
 	
+	/**
+	 * Draws a triangle.
+	 */
 	private void drawTriCent(Graphics g, int cx, int cy, int szx, int szy) {		
 		switch (this.direction) {
 		case Up:

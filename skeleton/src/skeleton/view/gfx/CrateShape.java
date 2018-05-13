@@ -3,6 +3,9 @@ package skeleton.view.gfx;
 import java.awt.Color;
 import java.awt.Graphics;
 
+/**
+ * Draws a shape on the display.
+ */
 public class CrateShape extends Shape {
 
 	public float scale = 1.0f;
@@ -31,6 +34,9 @@ public class CrateShape extends Shape {
 		drawRectCent(g, xx + inner + width_in / 2, yy + inner + width_in / 2, (int)(width_in * scale), (int)(width_in * scale));
 	}
 	
+	/**
+	 * Draws a rectangle.
+	 */
 	protected void drawRectCent(Graphics g, int cx, int cy, int w, int h) {
 		int w2 = w / 2;
 		int h2 = h / 2;

@@ -3,8 +3,14 @@ package skeleton.view.gfx;
 import java.awt.Color;
 import java.awt.Graphics;
 
+/**
+ * Draws a hole.
+ */
 public class HoleShape extends FloorShape {
 
+	/**
+	 * The state of the hole.
+	 */
 	public boolean open;
 	
 	public HoleShape(int x, int y) {

@@ -3,6 +3,9 @@ package skeleton.view.gfx;
 import java.awt.Color;
 import java.awt.Graphics;
 
+/**
+ * Draws a spawn.
+ */
 public class PlayerSpawnShape extends FloorShape {
 
 	private Color color;
