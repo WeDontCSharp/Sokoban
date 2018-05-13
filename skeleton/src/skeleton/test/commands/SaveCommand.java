@@ -33,6 +33,7 @@ public class SaveCommand implements Command {
 			fout = new FileOutputStream(path);
 		} catch (FileNotFoundException e) {
 			result.add("SAVE_FAIL \"" + path + "\"");
+			return;
 		}
 		
 		try {
@@ -42,6 +43,7 @@ public class SaveCommand implements Command {
 			oos.close();
 		} catch (IOException e) {
 			result.add("SAVE_FAIL \"" + path + "\"");
+			return;
 		}
 		
 		result.add("SAVE_SUCCESS \"" + path + "\"");

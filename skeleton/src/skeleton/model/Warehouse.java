@@ -42,13 +42,16 @@ public class Warehouse implements Serializable {
 		}
 	}
 	
-	private IView<StateChangeMessage> graphicsView;
+	private transient IView<StateChangeMessage> graphicsView;
 	
 	public void sendMessage(StateChangeMessage msg) {
 		// TODO
 	}
 	
 	public void receiveMessage(StateChangeMessage msg) {
+		if (this.graphicsView == null) {
+			return;
+		}
 		this.graphicsView.receiveMessage(msg);
 	}
 	
