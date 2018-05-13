@@ -2,10 +2,14 @@ package skeleton.model;
 
 import java.util.Random;
 
+import skeleton.view.message.ItemStateChangeMessage;
+
 /**
  * A class representing a worker.
  */
 public abstract class Worker extends Entity {
+	private static Random rand = new Random();
+	
 	private int playerIndex;
 	
 	public int getPlayerIndex() {
@@ -38,6 +42,7 @@ public abstract class Worker extends Entity {
 	
 	public void setItem(PlaceableItem item) {
 		this.item = item;
+		this.getLevel().receiveMessage(new ItemStateChangeMessage(this.playerIndex, item));
 	}
 
 	public PlaceableItem getItem() {
@@ -95,12 +100,17 @@ public abstract class Worker extends Entity {
 	public boolean placeItem() {
 		// TODO: What to do on successfull/failed place? 
 		if (item == PlaceableItem.Honey) {
-			getCurField().placeSlipFactor(2.0);
-			return true;
+			if (getCurField().placeSlipFactor(2.0)) {
+				this.setItem(PlaceableItem.Nothing);
+				return false;
+			}
 		}
 		else if (item == PlaceableItem.Oil) {
-			getCurField().placeSlipFactor(0.0);
-			return true;
+			if (getCurField().placeSlipFactor(0.0)) {
+				this.setItem(PlaceableItem.Nothing);
+				return true;
+			}
+			return false;
 		}
 		return false;
 	}
@@ -207,9 +217,8 @@ public abstract class Worker extends Entity {
 	 * The Worker respawns at their spawnField.
 	 */
 	public void reSpawn() {
-		//this.getCurField().unsetEntity();
-		//this.spawnField.setEntity(this);
-		//this.setCurField(this.spawnField);	
+		int ritem = rand.nextInt() % 2;
+		this.setItem(ritem == 0 ? PlaceableItem.Honey : PlaceableItem.Oil);
 	}
 	
 	/**
