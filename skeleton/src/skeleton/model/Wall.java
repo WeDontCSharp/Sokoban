@@ -30,7 +30,6 @@ public abstract class Wall extends Field  {
 	@Override
 	public boolean visitByWorker(Worker firstPusher, Worker w) {
 		if (firstPusher != w) {
-			super.setEntity(w);
 			w.loseHealth();
 			return true;
 		}
