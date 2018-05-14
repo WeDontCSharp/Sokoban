@@ -1,26 +1,21 @@
 package skeleton.model;
-import skeleton.view.CrateFallStateChangeMessage;
-import skeleton.view.CrateStepStateChangeMessage;
+import skeleton.view.message.CrateFallStateChangeMessage;
+import skeleton.view.message.CrateStepStateChangeMessage;
 
+/**
+ * Overrides the methods which affect the display
+ * and sends messages so that the View could handle the changes.
+ */
 public class CrateWrapper extends Crate {
 	
+	/**
+	 * Sends a message because a crate has been created.
+	 * @param g The warehouse to create the crate in.
+	 * @param f The field to place the crate onto.
+	 */
 	public CrateWrapper(Warehouse g, Field f) {
 		super(g, f);
-		// TODO Auto-generated constructor stub
-	}
-
-	@Override
-	public void setCurField(Field f) {
-		super.setCurField(f);
-		// XXX: Not sure if works like this.
-		this.getLevel().receiveMessage(new CrateStepStateChangeMessage(this, this.getCurField(), f));
-	}
-	
-	@Override
-	public void remove() {
-		super.remove();
-		// XXX: Not sure if works like this.
-		this.getLevel().receiveMessage(new CrateFallStateChangeMessage(this));
+		this.getLevel().receiveMessage(new CrateStepStateChangeMessage(this, this.getCurField(), this.getCurField(), 1.0f));
 	}
 
 }

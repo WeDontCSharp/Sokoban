@@ -5,7 +5,7 @@ package skeleton.model;
  * floors but if a crate is pushed onto them, the
  * pushing worker gets a point.
  */
-public class Target extends Floor {
+public abstract class Target extends Floor {
 	
     /**
 	 * The worker who pushed the crate on the target.
@@ -16,8 +16,8 @@ public class Target extends Floor {
 	 * Creates a target.
 	 * @param level The warehouse to the create the target in.
 	 */
-    public Target(Warehouse level) {
-		super(level);
+    public Target(Warehouse level, int x, int y) {
+		super(level, x, y);
 	}
     
     /**
@@ -29,9 +29,6 @@ public class Target extends Floor {
 		return false;
 	}
 	
-    /* (non-Javadoc)
-     * @see skeleton.model.Field#unsetEntity()
-     */
     @Override
 	public void unsetEntity() {
     	if (whoPushed != null) {
@@ -43,9 +40,6 @@ public class Target extends Floor {
     	super.unsetEntity();
 	}
 	
-    /* (non-Javadoc)
-     * @see skeleton.model.Floor#visitByCrate(skeleton.model.Worker, skeleton.model.Crate)
-     */
     @Override
 	public boolean visitByCrate(Worker firstPusher, Crate c) {
 		super.setEntity(c);

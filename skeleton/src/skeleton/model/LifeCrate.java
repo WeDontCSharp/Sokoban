@@ -4,7 +4,7 @@ package skeleton.model;
  * A class representing a crate with a heart symbol on it.
  * This crate gives a health to the worker who pushes it in an open hole.
  */
-public class LifeCrate extends Crate {
+public abstract class LifeCrate extends Crate {
 	
 	/**
 	 * LifeCrate's construstor.
@@ -25,12 +25,19 @@ public class LifeCrate extends Crate {
 		firstPusher.gainHealth();
 	}
 	
-	/* (non-Javadoc)
-	 * @see skeleton.model.Crate#visit(skeleton.model.Worker, skeleton.model.IVisitable)
-	 */
 	@Override
 	public boolean visit(Worker firstPusher, IVisitable iv) {
 		return iv.visitByLifeCrate(firstPusher, this);
+	}
+	
+	@Override
+	public void startStepProcess(Field to) {
+		this.pushProcess(new StepProcessWrapper(this, this.getCurField(), to));
+	}
+	
+	@Override
+	public void startStepHoleProcess(Field to) {
+		this.pushProcess(new StepHoleProcessWrapper(this, this.getCurField(), to));
 	}
 	
 }

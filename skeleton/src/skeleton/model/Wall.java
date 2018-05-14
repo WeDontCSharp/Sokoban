@@ -5,14 +5,14 @@ package skeleton.model;
  * Entities cannot step into walls
  * but a worker may be pushed into one.
  */
-public class Wall extends Field  {
+public abstract class Wall extends Field  {
     
     /**
 	 * Creates a wall.
 	 * @param level The warehouse to the create the floor in.
 	 */
-    public Wall(Warehouse level) {
-		super(level);
+    public Wall(Warehouse level, int x, int y) {
+		super(level, x, y);
 	}
     
     /**
@@ -24,13 +24,9 @@ public class Wall extends Field  {
 		return false;
 	}
 	
-	/* (non-Javadoc)
-	 * @see skeleton.model.IVisitable#visitByWorker(skeleton.model.Worker, skeleton.model.Worker)
-	 */
 	@Override
 	public boolean visitByWorker(Worker firstPusher, Worker w) {
 		if (firstPusher != w) {
-			super.setEntity(w);
 			w.loseHealth();
 			return true;
 		}
@@ -39,9 +35,6 @@ public class Wall extends Field  {
 		}
 	}
 
-    /* (non-Javadoc)
-     * @see skeleton.model.IVisitable#visitByCrate(skeleton.model.Worker, skeleton.model.Crate)
-     */
     @Override
 	public boolean visitByCrate(Worker firstPusher, Crate c) {
 		return false;
@@ -52,9 +45,13 @@ public class Wall extends Field  {
     	return true;
     }
     
-    // XXX: StepProcess Visitor...
+    /**
+	 * Visitor for a stepping process.
+	 * @param e The entity that is stepping.
+	 * @param from The field the entity is stepping from.
+	 */
  	public void callProcess(Entity e, Field from) {
-		e.pushProcess(new StepWallProcess(from, this));
+		e.pushProcess(new StepWallProcessWrapper((Worker)e, from, this));
  	}
 }
 

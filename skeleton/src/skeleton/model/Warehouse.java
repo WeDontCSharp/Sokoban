@@ -14,51 +14,93 @@ import javax.json.JsonObject;
 import javax.json.JsonReader;
 import javax.json.JsonValue;
 
-import skeleton.view.ControlMessage;
 import skeleton.view.IView;
-import skeleton.view.StateChangeMessage;
+import skeleton.view.message.ControlMessage;
+import skeleton.view.message.GameOverStateChangeMessage;
+import skeleton.view.message.HealthStateChangeMessage;
+import skeleton.view.message.PlaceControlMessage;
+import skeleton.view.message.StateChangeMessage;
+import skeleton.view.message.StateChangeMessageType;
+import skeleton.view.message.StepControlMessage;
 
 /**
  * A class representing a container for the fields and entities, also taking
  * part as a level in the game.
  */
 public class Warehouse implements Serializable {
-	public enum EndType{
-		Nothing,Target,Crate,Player;
+	
+	/**
+	 * Represents a game-ending type.
+	 */
+	public enum EndType {
+		Nothing, Target, Crate, Player;
+		
+		/**
+		 * Converts an end type to a string.
+		 * @param et The end type.
+		 * @return The string value of the end type, '?' if not recognised.
+		 */
 		public static String toString(EndType et) {
 			if (et == null) {
 				return "?";
 			}
 			switch (et) {
-			case Nothing: return "N";
-			case Target: return "TR";
-			case Crate: return "CR";
-			case Player: return "P";
+			case Nothing: 	return "N";
+			case Target: 	return "TR";
+			case Crate: 	return "CR";
+			case Player: 	return "P";
+			default: 		return "?";
 			}
-			return "?";
 		}
 	}
 	
-	private IView view;
+	/**
+	 * The view of the warehouse.
+	 */
+	private transient IView<StateChangeMessage> graphicsView;
 	
 	public void sendMessage(StateChangeMessage msg) {
-		// TODO
-		
+		// XXX: Not required
 	}
 	
+	/**
+	 * The warehouse receives a message and forwards it to the view.
+	 * @param msg The message.
+	 */
 	public void receiveMessage(StateChangeMessage msg) {
-		// TODO
-		
+		if (this.graphicsView == null) {
+			return;
+		}
+		this.graphicsView.receiveMessage(msg);
 	}
 	
 	public void sendMessage(ControlMessage msg) {
-		// TODO
-		
+		// XXX: Not required
 	}
 	
+	/**
+	 * The warehouse receives a message and acts according to it.
+	 * @param msg The message.
+	 */
 	public void receiveMessage(ControlMessage msg) {
-		// TODO
+		if (this.end != EndType.Nothing) {
+			return;
+		}
 		
+		switch (msg.type) {
+		case Step: {
+			StepControlMessage scm = (StepControlMessage)msg;
+			Worker w = this.workers[scm.playerIndex];
+			if (w.getHealth() > 0) {
+				w.move(scm.direction);
+			}
+		} break;
+		
+		case Place: {
+			PlaceControlMessage pc = (PlaceControlMessage)msg;
+			this.workers[pc.playerIndex].placeItem();
+		} break;
+		}
 	}
 	
 	/**
@@ -91,7 +133,9 @@ public class Warehouse implements Serializable {
 	 * @param w The width of the warehouse.
 	 * @param h The height of the warehouse.
 	 */
-	public Warehouse(int w, int h) {
+	public Warehouse(int w, int h, IView<StateChangeMessage> graphicsView) {
+		this.graphicsView = graphicsView;
+		
 		this.width = w;
 		this.height = h;
 
@@ -203,7 +247,47 @@ public class Warehouse implements Serializable {
 		}
 	}
 	
+	/**
+	 * @return The worker with the highest score.
+	 */
+	private Worker getHighestScoreWorker() {
+		Worker best = null;
+		int bestScore = 0;
+		for (Worker w : this.workers) {
+			if (w == null) {
+				continue;
+			}
+			if (w.getPoints() > bestScore) {
+				best = w;
+				bestScore = w.getPoints();
+			}
+			else if (w.getPoints() == bestScore) {
+				best = null;
+			}
+		}
+		return best;
+	}
+	
+	/**
+	 * Updates everything in the warehouse.
+	 */
 	public void update() {
+		if (this.end != EndType.Nothing) {
+			Worker best = getHighestScoreWorker();
+			int pidx = best == null ? -1 : best.getPlayerIndex();
+			if(this.end == EndType.Player) {
+				for (Worker w : this.workers) {
+					if (w == null) {
+						continue;
+					}
+					if (w.getHealth() > 0) {
+						pidx = w.getPlayerIndex();
+					}
+				}
+			}
+			this.receiveMessage(new GameOverStateChangeMessage(this.end, pidx));
+		}
+		
 		if (this.aliveWorker <= 1) {
 			this.end = EndType.Player;
 		}
@@ -214,7 +298,6 @@ public class Warehouse implements Serializable {
 		for (Entity e : this.entities) {
 			e.update();
 		}
-		
 	}
 	
 	private void addTarget() {
@@ -242,6 +325,9 @@ public class Warehouse implements Serializable {
 		return this.blockedMap[pos];
 	}
 	
+	/**
+	 * Updates the blocking map, so that it is noted down if a crate got blocked.
+	 */
 	public void updateBlocking(Field f, boolean initial) {
 		if(f == null) return;
 		int pos = -1;
@@ -307,7 +393,15 @@ public class Warehouse implements Serializable {
 		return this.workers[i];
 	}
 
-	public static Warehouse fromFile(String path) throws LevelFormatException, FileNotFoundException {
+	/**
+	 * Loads a warehouse (a map) from a file.
+	 * @param path
+	 * @param gw
+	 * @return The ready warehouse.
+	 * @throws LevelFormatException
+	 * @throws FileNotFoundException
+	 */
+	public static Warehouse fromFile(String path, IView<StateChangeMessage> gw) throws LevelFormatException, FileNotFoundException {
 		JsonReader reader = Json.createReader(new BufferedInputStream(new FileInputStream(path)));
 		JsonObject mapObj = reader.readObject();
 
@@ -315,7 +409,7 @@ public class Warehouse implements Serializable {
 		int height = mapObj.getInt("height");
 		int tileSize = mapObj.getInt("tilewidth");
 
-		Warehouse wh = new Warehouse(width, height);
+		Warehouse wh = new Warehouse(width, height, gw);
 
 		JsonArray layers = mapObj.getJsonArray("layers");
 
@@ -335,44 +429,46 @@ public class Warehouse implements Serializable {
 				for (JsonValue fieldIdStr : fields) {
 					int fieldId = Integer.parseInt(fieldIdStr.toString());
 					Field field = null;
+					int field_x = index % width;
+					int field_y = index / width;
 
 					switch (fieldId) {
 					case 0:
 						break;
 					case 1:
-						field = new Wall(wh);
+						field = new WallWrapper(wh, field_x, field_y);
 						break;
 					case 2:
-						field = new Floor(wh);
+						field = new FloorWrapper(wh, field_x, field_y);
 						break;
 					case 3:
-						field = new Target(wh);
+						field = new TargetWrapper(wh, field_x, field_y);
 						wh.addTarget();
 						break;
 					case 4:
-						field = new Switch(wh);
+						field = new SwitchWrapper(wh, field_x, field_y);
 						break;
 					case 5:
-						field = new Hole(wh);
+						field = new HoleWrapper(wh, field_x, field_y);
 						break;
 					case 6:
 						// Spawn for P1
-						field = new Spawn(wh);
+						field = new SpawnWrapper(wh, field_x, field_y);
 						spawns[0] = (Spawn) field;
 						break;
 					case 7:
 						// Spawn for P2
-						field = new Spawn(wh);
+						field = new SpawnWrapper(wh, field_x, field_y);
 						spawns[1] = (Spawn) field;
 						break;
 					case 8:
 						// Spawn for P3
-						field = new Spawn(wh);
+						field = new SpawnWrapper(wh, field_x, field_y);
 						spawns[2] = (Spawn) field;
 						break;
 					case 9:
 						// Spawn for P4
-						field = new Spawn(wh);
+						field = new SpawnWrapper(wh, field_x, field_y);
 						spawns[3] = (Spawn) field;
 						break;
 					// XXX
@@ -381,7 +477,7 @@ public class Warehouse implements Serializable {
 					}
 
 					if (field != null) {
-						wh.setField(field, index % width, index / width);
+						wh.setField(field, field_x, field_y);
 					}
 					index++;
 				}
@@ -396,31 +492,31 @@ public class Warehouse implements Serializable {
 					case 0:
 						break;
 					case 10:
-						ent = new Crate(wh, wh.getField(index % width, index / width));
+						ent = new CrateWrapper(wh, wh.getField(index % width, index / width));
 						if(wh.getField(index % width, index / width) instanceof Target) wh.addOntarget();
 						break;
 					case 11:
-						ent = new Worker(wh, wh.getField(index % width, index / width), Direction.Down);
+						ent = new WorkerWrapper(wh, wh.getField(index % width, index / width), Direction.Down, 0);
 						owners[0] = (Worker) ent;
 						wh.setWorker(0, ent);
 						break;
 					case 12:
-						ent = new Worker(wh, wh.getField(index % width, index / width), Direction.Down);
+						ent = new WorkerWrapper(wh, wh.getField(index % width, index / width), Direction.Down, 1);
 						owners[1] = (Worker) ent;
 						wh.setWorker(1, ent);
 						break;
 					case 13:
-						ent = new Worker(wh, wh.getField(index % width, index / width), Direction.Down);
+						ent = new WorkerWrapper(wh, wh.getField(index % width, index / width), Direction.Down, 2);
 						owners[2] = (Worker) ent;
 						wh.setWorker(2, ent);
 						break;
 					case 14:
-						ent = new Worker(wh, wh.getField(index % width, index / width), Direction.Down);
+						ent = new WorkerWrapper(wh, wh.getField(index % width, index / width), Direction.Down, 3);
 						owners[3] = (Worker) ent;
 						wh.setWorker(3, ent);
 						break;
 					case 15:
-						ent = new LifeCrate(wh, wh.getField(index % width, index / width));
+						ent = new LifeCrateWrapper(wh, wh.getField(index % width, index / width));
 						break;
 					// XXX
 					default:

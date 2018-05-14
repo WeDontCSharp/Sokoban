@@ -5,7 +5,7 @@ package skeleton.model;
  * reachable by their associated workers.
  * To other entities, they act like walls.
  */
-public class Spawn extends Floor {
+public abstract class Spawn extends Floor {
 
 	/**
 	 * The worker associated with this spawn, beeing the only one to step here.
@@ -21,8 +21,8 @@ public class Spawn extends Floor {
 	 * Creates a spawn.
 	 * @param level The warehouse to the create the spawn in.
 	 */
-    public Spawn(Warehouse level) {
-		super(level);
+    public Spawn(Warehouse level, int x, int y) {
+		super(level, x, y);
 	}
     
     /**
@@ -34,9 +34,6 @@ public class Spawn extends Floor {
 		return false;
 	}
 
-    /* (non-Javadoc)
-     * @see skeleton.model.Floor#visitByWorker(skeleton.model.Worker, skeleton.model.Worker)
-     */
     @Override
 	public boolean visitByWorker(Worker firstPusher, Worker w) {
 		if (w != firstPusher && w != owner) {
@@ -51,9 +48,6 @@ public class Spawn extends Floor {
 		}
 	}
 
-    /* (non-Javadoc)
-     * @see skeleton.model.Floor#visitByCrate(skeleton.model.Worker, skeleton.model.Crate)
-     */
     @Override
 	public boolean visitByCrate(Worker firstPusher, Crate c) {
 		return false;
@@ -67,9 +61,6 @@ public class Spawn extends Floor {
 		return owner;
 	}
 	
-    /* (non-Javadoc)
-     * @see skeleton.model.Field#isEmpty()
-     */
     @Override
 	public boolean isEmpty() {
 		return true;

@@ -1,11 +1,17 @@
 package skeleton.model;
-import skeleton.view.PlaceStateChangeMessage;
+import skeleton.view.message.PlaceStateChangeMessage;
+import skeleton.view.message.TileRegisterStateChangeMessage;
+import skeleton.view.message.TileType;
 
+/**
+ * Overrides the methods which affect the display
+ * and sends messages so that the View could handle the changes.
+ */
 public class FloorWrapper extends Floor {
 
-	public FloorWrapper(Warehouse level) {
-		super(level);
-		// TODO Auto-generated constructor stub
+	public FloorWrapper(Warehouse level, int x, int y) {
+		super(level, x, y);
+		this.getLevel().receiveMessage(new TileRegisterStateChangeMessage(x, y, TileType.Floor, this));
 	}
 	
 	@Override

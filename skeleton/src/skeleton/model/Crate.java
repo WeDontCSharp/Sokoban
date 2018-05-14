@@ -3,7 +3,7 @@ package skeleton.model;
 /**
  * A class representing a crate.
  */
-public class Crate extends Entity {
+public abstract class Crate extends Entity {
 	private boolean onTarget;
 	
 	/**
@@ -64,6 +64,10 @@ public class Crate extends Entity {
 		// XXX: Stub
 	}
 	
+	/**
+	 * Sets whether the crate is on a target field or not.
+	 * @param ot True if the crate is on a target, false otherwise.
+	 */
 	public void setOntarget(boolean ot) {
 		this.onTarget = ot;
 	}
@@ -71,6 +75,16 @@ public class Crate extends Entity {
 	@Override
 	public boolean visit(Worker firstPusher, IVisitable iv) {
 		return iv.visitByCrate(firstPusher, this);
+	}
+	
+	@Override
+	public void startStepProcess(Field to) {
+		this.pushProcess(new StepProcessWrapper(this, this.getCurField(), to));
+	}
+	
+	@Override
+	public void startStepHoleProcess(Field to) {
+		this.pushProcess(new StepHoleProcessWrapper(this, this.getCurField(), to));
 	}
 	
 }

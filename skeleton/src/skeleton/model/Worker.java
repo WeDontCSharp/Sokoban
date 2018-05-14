@@ -1,18 +1,19 @@
 package skeleton.model;
 
+import java.util.Random;
+
+import skeleton.view.message.ItemStateChangeMessage;
+
 /**
  * A class representing a worker.
  */
-public class Worker extends Entity {
+public abstract class Worker extends Entity {
+	private static Random rand = new Random();
 	
 	private int playerIndex;
 	
 	public int getPlayerIndex() {
 		return playerIndex;
-	}
-
-	public void setPlayerIndex(int playerIndex) {
-		this.playerIndex = playerIndex;
 	}
 
 	/**
@@ -41,6 +42,7 @@ public class Worker extends Entity {
 	
 	public void setItem(PlaceableItem item) {
 		this.item = item;
+		this.getLevel().receiveMessage(new ItemStateChangeMessage(this.playerIndex, item));
 	}
 
 	public PlaceableItem getItem() {
@@ -70,10 +72,11 @@ public class Worker extends Entity {
 	 * @param f 	The new worker's Field where he spawns the first time.
 	 * @param dir 	The direction, where the worker is heading.
 	 */
-	public Worker(Warehouse g, Field f, Direction dir) {
+	public Worker(Warehouse g, Field f, Direction dir, int idx) {
 		super(g, f);
 		this.orgPower = 3.0;
 		this.health = 3;
+		this.playerIndex = idx;
 	}
 	
 	/**
@@ -95,14 +98,17 @@ public class Worker extends Entity {
 	 * the field the worker is currently staying on.
 	 */
 	public boolean placeItem() {
-		// TODO: What to do on successfull/failed place? 
 		if (item == PlaceableItem.Honey) {
-			getCurField().placeSlipFactor(2.0);
-			return true;
+			if (getCurField().placeSlipFactor(2.0)) {
+				this.setItem(PlaceableItem.Nothing);
+				return true;
+			}
 		}
 		else if (item == PlaceableItem.Oil) {
-			getCurField().placeSlipFactor(0.0);
-			return true;
+			if (getCurField().placeSlipFactor(0.0)) {
+				this.setItem(PlaceableItem.Nothing);
+				return true;
+			}
 		}
 		return false;
 	}
@@ -120,17 +126,11 @@ public class Worker extends Entity {
 		step(this, dir);
 	}
 	
-	/* (non-Javadoc)
-	 * @see skeleton.model.Entity#push(skeleton.model.Worker, skeleton.model.Entity, skeleton.model.Direction)
-	 */
 	@Override
 	public boolean push(Worker firstPusher, Entity pushed, Direction dir) {
 		return pushed.pushByWorker(firstPusher, this, dir);
 	}
 
-	/* (non-Javadoc)
-	 * @see skeleton.model.Entity#pushByWorker(skeleton.model.Worker, skeleton.model.Worker, skeleton.model.Direction)
-	 */
 	@Override
 	public boolean pushByWorker(Worker firstPusher, Worker pusher, Direction dir) {
 		if (firstPusher == pusher) {
@@ -143,9 +143,6 @@ public class Worker extends Entity {
 		return step(firstPusher, dir);
 	}
 
-	/* (non-Javadoc)
-	 * @see skeleton.model.Entity#pushByCrate(skeleton.model.Worker, skeleton.model.Crate, skeleton.model.Direction)
-	 */
 	@Override
 	public boolean pushByCrate(Worker firstPusher, Crate pusher, Direction dir) {
 		double remPower = firstPusher.consumePower(getCurField().getSlipFactor() * getWeight());
@@ -209,27 +206,30 @@ public class Worker extends Entity {
 	 * The Worker respawns at their spawnField.
 	 */
 	public void reSpawn() {
-		this.getCurField().unsetEntity();
-		this.spawnField.setEntity(this);
-		this.setCurField(this.spawnField);	
+		int ritem = rand.nextInt() % 2;
+		this.setItem(ritem == 0 ? PlaceableItem.Honey : PlaceableItem.Oil);
 	}
 	
 	/**
 	 * The Worker dies
 	 */
 	public void die() {
-		//throw new RuntimeException("Unimplemented!");
-		// TODO Remove worker from game.
 		super.level.removeAliveWorker();
-		super.level.update();
 	}
 	
-	/* (non-Javadoc)
-	 * @see skeleton.model.IVisitor#visit(skeleton.model.Worker, skeleton.model.IVisitable)
-	 */
 	@Override
 	public boolean visit(Worker firstPusher, IVisitable iv) {
 		return iv.visitByWorker(firstPusher, this);
+	}
+	
+	@Override
+	public void startStepProcess(Field to) {
+		this.pushProcess(new StepProcessWrapper(this, this.getCurField(), to));
+	}
+	
+	@Override
+	public void startStepHoleProcess(Field to) {
+		this.pushProcess(new StepHoleProcessWrapper(this, this.getCurField(), to));
 	}
 	
 }

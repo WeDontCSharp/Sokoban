@@ -8,7 +8,7 @@ import java.util.List;
  * reachable by entities. Switches control holes
  * and they are only activated by crates.
  */
-public class Switch extends Floor {
+public abstract class Switch extends Floor {
 	
 	/**
      * The holes associated with the switch, which it can control.
@@ -19,8 +19,8 @@ public class Switch extends Floor {
 	 * Creates a switch.
 	 * @param level The warehouse to the create the switch in.
 	 */
-    public Switch(Warehouse level) {
-		super(level);
+    public Switch(Warehouse level, int x, int y) {
+		super(level, x, y);
 		holes = new ArrayList<Hole>();
 	}
     
@@ -33,9 +33,6 @@ public class Switch extends Floor {
 		return false;
 	}
 	
-    /* (non-Javadoc)
-     * @see skeleton.model.Floor#visitByCrate(skeleton.model.Worker, skeleton.model.Crate)
-     */
     @Override
 	public boolean visitByCrate(Worker firstPusher, Crate c) {
 		super.setEntity(c);
@@ -50,10 +47,7 @@ public class Switch extends Floor {
 		return true;
 	}
 	
-	
-    /* (non-Javadoc)
-     * @see skeleton.model.Field#unsetEntity()
-     */
+
     @Override
 	public void unsetEntity() {
 		super.unsetEntity();
@@ -62,11 +56,18 @@ public class Switch extends Floor {
 		}
 	}
     
+    /**
+     * Adds a hole to the switch
+     * @param h The hole.
+     */
     public void addHole(Hole h) {
     	this.holes.add(h);
     	h.setOpen(false);
     }
     
+    /**
+     * The switch closes all its holes.
+     */
     public void closeHoles() {
     	for (Hole h : holes) {
 			h.setOpen(false);
