@@ -70,5 +70,18 @@ public abstract class Spawn extends Floor {
     public boolean isBlocking() {
     	return true;
     }
+    
+    /**
+	 * Visitor for a stepping process.
+	 * @param e The entity that is stepping.
+	 * @param from The field the entity is stepping from.
+	 */
+ 	public void callProcess(Entity e, Field from) {
+ 		if(e == owner) {
+ 			e.pushProcess(new StepProcessWrapper((Worker)e, from, this));
+ 		}else{
+ 			e.pushProcess(new StepWallProcessWrapper((Worker)e, from, this));
+		}
+ 	}
 
 }
